@@ -34,13 +34,17 @@ if __name__ == '__main__':
     msg = bytes(input("Enter a message: "), encoding="utf8")
     msg = pad(msg, AES.block_size)
 
-    print(msg)
+    print(msg, len(msg))
 
     encodedMsg = base64.b64encode(bytes(iv + cipher.encrypt(msg)))
 
     print(encodedMsg, len(encodedMsg))
 
-    clientSocket.send(encodedMsg)
+    messageLen = bytes(str(len(encodedMsg)), encoding="utf8")
+
+    print(messageLen)
+
+    clientSocket.send(messageLen + b"_" + encodedMsg)
 
     received = clientSocket.recv(2048)
 
