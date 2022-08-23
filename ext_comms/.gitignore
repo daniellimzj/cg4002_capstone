@@ -1,3 +1,4 @@
 /eval_server/venv/*
 /eval_server/__pycache__
 /config.json
+/__pycache__
