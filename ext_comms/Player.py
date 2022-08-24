@@ -139,3 +139,41 @@ class Player:
                 pass
             else:
                 self.bullets = self.magazine_size
+
+
+    def update_correct_state(self, correct_data):
+        
+        if self.hp != correct_data['hp']:
+            print("current HP is %d, but should be %d", self.hp, correct_data['hp'])
+            self.hp = correct_data['hp']
+
+        elif self.action != correct_data['action']:
+            print("current action is %s, but should be %s", self.action, correct_data['action'])
+            self.action = correct_data['action']
+
+        elif self.bullets != correct_data['bullets']:
+            print("current bullets is %d, but should be %d", self.bullets, correct_data['bullets'])
+            self.bullets = correct_data['bullets']
+
+        elif self.grenades != correct_data['grenades']:
+            print("current grenades is %d, but should be %d", self.grenades, correct_data['grenades'])
+            self.grenades = correct_data['grenades']
+
+        elif self.shield_time != correct_data['shield_time']:
+            print("current shield time is %d, but should be %d", self.shield_time, correct_data['shield_time'])
+            self.shield_time = correct_data['shield_time']
+
+        elif self.shield_health != correct_data['shield_health']:
+            print("current shield health is %d, but should be %d", self.shield_health, correct_data['shield_health'])
+            self.shield_health = correct_data['shield_health']
+
+        elif self.num_deaths != correct_data['num_deaths']:
+            print("current num deaths is %d, but should be %d", self.num_deaths, correct_data['num_deaths'])
+            self.num_deaths = correct_data['num_deaths']
+
+        elif self.num_shield != correct_data['num_shield']:
+            print("current num shield is %d, but should be %d", self.num_shield, correct_data['num_shield'])
+            self.num_shield = correct_data['num_shield']
+
+        else:
+            print("State is correct! :)")
