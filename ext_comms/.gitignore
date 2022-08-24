@@ -1,4 +1,5 @@
 /eval_server/venv/*
 /eval_server/__pycache__
+/eval_server/evaluation_logs
 /config.json
 /__pycache__
