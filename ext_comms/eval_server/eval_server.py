@@ -321,7 +321,7 @@ class Server(threading.Thread):
         It returns a dictionary containing the action detected by the Ultra96.
         """
         decoded_message = base64.b64decode(cipher_text)                            # Decode message from base64 to bytes
-        iv              = decoded_message[:AES.block_size]                                     # Get IV value
+        iv              = decoded_message[:AES.block_size]                         # Get IV value
         secret_key      = bytes(str(self.secret_key), encoding="utf8")             # Convert secret key to bytes
 
         cipher = AES.new(secret_key, AES.MODE_CBC, iv)                              # Create new AES cipher object
@@ -347,8 +347,8 @@ class Server(threading.Thread):
             if len(data) == 0:
                 print('no more data from the client')
                 self.stop()
+
             data = data.decode("utf-8")
-            print(data)
             length = int(data[:-1])
 
             data = b''
@@ -361,8 +361,6 @@ class Server(threading.Thread):
             if len(data) == 0:
                 print('no more data from the client')
                 self.stop()
-
-            print(data)
             msg = data.decode("utf8")  # Decode raw bytes to UTF-8
             game_state_received = self.decrypt_message(msg)
         except ConnectionResetError:

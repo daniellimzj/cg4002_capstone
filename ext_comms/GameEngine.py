@@ -58,5 +58,5 @@ if __name__ == '__main__':
 
     finally:
         client.close()
-        print("successfuly closed client!")
+        print("successfully closed client!")
 

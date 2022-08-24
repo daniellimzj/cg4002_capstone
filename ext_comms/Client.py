@@ -14,25 +14,22 @@ class Client:
         print("Connecting to server at ", serverName, ", port number ", serverPort)
 
         config = json.load(open('config.json'))
-        secretKey = bytes(config["key"], encoding="utf-8")
-
-        self.iv = Random.new().read(AES.block_size)
-        self.cipher = AES.new(secretKey, AES.MODE_CBC, self.iv)
+        self.secretKey = bytes(config["key"], encoding="utf-8")
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((serverName, serverPort))
 
     def send_data(self, data: str):
 
-        print("trying to send: ", data)
         msg = bytes(data, encoding="utf-8")
-        msg = pad(msg, AES.block_size)
+        msg = pad(msg, AES.block_size, "pkcs7")
 
-        encodedMsg = base64.b64encode(bytes(self.iv + self.cipher.encrypt(msg)))
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(self.secretKey, AES.MODE_CBC, iv)
 
+        encryptedMsg = cipher.encrypt(msg)
+        encodedMsg = base64.b64encode(iv + encryptedMsg)
         messageLen = bytes(str(len(encodedMsg)), encoding="utf-8")
-
-        print(messageLen + b"_" + encodedMsg)
 
         self.socket.sendall(messageLen + b"_" + encodedMsg)
 
