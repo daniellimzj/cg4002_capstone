@@ -1,5 +1,8 @@
 import json
+import os
+import sys
 
+from Client import Client
 from Player import Actions, Player
 
 
@@ -21,17 +24,39 @@ class GameEngine:
         self.p1.update(is_in_same_area, p1_action, p2_action, is_p2_action_valid)
         self.p2.update(is_in_same_area, p2_action, p1_action, is_p1_action_valid)
 
+    def confirm_player_state(self, correct_resp: dict):
+        self.p1.update_correct_state(correct_resp['p1'])
+        self.p2.update_correct_state(correct_resp['p2'])
 
 if __name__ == '__main__':
 
+    _num_param = 3
+    if len(sys.argv) < _num_param:
+            print('Invalid number of arguments')
+            print('python3 ' + os.path.basename(__file__) + '[Eval Host] [EvalPort]')
+            print('Eval Host: IP Address of eval server')
+            print('Eval Port: Port number of eval server')
+            sys.exit()
+
+    client = Client(sys.argv[-2], int(sys.argv[-1]))
     engine = GameEngine()
 
-    while True:
-        todo = input().split(' ')
-        p1_action = todo[0]
-        is_in_same_area = todo[1] == "true"
+    try:
 
-        engine.do_actions(p1_action = p1_action, is_in_same_area=is_in_same_area)
+        while True:
+            todo = input("Next move: ").split(' ')
+            p1_action = todo[0]
+            is_in_same_area = todo[1] == "true" if len(todo) > 1 else True
 
-        print(engine.get_JSON_string())
+            engine.do_actions(p1_action = p1_action, is_in_same_area=is_in_same_area)
+            print("Now sending to eval server...")
+            client.send_data(engine.get_JSON_string())
+            resp = client.recv_data()
+            respObj = json.loads(resp)
+            engine.confirm_player_state(respObj)
+
+
+    finally:
+        client.close()
+        print("successfuly closed client!")
 

@@ -347,8 +347,8 @@ class Server(threading.Thread):
             if len(data) == 0:
                 print('no more data from the client')
                 self.stop()
-
             data = data.decode("utf-8")
+            print(data)
             length = int(data[:-1])
 
             data = b''
@@ -361,6 +361,8 @@ class Server(threading.Thread):
             if len(data) == 0:
                 print('no more data from the client')
                 self.stop()
+
+            print(data)
             msg = data.decode("utf8")  # Decode raw bytes to UTF-8
             game_state_received = self.decrypt_message(msg)
         except ConnectionResetError:
