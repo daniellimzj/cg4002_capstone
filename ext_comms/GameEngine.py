@@ -11,8 +11,8 @@ class GameEngine:
     def __init__(self):
         self.gameState = {}
 
-        self.p1 = Player()
-        self.p2 = Player()
+        self.p1 = Player(1)
+        self.p2 = Player(2)
 
     def get_JSON_string(self):
         return json.dumps({'p1': self.p1.get_dict(), 'p2': self.p2.get_dict()})
@@ -46,9 +46,10 @@ if __name__ == '__main__':
         while True:
             todo = input("Next move: ").split(' ')
             p1_action = todo[0]
-            is_in_same_area = todo[1] == "true" if len(todo) > 1 else True
+            p2_action = todo[1]
+            is_in_same_area = todo[2]
 
-            engine.do_actions(p1_action = p1_action, is_in_same_area=is_in_same_area)
+            engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
             print("Now sending to eval server...")
             client.send_data(engine.get_JSON_string())
             resp = client.recv_data()
