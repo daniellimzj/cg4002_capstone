@@ -47,7 +47,7 @@ if __name__ == '__main__':
             todo = input("Next move: ").split(' ')
             p1_action = todo[0]
             p2_action = todo[1]
-            is_in_same_area = todo[2]
+            is_in_same_area = todo[2] == "true"
 
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
             print("Now sending to eval server...")
