@@ -144,38 +144,48 @@ class Player:
 
 
     def update_correct_state(self, correct_data):
+
+        isCorrect = True
         
         if self.hp != correct_data['hp']:
             print("current HP of player %d is %d, but should be %d" % (self.id, self.hp, correct_data['hp']))
             self.hp = correct_data['hp']
+            isCorrect = False
 
-        elif self.action != correct_data['action']:
+        if self.action != correct_data['action']:
             print(f"current action of player %d is %s, but should be %s" % (self.id, self.action, correct_data['action']))
             self.action = correct_data['action']
+            isCorrect = False
 
-        elif self.bullets != correct_data['bullets']:
+        if self.bullets != correct_data['bullets']:
             print(f"current bullets of player %d is %d, but should be %d" % (self.id, self.bullets, correct_data['bullets']))
             self.bullets = correct_data['bullets']
+            isCorrect = False
 
-        elif self.grenades != correct_data['grenades']:
+        if self.grenades != correct_data['grenades']:
             print(f"current grenades of player %d is %d, but should be %d" % (self.id, self.grenades, correct_data['grenades']))
             self.grenades = correct_data['grenades']
+            isCorrect = False
 
-        elif self.shield_time != correct_data['shield_time']:
+        if self.shield_time != correct_data['shield_time']:
             print(f"current shield time of player %d is %d, but should be %d" % (self.id, self.shield_time, correct_data['shield_time']))
             self.shield_time = correct_data['shield_time']
+            isCorrect = False
 
-        elif self.shield_health != correct_data['shield_health']:
+        if self.shield_health != correct_data['shield_health']:
             print(f"current shield health of player %d is %d, but should be %d" % (self.id, self.shield_health, correct_data['shield_health']))
             self.shield_health = correct_data['shield_health']
+            isCorrect = False
 
-        elif self.num_deaths != correct_data['num_deaths']:
+        if self.num_deaths != correct_data['num_deaths']:
             print(f"current num deaths of player %d is %d, but should be %d"  % (self.id, self.num_deaths, correct_data['num_deaths']))
             self.num_deaths = correct_data['num_deaths']
+            isCorrect = False
 
-        elif self.num_shield != correct_data['num_shield']:
+        if self.num_shield != correct_data['num_shield']:
             print(f"current num shield of player %d is %d, but should be %d"  % (self.id, self.num_shield, correct_data['num_shield']))
             self.num_shield = correct_data['num_shield']
+            isCorrect = False
 
-        else:
+        if isCorrect:
             print("State of " + str(self.id) + " is correct! :)")
