@@ -15,7 +15,7 @@ if __name__ == "__main__":
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverSocket.bind(('', serverPort))
     serverSocket.listen()
-    print('Server is ready to receive message')
+    print('Server is ready to receive message at port', serverPort)
     connectionSocket, clientAddr = serverSocket.accept()
     message = connectionSocket.recv(2048)
     print('Server received: ', str(message))
