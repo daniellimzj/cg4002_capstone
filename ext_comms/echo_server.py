@@ -23,5 +23,3 @@ if __name__ == "__main__":
     connectionSocket.close()
 
     serverSocket.close()
-
-
