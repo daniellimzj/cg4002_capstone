@@ -22,6 +22,6 @@ if __name__ == "__main__":
     connectionSocket.send(message)
     connectionSocket.close()
 
-
+    serverSocket.close()
 
 
