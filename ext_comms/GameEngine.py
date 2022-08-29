@@ -2,6 +2,9 @@ import json
 import os
 import sys
 
+import paho.mqtt.client as mqtt
+
+import MQTT
 from EvalClient import EvalClient
 from Player import Actions, Player
 
@@ -40,6 +43,9 @@ if __name__ == '__main__':
 
     evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))
     engine = GameEngine()
+    
+    mqttClient = mqtt.Client()
+    mqttClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     try:
 
@@ -55,9 +61,12 @@ if __name__ == '__main__':
             resp = evalClient.recv_data()
             respObj = json.loads(resp)
             engine.confirm_player_state(respObj)
+            mqttClient.publish(MQTT.Topics.gameState, resp)
 
 
     finally:
         evalClient.close()
-        print("successfully closed client!")
+        print("successfully closed eval client!")
+        mqttClient.disconnect()
+        print("successfully closed MQTT client!")
 
