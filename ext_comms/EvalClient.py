@@ -6,8 +6,7 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 
-
-class Client:
+class EvalClient:
 
     def __init__(self, serverName: str, serverPort: int):
 

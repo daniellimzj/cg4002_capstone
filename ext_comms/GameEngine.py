@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from Client import Client
+from EvalClient import EvalClient
 from Player import Actions, Player
 
 
@@ -38,7 +38,7 @@ if __name__ == '__main__':
             print('Eval Port: Port number of eval server')
             sys.exit()
 
-    client = Client(sys.argv[-2], int(sys.argv[-1]))
+    evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))
     engine = GameEngine()
 
     try:
@@ -51,13 +51,13 @@ if __name__ == '__main__':
 
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
             print("Now sending to eval server...")
-            client.send_data(engine.get_JSON_string())
-            resp = client.recv_data()
+            evalClient.send_data(engine.get_JSON_string())
+            resp = evalClient.recv_data()
             respObj = json.loads(resp)
             engine.confirm_player_state(respObj)
 
 
     finally:
-        client.close()
+        evalClient.close()
         print("successfully closed client!")
 
