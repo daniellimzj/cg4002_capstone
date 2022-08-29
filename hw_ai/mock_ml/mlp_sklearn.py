@@ -19,6 +19,7 @@ x = data[['meanattitude.roll', 'rangeattitude.roll', 'sdattitude.roll', 'varatti
           'sduserAcceleration.z', 'varuserAcceleration.z', 'medianuserAcceleration.z'
           ]]
 y = data[['label']]
+y = y.values.reshape(-1,)
 scaler = StandardScaler()
 
 x = scaler.fit_transform(x)
@@ -50,6 +51,7 @@ def objective_fn(args):
         'activation': args['activation'],
         'solver': args['solver'],
         'learning_rate_init': args['learning_rate_init'],
+        'max_iter': 2000,
     }
     classifier = MLPClassifier(**dict)
     classifier.fit(x_train, y_train)
