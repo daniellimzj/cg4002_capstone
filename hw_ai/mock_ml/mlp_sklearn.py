@@ -3,7 +3,7 @@ import numpy as np
 from hyperopt import fmin, tpe, Trials, hp, STATUS_OK
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import StandardScaler
 
 data = pd.read_csv('test.csv')
@@ -64,10 +64,11 @@ best = fmin(objective_fn,
             space=coarse_search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=10)
+            max_evals=5)
 
 best_model = trials.best_trial['result']['model']
 print("Training Accuracy: %f" % best_model.score(x_train, y_train))
 print("Testing Accuracy: %f" % best_model.score(x_test, y_test))
-
+y_pred = best_model.predict(x_test)
+print(classification_report(y_pred, y_test))
 print(best)
