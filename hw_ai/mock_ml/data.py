@@ -2,7 +2,6 @@ import os
 import pandas as pd
 
 data_path = os.path.join(os.getcwd(), 'A_DeviceMotion_data')
-
 # specified in dataset
 sampling_rate = 50
 window_size = 2
@@ -18,8 +17,8 @@ raw_features = ["attitude.roll",
                 "userAcceleration.y",
                 "userAcceleration.z",]
 
-extracted_features_list = ["mean", "range", "sd", "var", "median"]
-extracted_features_dict = dict.fromkeys(["mean", "range", "sd", "var", "median"])
+extracted_features_list = ["mean", "range", "var", "median"]
+extracted_features_dict = dict.fromkeys(["mean", "range", "var", "median"])
 num_raw_features = len(raw_features)
 num_extracted_features = len(extracted_features_dict)
 print("num of raw features=" + str(num_raw_features) + '\n')
@@ -29,16 +28,14 @@ df3 = pd.DataFrame()
 # This function takes in a series of data and an index to denote the operation, and returns
 # the processed data
 def extract(series, index):
-    operations = ["mean", "range", "sd", "var", "median"]
+    operations = ["mean", "range", "var", "median"]
     if index == 0:
         return series.mean()
     elif index == 1:
         return series.max() - series.min()
     elif index == 2:
-        return series.std()
-    elif index == 3:
         return series.var()
-    elif index == 4:
+    elif index == 3:
         return series.median()
 
 
@@ -60,7 +57,7 @@ def transform(string):
 # This function creates new column names for a given raw feature
 # i.e, if raw feature = yaw, then [mean yaw, range yaw... etc] is returned.
 def util(raw_feature):
-    operations = ["mean", "range", "sd", "var", "median"]
+    operations = ["Mean-", "Range-", "Var-", "Median-"]
     col_vector = []
     for ii in range(len(operations)):
         col_vector.append(operations[ii] + raw_feature)
