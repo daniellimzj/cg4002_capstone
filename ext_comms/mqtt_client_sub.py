@@ -17,7 +17,7 @@ if __name__ == "__main__":
         client.on_connect = on_connect
         client.on_message = on_message
 
-        client.connect("localhost", 1883, 60)
+        client.connect("172.24.184.53", 1883, 60)
 
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
