@@ -1,0 +1,593 @@
+
+
+================================================================
+== Vivado HLS Report for 'myip_v1_0_HLS'
+================================================================
+* Date:           Sat Sep  3 13:47:17 2022
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        cg4002
+* Solution:       solution1
+* Product family: zynquplus
+* Target device:  xczu3eg-sbva484-1-i
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  | 10.00 ns | 8.286 ns |   1.25 ns  |
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+------+------+---------+
+    |  Latency (cycles) |   Latency (absolute)  |   Interval  | Pipeline|
+    |   min   |   max   |    min    |    max    |  min |  max |   Type  |
+    +---------+---------+-----------+-----------+------+------+---------+
+    |     2047|     2047| 20.470 us | 20.470 us |  2047|  2047|   none  |
+    +---------+---------+-----------+-----------+------+------+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +-------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                         |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |        Loop Name        |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +-------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- myip_v1_0_HLS_for1     |       36|       36|         1|          -|          -|    36|    no    |
+        |- myip_v1_0_HLS_for2     |     1665|     1665|       333|          -|          -|     5|    no    |
+        | + myip_v1_0_HLS_for2.1  |      324|      324|         9|          -|          -|    36|    no    |
+        |- myip_v1_0_HLS_for3     |      324|      324|        54|          -|          -|     6|    no    |
+        | + myip_v1_0_HLS_for3.1  |       45|       45|         9|          -|          -|     5|    no    |
+        |- myip_v1_0_HLS_for4     |       18|       18|         3|          -|          -|     6|    no    |
+        +-------------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 39
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 2 3 
+3 --> 4 20 
+4 --> 5 13 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 4 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 3 
+20 --> 21 37 
+21 --> 22 30 
+22 --> 23 
+23 --> 24 
+24 --> 25 
+25 --> 26 
+26 --> 27 
+27 --> 28 
+28 --> 29 
+29 --> 21 
+30 --> 31 
+31 --> 32 
+32 --> 33 
+33 --> 34 
+34 --> 35 
+35 --> 36 
+36 --> 20 
+37 --> 38 
+38 --> 39 
+39 --> 37 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 0.75>
+ST_1 : Operation 40 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(float* %S_AXIS_V_data), !map !19"   --->   Operation 40 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i1* %S_AXIS_V_last), !map !25"   --->   Operation 41 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(float* %M_AXIS_V_data), !map !29"   --->   Operation 42 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i1* %M_AXIS_V_last), !map !33"   --->   Operation 43 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 44 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecTopModule([14 x i8]* @myip_v1_0_HLS_str) nounwind"   --->   Operation 44 'spectopmodule' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 45 [1/1] (0.00ns)   --->   "%v = alloca [5 x float], align 16" [cg4002/myip_v1_0_HLS.cpp:35]   --->   Operation 45 'alloca' 'v' <Predicate = true> <Delay = 0.00> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_1 : Operation 46 [1/1] (0.00ns)   --->   "%v2 = alloca [6 x float], align 16" [cg4002/myip_v1_0_HLS.cpp:36]   --->   Operation 46 'alloca' 'v2' <Predicate = true> <Delay = 0.00> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_1 : Operation 47 [1/1] (0.00ns)   --->   "%input = alloca [36 x float], align 16" [cg4002/myip_v1_0_HLS.cpp:37]   --->   Operation 47 'alloca' 'input' <Predicate = true> <Delay = 0.00> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_1 : Operation 48 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32 0, [13 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str1, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1, [1 x i8]* @p_str1, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1) nounwind" [cg4002/myip_v1_0_HLS.cpp:30]   --->   Operation 48 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 49 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(float* %S_AXIS_V_data, i1* %S_AXIS_V_last, [5 x i8]* @p_str2, i32 1, i32 1, [5 x i8]* @p_str3, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1, [1 x i8]* @p_str1, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1) nounwind" [cg4002/myip_v1_0_HLS.cpp:31]   --->   Operation 49 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 50 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(float* %M_AXIS_V_data, i1* %M_AXIS_V_last, [5 x i8]* @p_str2, i32 1, i32 1, [5 x i8]* @p_str3, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1, [1 x i8]* @p_str1, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str1, [1 x i8]* @p_str1) nounwind" [cg4002/myip_v1_0_HLS.cpp:32]   --->   Operation 50 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 51 [1/1] (0.75ns)   --->   "br label %1" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 51 'br' <Predicate = true> <Delay = 0.75>
+
+State 2 <SV = 1> <Delay = 1.35>
+ST_2 : Operation 52 [1/1] (0.00ns)   --->   "%word_cnt_0 = phi i6 [ 0, %0 ], [ %word_cnt, %2 ]"   --->   Operation 52 'phi' 'word_cnt_0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 53 [1/1] (0.87ns)   --->   "%icmp_ln43 = icmp eq i6 %word_cnt_0, -28" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 53 'icmp' 'icmp_ln43' <Predicate = true> <Delay = 0.87> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 54 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 36, i64 36, i64 36)"   --->   Operation 54 'speclooptripcount' 'empty' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 55 [1/1] (0.88ns)   --->   "%word_cnt = add i6 %word_cnt_0, 1" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 55 'add' 'word_cnt' <Predicate = true> <Delay = 0.88> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 56 [1/1] (0.00ns)   --->   "br i1 %icmp_ln43, label %.preheader4.preheader, label %2" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 56 'br' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 57 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecLoopName([19 x i8]* @p_str4) nounwind" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 57 'specloopname' <Predicate = (!icmp_ln43)> <Delay = 0.00>
+ST_2 : Operation 58 [1/1] (0.00ns)   --->   "%empty_5 = call { float, i1 } @_ssdm_op_Read.axis.volatile.floatP.i1P(float* %S_AXIS_V_data, i1* %S_AXIS_V_last)" [cg4002/myip_v1_0_HLS.cpp:44]   --->   Operation 58 'read' 'empty_5' <Predicate = (!icmp_ln43)> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+ST_2 : Operation 59 [1/1] (0.00ns)   --->   "%tmp_data_1 = extractvalue { float, i1 } %empty_5, 0" [cg4002/myip_v1_0_HLS.cpp:44]   --->   Operation 59 'extractvalue' 'tmp_data_1' <Predicate = (!icmp_ln43)> <Delay = 0.00>
+ST_2 : Operation 60 [1/1] (0.00ns)   --->   "%zext_ln45 = zext i6 %word_cnt_0 to i64" [cg4002/myip_v1_0_HLS.cpp:45]   --->   Operation 60 'zext' 'zext_ln45' <Predicate = (!icmp_ln43)> <Delay = 0.00>
+ST_2 : Operation 61 [1/1] (0.00ns)   --->   "%input_addr = getelementptr inbounds [36 x float]* %input, i64 0, i64 %zext_ln45" [cg4002/myip_v1_0_HLS.cpp:45]   --->   Operation 61 'getelementptr' 'input_addr' <Predicate = (!icmp_ln43)> <Delay = 0.00>
+ST_2 : Operation 62 [1/1] (1.35ns)   --->   "store float %tmp_data_1, float* %input_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:45]   --->   Operation 62 'store' <Predicate = (!icmp_ln43)> <Delay = 1.35> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_2 : Operation 63 [1/1] (0.00ns)   --->   "br label %1" [cg4002/myip_v1_0_HLS.cpp:43]   --->   Operation 63 'br' <Predicate = (!icmp_ln43)> <Delay = 0.00>
+ST_2 : Operation 64 [1/1] (0.75ns)   --->   "br label %.preheader4" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 64 'br' <Predicate = (icmp_ln43)> <Delay = 0.75>
+
+State 3 <SV = 2> <Delay = 0.75>
+ST_3 : Operation 65 [1/1] (0.00ns)   --->   "%word_cnt_1 = phi i3 [ %word_cnt_4, %myip_v1_0_HLS_for2_end ], [ 0, %.preheader4.preheader ]"   --->   Operation 65 'phi' 'word_cnt_1' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 66 [1/1] (0.69ns)   --->   "%icmp_ln48 = icmp eq i3 %word_cnt_1, -3" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 66 'icmp' 'icmp_ln48' <Predicate = true> <Delay = 0.69> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 67 [1/1] (0.00ns)   --->   "%empty_6 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 5, i64 5, i64 5)"   --->   Operation 67 'speclooptripcount' 'empty_6' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 68 [1/1] (0.74ns)   --->   "%word_cnt_4 = add i3 %word_cnt_1, 1" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 68 'add' 'word_cnt_4' <Predicate = true> <Delay = 0.74> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 69 [1/1] (0.00ns)   --->   "br i1 %icmp_ln48, label %.preheader3.preheader, label %myip_v1_0_HLS_for2_begin" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 69 'br' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 70 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecLoopName([19 x i8]* @p_str5) nounwind" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 70 'specloopname' <Predicate = (!icmp_ln48)> <Delay = 0.00>
+ST_3 : Operation 71 [1/1] (0.00ns)   --->   "%tmp = call i32 (...)* @_ssdm_op_SpecRegionBegin([19 x i8]* @p_str5)" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 71 'specregionbegin' 'tmp' <Predicate = (!icmp_ln48)> <Delay = 0.00>
+ST_3 : Operation 72 [1/1] (0.00ns)   --->   "%zext_ln51 = zext i3 %word_cnt_1 to i64" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 72 'zext' 'zext_ln51' <Predicate = (!icmp_ln48)> <Delay = 0.00>
+ST_3 : Operation 73 [1/1] (0.00ns)   --->   "%zext_ln50 = zext i3 %word_cnt_1 to i9" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 73 'zext' 'zext_ln50' <Predicate = (!icmp_ln48)> <Delay = 0.00>
+ST_3 : Operation 74 [1/1] (0.75ns)   --->   "br label %3" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 74 'br' <Predicate = (!icmp_ln48)> <Delay = 0.75>
+ST_3 : Operation 75 [1/1] (0.75ns)   --->   "br label %.preheader3" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 75 'br' <Predicate = (icmp_ln48)> <Delay = 0.75>
+
+State 4 <SV = 3> <Delay = 2.52>
+ST_4 : Operation 76 [1/1] (0.00ns)   --->   "%sum_0 = phi float [ 0.000000e+00, %myip_v1_0_HLS_for2_begin ], [ %sum_1, %4 ]"   --->   Operation 76 'phi' 'sum_0' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 77 [1/1] (0.00ns)   --->   "%i_0 = phi i6 [ 0, %myip_v1_0_HLS_for2_begin ], [ %i, %4 ]"   --->   Operation 77 'phi' 'i_0' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 78 [1/1] (0.87ns)   --->   "%icmp_ln50 = icmp eq i6 %i_0, -28" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 78 'icmp' 'icmp_ln50' <Predicate = true> <Delay = 0.87> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 79 [1/1] (0.00ns)   --->   "%empty_7 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 36, i64 36, i64 36)"   --->   Operation 79 'speclooptripcount' 'empty_7' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 80 [1/1] (0.88ns)   --->   "%i = add i6 %i_0, 1" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 80 'add' 'i' <Predicate = true> <Delay = 0.88> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 81 [1/1] (0.00ns)   --->   "br i1 %icmp_ln50, label %myip_v1_0_HLS_for2_end, label %4" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 81 'br' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 82 [1/1] (0.00ns)   --->   "%zext_ln51_1 = zext i6 %i_0 to i64" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 82 'zext' 'zext_ln51_1' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 83 [1/1] (0.00ns)   --->   "%zext_ln51_2 = zext i6 %i_0 to i9" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 83 'zext' 'zext_ln51_2' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 84 [1/1] (0.00ns)   --->   "%tmp_7 = call i8 @_ssdm_op_BitConcatenate.i8.i6.i2(i6 %i_0, i2 0)" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 84 'bitconcatenate' 'tmp_7' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 85 [1/1] (0.00ns)   --->   "%zext_ln51_3 = zext i8 %tmp_7 to i9" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 85 'zext' 'zext_ln51_3' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 86 [1/1] (0.00ns) (grouped into TernaryAdder)   --->   "%add_ln51 = add i9 %zext_ln51_2, %zext_ln51_3" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 86 'add' 'add_ln51' <Predicate = (!icmp_ln50)> <Delay = 0.00> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 0.44> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_4 : Operation 87 [1/1] (1.17ns) (root node of TernaryAdder)   --->   "%add_ln51_1 = add i9 %add_ln51, %zext_ln50" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 87 'add' 'add_ln51_1' <Predicate = (!icmp_ln50)> <Delay = 1.17> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 0.44> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_4 : Operation 88 [1/1] (0.00ns)   --->   "%zext_ln51_4 = zext i9 %add_ln51_1 to i64" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 88 'zext' 'zext_ln51_4' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 89 [1/1] (0.00ns)   --->   "%weights1_addr = getelementptr [180 x float]* @weights1, i64 0, i64 %zext_ln51_4" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 89 'getelementptr' 'weights1_addr' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 90 [2/2] (1.35ns)   --->   "%weights1_load = load float* %weights1_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 90 'load' 'weights1_load' <Predicate = (!icmp_ln50)> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+ST_4 : Operation 91 [1/1] (0.00ns)   --->   "%input_addr_1 = getelementptr inbounds [36 x float]* %input, i64 0, i64 %zext_ln51_1" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 91 'getelementptr' 'input_addr_1' <Predicate = (!icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 92 [2/2] (1.35ns)   --->   "%input_load = load float* %input_addr_1, align 4" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 92 'load' 'input_load' <Predicate = (!icmp_ln50)> <Delay = 1.35> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_4 : Operation 93 [1/1] (0.00ns)   --->   "%bias1_addr = getelementptr inbounds [5 x float]* @bias1, i64 0, i64 %zext_ln51" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 93 'getelementptr' 'bias1_addr' <Predicate = (icmp_ln50)> <Delay = 0.00>
+ST_4 : Operation 94 [2/2] (1.35ns)   --->   "%bias1_load = load float* %bias1_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 94 'load' 'bias1_load' <Predicate = (icmp_ln50)> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+
+State 5 <SV = 4> <Delay = 1.35>
+ST_5 : Operation 95 [1/2] (1.35ns)   --->   "%weights1_load = load float* %weights1_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 95 'load' 'weights1_load' <Predicate = true> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+ST_5 : Operation 96 [1/2] (1.35ns)   --->   "%input_load = load float* %input_addr_1, align 4" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 96 'load' 'input_load' <Predicate = true> <Delay = 1.35> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+
+State 6 <SV = 5> <Delay = 8.28>
+ST_6 : Operation 97 [3/3] (8.28ns)   --->   "%tmp_3 = fmul float %weights1_load, %input_load" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 97 'fmul' 'tmp_3' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 8.28>
+ST_7 : Operation 98 [2/3] (8.28ns)   --->   "%tmp_3 = fmul float %weights1_load, %input_load" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 98 'fmul' 'tmp_3' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 8.28>
+ST_8 : Operation 99 [1/3] (8.28ns)   --->   "%tmp_3 = fmul float %weights1_load, %input_load" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 99 'fmul' 'tmp_3' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 7.71>
+ST_9 : Operation 100 [4/4] (7.71ns)   --->   "%sum_1 = fadd float %sum_0, %tmp_3" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 100 'fadd' 'sum_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 7.71>
+ST_10 : Operation 101 [3/4] (7.71ns)   --->   "%sum_1 = fadd float %sum_0, %tmp_3" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 101 'fadd' 'sum_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 7.71>
+ST_11 : Operation 102 [2/4] (7.71ns)   --->   "%sum_1 = fadd float %sum_0, %tmp_3" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 102 'fadd' 'sum_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 7.71>
+ST_12 : Operation 103 [1/4] (7.71ns)   --->   "%sum_1 = fadd float %sum_0, %tmp_3" [cg4002/myip_v1_0_HLS.cpp:51]   --->   Operation 103 'fadd' 'sum_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 104 [1/1] (0.00ns)   --->   "br label %3" [cg4002/myip_v1_0_HLS.cpp:50]   --->   Operation 104 'br' <Predicate = true> <Delay = 0.00>
+
+State 13 <SV = 4> <Delay = 1.35>
+ST_13 : Operation 105 [1/2] (1.35ns)   --->   "%bias1_load = load float* %bias1_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 105 'load' 'bias1_load' <Predicate = true> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+
+State 14 <SV = 5> <Delay = 7.71>
+ST_14 : Operation 106 [4/4] (7.71ns)   --->   "%sum = fadd float %sum_0, %bias1_load" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 106 'fadd' 'sum' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 6> <Delay = 7.71>
+ST_15 : Operation 107 [3/4] (7.71ns)   --->   "%sum = fadd float %sum_0, %bias1_load" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 107 'fadd' 'sum' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 7> <Delay = 7.71>
+ST_16 : Operation 108 [2/4] (7.71ns)   --->   "%sum = fadd float %sum_0, %bias1_load" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 108 'fadd' 'sum' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 8> <Delay = 7.71>
+ST_17 : Operation 109 [1/4] (7.71ns)   --->   "%sum = fadd float %sum_0, %bias1_load" [cg4002/myip_v1_0_HLS.cpp:54]   --->   Operation 109 'fadd' 'sum' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 18 <SV = 9> <Delay = 3.34>
+ST_18 : Operation 110 [2/2] (3.34ns)   --->   "%tmp_4 = fcmp oeq float %sum, 0.000000e+00" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 110 'fcmp' 'tmp_4' <Predicate = true> <Delay = 3.34> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 3.34> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 19 <SV = 10> <Delay = 4.66>
+ST_19 : Operation 111 [1/1] (0.00ns)   --->   "%bitcast_ln56 = bitcast float %sum to i32" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 111 'bitcast' 'bitcast_ln56' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 112 [1/1] (0.00ns)   --->   "%tmp_2 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %bitcast_ln56, i32 23, i32 30)" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 112 'partselect' 'tmp_2' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 113 [1/1] (0.00ns)   --->   "%trunc_ln56 = trunc i32 %bitcast_ln56 to i23" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 113 'trunc' 'trunc_ln56' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 114 [1/1] (0.85ns)   --->   "%icmp_ln56 = icmp ne i8 %tmp_2, -1" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 114 'icmp' 'icmp_ln56' <Predicate = true> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 115 [1/1] (0.97ns)   --->   "%icmp_ln56_1 = icmp eq i23 %trunc_ln56, 0" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 115 'icmp' 'icmp_ln56_1' <Predicate = true> <Delay = 0.97> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 116 [1/1] (0.00ns) (grouped into LUT with out node sum_2)   --->   "%or_ln56 = or i1 %icmp_ln56_1, %icmp_ln56" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 116 'or' 'or_ln56' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.33> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 117 [1/2] (3.34ns)   --->   "%tmp_4 = fcmp oeq float %sum, 0.000000e+00" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 117 'fcmp' 'tmp_4' <Predicate = true> <Delay = 3.34> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 3.34> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 118 [1/1] (0.00ns) (grouped into LUT with out node sum_2)   --->   "%and_ln56 = and i1 %or_ln56, %tmp_4" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 118 'and' 'and_ln56' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.33> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 119 [1/1] (0.00ns)   --->   "%v_addr = getelementptr inbounds [5 x float]* %v, i64 0, i64 %zext_ln51" [cg4002/myip_v1_0_HLS.cpp:57]   --->   Operation 119 'getelementptr' 'v_addr' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 120 [1/1] (0.52ns) (out node of the LUT)   --->   "%sum_2 = select i1 %and_ln56, float 0.000000e+00, float %sum" [cg4002/myip_v1_0_HLS.cpp:56]   --->   Operation 120 'select' 'sum_2' <Predicate = true> <Delay = 0.52> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.52> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_19 : Operation 121 [1/1] (0.79ns)   --->   "store float %sum_2, float* %v_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:57]   --->   Operation 121 'store' <Predicate = true> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_19 : Operation 122 [1/1] (0.00ns)   --->   "%empty_8 = call i32 (...)* @_ssdm_op_SpecRegionEnd([19 x i8]* @p_str5, i32 %tmp)" [cg4002/myip_v1_0_HLS.cpp:61]   --->   Operation 122 'specregionend' 'empty_8' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 123 [1/1] (0.00ns)   --->   "br label %.preheader4" [cg4002/myip_v1_0_HLS.cpp:48]   --->   Operation 123 'br' <Predicate = true> <Delay = 0.00>
+
+State 20 <SV = 3> <Delay = 0.75>
+ST_20 : Operation 124 [1/1] (0.00ns)   --->   "%word_cnt_2 = phi i3 [ %word_cnt_6, %myip_v1_0_HLS_for3_end ], [ 0, %.preheader3.preheader ]"   --->   Operation 124 'phi' 'word_cnt_2' <Predicate = true> <Delay = 0.00>
+ST_20 : Operation 125 [1/1] (0.69ns)   --->   "%icmp_ln64 = icmp eq i3 %word_cnt_2, -2" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 125 'icmp' 'icmp_ln64' <Predicate = true> <Delay = 0.69> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 126 [1/1] (0.00ns)   --->   "%empty_9 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 6, i64 6, i64 6)"   --->   Operation 126 'speclooptripcount' 'empty_9' <Predicate = true> <Delay = 0.00>
+ST_20 : Operation 127 [1/1] (0.74ns)   --->   "%word_cnt_6 = add i3 %word_cnt_2, 1" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 127 'add' 'word_cnt_6' <Predicate = true> <Delay = 0.74> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 128 [1/1] (0.00ns)   --->   "br i1 %icmp_ln64, label %.preheader.preheader, label %myip_v1_0_HLS_for3_begin" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 128 'br' <Predicate = true> <Delay = 0.00>
+ST_20 : Operation 129 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecLoopName([19 x i8]* @p_str6) nounwind" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 129 'specloopname' <Predicate = (!icmp_ln64)> <Delay = 0.00>
+ST_20 : Operation 130 [1/1] (0.00ns)   --->   "%tmp_1 = call i32 (...)* @_ssdm_op_SpecRegionBegin([19 x i8]* @p_str6)" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 130 'specregionbegin' 'tmp_1' <Predicate = (!icmp_ln64)> <Delay = 0.00>
+ST_20 : Operation 131 [1/1] (0.00ns)   --->   "%zext_ln67 = zext i3 %word_cnt_2 to i64" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 131 'zext' 'zext_ln67' <Predicate = (!icmp_ln64)> <Delay = 0.00>
+ST_20 : Operation 132 [1/1] (0.00ns)   --->   "%zext_ln66 = zext i3 %word_cnt_2 to i6" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 132 'zext' 'zext_ln66' <Predicate = (!icmp_ln64)> <Delay = 0.00>
+ST_20 : Operation 133 [1/1] (0.75ns)   --->   "br label %5" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 133 'br' <Predicate = (!icmp_ln64)> <Delay = 0.75>
+ST_20 : Operation 134 [1/1] (0.75ns)   --->   "br label %.preheader" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 134 'br' <Predicate = (icmp_ln64)> <Delay = 0.75>
+
+State 21 <SV = 4> <Delay = 2.23>
+ST_21 : Operation 135 [1/1] (0.00ns)   --->   "%sum2_0 = phi float [ 0.000000e+00, %myip_v1_0_HLS_for3_begin ], [ %sum2_1, %6 ]"   --->   Operation 135 'phi' 'sum2_0' <Predicate = true> <Delay = 0.00>
+ST_21 : Operation 136 [1/1] (0.00ns)   --->   "%x_0 = phi i3 [ 0, %myip_v1_0_HLS_for3_begin ], [ %x, %6 ]"   --->   Operation 136 'phi' 'x_0' <Predicate = true> <Delay = 0.00>
+ST_21 : Operation 137 [1/1] (0.69ns)   --->   "%icmp_ln66 = icmp eq i3 %x_0, -3" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 137 'icmp' 'icmp_ln66' <Predicate = true> <Delay = 0.69> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 138 [1/1] (0.00ns)   --->   "%empty_10 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 5, i64 5, i64 5)"   --->   Operation 138 'speclooptripcount' 'empty_10' <Predicate = true> <Delay = 0.00>
+ST_21 : Operation 139 [1/1] (0.74ns)   --->   "%x = add i3 %x_0, 1" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 139 'add' 'x' <Predicate = true> <Delay = 0.74> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 140 [1/1] (0.00ns)   --->   "br i1 %icmp_ln66, label %myip_v1_0_HLS_for3_end, label %6" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 140 'br' <Predicate = true> <Delay = 0.00>
+ST_21 : Operation 141 [1/1] (0.00ns)   --->   "%zext_ln67_1 = zext i3 %x_0 to i64" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 141 'zext' 'zext_ln67_1' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 142 [1/1] (0.00ns)   --->   "%tmp_9 = call i6 @_ssdm_op_BitConcatenate.i6.i3.i3(i3 %x_0, i3 0)" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 142 'bitconcatenate' 'tmp_9' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 143 [1/1] (0.00ns)   --->   "%tmp_s = call i4 @_ssdm_op_BitConcatenate.i4.i3.i1(i3 %x_0, i1 false)" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 143 'bitconcatenate' 'tmp_s' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 144 [1/1] (0.00ns)   --->   "%zext_ln67_2 = zext i4 %tmp_s to i6" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 144 'zext' 'zext_ln67_2' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 145 [1/1] (0.00ns) (grouped into TernaryAdder)   --->   "%sub_ln67 = sub i6 %tmp_9, %zext_ln67_2" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 145 'sub' 'sub_ln67' <Predicate = (!icmp_ln66)> <Delay = 0.00> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 0.44> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_21 : Operation 146 [1/1] (0.88ns) (root node of TernaryAdder)   --->   "%add_ln67 = add i6 %sub_ln67, %zext_ln66" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 146 'add' 'add_ln67' <Predicate = (!icmp_ln66)> <Delay = 0.88> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 0.44> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_21 : Operation 147 [1/1] (0.00ns)   --->   "%sext_ln67 = sext i6 %add_ln67 to i64" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 147 'sext' 'sext_ln67' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 148 [1/1] (0.00ns)   --->   "%weights2_addr = getelementptr [30 x float]* @weights2, i64 0, i64 %sext_ln67" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 148 'getelementptr' 'weights2_addr' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 149 [2/2] (1.35ns)   --->   "%weights2_load = load float* %weights2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 149 'load' 'weights2_load' <Predicate = (!icmp_ln66)> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+ST_21 : Operation 150 [1/1] (0.00ns)   --->   "%v_addr_1 = getelementptr inbounds [5 x float]* %v, i64 0, i64 %zext_ln67_1" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 150 'getelementptr' 'v_addr_1' <Predicate = (!icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 151 [2/2] (0.79ns)   --->   "%v_load = load float* %v_addr_1, align 4" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 151 'load' 'v_load' <Predicate = (!icmp_ln66)> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_21 : Operation 152 [1/1] (0.00ns)   --->   "%bias2_addr = getelementptr inbounds [6 x float]* @bias2, i64 0, i64 %zext_ln67" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 152 'getelementptr' 'bias2_addr' <Predicate = (icmp_ln66)> <Delay = 0.00>
+ST_21 : Operation 153 [2/2] (1.35ns)   --->   "%bias2_load = load float* %bias2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 153 'load' 'bias2_load' <Predicate = (icmp_ln66)> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+
+State 22 <SV = 5> <Delay = 1.35>
+ST_22 : Operation 154 [1/2] (1.35ns)   --->   "%weights2_load = load float* %weights2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 154 'load' 'weights2_load' <Predicate = true> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+ST_22 : Operation 155 [1/2] (0.79ns)   --->   "%v_load = load float* %v_addr_1, align 4" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 155 'load' 'v_load' <Predicate = true> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+
+State 23 <SV = 6> <Delay = 8.28>
+ST_23 : Operation 156 [3/3] (8.28ns)   --->   "%tmp_8 = fmul float %weights2_load, %v_load" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 156 'fmul' 'tmp_8' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 24 <SV = 7> <Delay = 8.28>
+ST_24 : Operation 157 [2/3] (8.28ns)   --->   "%tmp_8 = fmul float %weights2_load, %v_load" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 157 'fmul' 'tmp_8' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 25 <SV = 8> <Delay = 8.28>
+ST_25 : Operation 158 [1/3] (8.28ns)   --->   "%tmp_8 = fmul float %weights2_load, %v_load" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 158 'fmul' 'tmp_8' <Predicate = true> <Delay = 8.28> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 2> <II = 1> <Delay = 8.28> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 26 <SV = 9> <Delay = 7.71>
+ST_26 : Operation 159 [4/4] (7.71ns)   --->   "%sum2_1 = fadd float %sum2_0, %tmp_8" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 159 'fadd' 'sum2_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 27 <SV = 10> <Delay = 7.71>
+ST_27 : Operation 160 [3/4] (7.71ns)   --->   "%sum2_1 = fadd float %sum2_0, %tmp_8" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 160 'fadd' 'sum2_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 28 <SV = 11> <Delay = 7.71>
+ST_28 : Operation 161 [2/4] (7.71ns)   --->   "%sum2_1 = fadd float %sum2_0, %tmp_8" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 161 'fadd' 'sum2_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 29 <SV = 12> <Delay = 7.71>
+ST_29 : Operation 162 [1/4] (7.71ns)   --->   "%sum2_1 = fadd float %sum2_0, %tmp_8" [cg4002/myip_v1_0_HLS.cpp:67]   --->   Operation 162 'fadd' 'sum2_1' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_29 : Operation 163 [1/1] (0.00ns)   --->   "br label %5" [cg4002/myip_v1_0_HLS.cpp:66]   --->   Operation 163 'br' <Predicate = true> <Delay = 0.00>
+
+State 30 <SV = 5> <Delay = 1.35>
+ST_30 : Operation 164 [1/2] (1.35ns)   --->   "%bias2_load = load float* %bias2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 164 'load' 'bias2_load' <Predicate = true> <Delay = 1.35> <Core = "ROM_nP">   --->   Core 52 'ROM_nP' <Latency = 1> <II = 1> <Delay = 1.35> <Storage> <Opcode : 'load'> <Ports = 0> <Width = 32> <Depth = 6> <ROM>
+
+State 31 <SV = 6> <Delay = 7.71>
+ST_31 : Operation 165 [4/4] (7.71ns)   --->   "%sum2 = fadd float %sum2_0, %bias2_load" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 165 'fadd' 'sum2' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 32 <SV = 7> <Delay = 7.71>
+ST_32 : Operation 166 [3/4] (7.71ns)   --->   "%sum2 = fadd float %sum2_0, %bias2_load" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 166 'fadd' 'sum2' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 33 <SV = 8> <Delay = 7.71>
+ST_33 : Operation 167 [2/4] (7.71ns)   --->   "%sum2 = fadd float %sum2_0, %bias2_load" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 167 'fadd' 'sum2' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 34 <SV = 9> <Delay = 7.71>
+ST_34 : Operation 168 [1/4] (7.71ns)   --->   "%sum2 = fadd float %sum2_0, %bias2_load" [cg4002/myip_v1_0_HLS.cpp:69]   --->   Operation 168 'fadd' 'sum2' <Predicate = true> <Delay = 7.71> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 3> <II = 1> <Delay = 7.71> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 35 <SV = 10> <Delay = 3.34>
+ST_35 : Operation 169 [2/2] (3.34ns)   --->   "%tmp_6 = fcmp oeq float %sum2, 0.000000e+00" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 169 'fcmp' 'tmp_6' <Predicate = true> <Delay = 3.34> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 3.34> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 36 <SV = 11> <Delay = 4.66>
+ST_36 : Operation 170 [1/1] (0.00ns)   --->   "%bitcast_ln72 = bitcast float %sum2 to i32" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 170 'bitcast' 'bitcast_ln72' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 171 [1/1] (0.00ns)   --->   "%tmp_5 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %bitcast_ln72, i32 23, i32 30)" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 171 'partselect' 'tmp_5' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 172 [1/1] (0.00ns)   --->   "%trunc_ln72 = trunc i32 %bitcast_ln72 to i23" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 172 'trunc' 'trunc_ln72' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 173 [1/1] (0.85ns)   --->   "%icmp_ln72 = icmp ne i8 %tmp_5, -1" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 173 'icmp' 'icmp_ln72' <Predicate = true> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 174 [1/1] (0.97ns)   --->   "%icmp_ln72_1 = icmp eq i23 %trunc_ln72, 0" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 174 'icmp' 'icmp_ln72_1' <Predicate = true> <Delay = 0.97> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 175 [1/1] (0.00ns) (grouped into LUT with out node sum2_2)   --->   "%or_ln72 = or i1 %icmp_ln72_1, %icmp_ln72" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 175 'or' 'or_ln72' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.33> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 176 [1/2] (3.34ns)   --->   "%tmp_6 = fcmp oeq float %sum2, 0.000000e+00" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 176 'fcmp' 'tmp_6' <Predicate = true> <Delay = 3.34> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 3.34> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 177 [1/1] (0.00ns) (grouped into LUT with out node sum2_2)   --->   "%and_ln72 = and i1 %or_ln72, %tmp_6" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 177 'and' 'and_ln72' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.33> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 178 [1/1] (0.00ns)   --->   "%v2_addr_1 = getelementptr inbounds [6 x float]* %v2, i64 0, i64 %zext_ln67" [cg4002/myip_v1_0_HLS.cpp:73]   --->   Operation 178 'getelementptr' 'v2_addr_1' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 179 [1/1] (0.52ns) (out node of the LUT)   --->   "%sum2_2 = select i1 %and_ln72, float 0.000000e+00, float %sum2" [cg4002/myip_v1_0_HLS.cpp:72]   --->   Operation 179 'select' 'sum2_2' <Predicate = true> <Delay = 0.52> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.52> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_36 : Operation 180 [1/1] (0.79ns)   --->   "store float %sum2_2, float* %v2_addr_1, align 4" [cg4002/myip_v1_0_HLS.cpp:73]   --->   Operation 180 'store' <Predicate = true> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_36 : Operation 181 [1/1] (0.00ns)   --->   "%empty_11 = call i32 (...)* @_ssdm_op_SpecRegionEnd([19 x i8]* @p_str6, i32 %tmp_1)" [cg4002/myip_v1_0_HLS.cpp:79]   --->   Operation 181 'specregionend' 'empty_11' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 182 [1/1] (0.00ns)   --->   "br label %.preheader3" [cg4002/myip_v1_0_HLS.cpp:64]   --->   Operation 182 'br' <Predicate = true> <Delay = 0.00>
+
+State 37 <SV = 4> <Delay = 0.79>
+ST_37 : Operation 183 [1/1] (0.00ns)   --->   "%word_cnt_3 = phi i3 [ %word_cnt_5, %7 ], [ 0, %.preheader.preheader ]"   --->   Operation 183 'phi' 'word_cnt_3' <Predicate = true> <Delay = 0.00>
+ST_37 : Operation 184 [1/1] (0.69ns)   --->   "%icmp_ln82 = icmp eq i3 %word_cnt_3, -2" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 184 'icmp' 'icmp_ln82' <Predicate = true> <Delay = 0.69> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_37 : Operation 185 [1/1] (0.00ns)   --->   "%empty_12 = call i32 (...)* @_ssdm_op_SpecLoopTripCount(i64 6, i64 6, i64 6)"   --->   Operation 185 'speclooptripcount' 'empty_12' <Predicate = true> <Delay = 0.00>
+ST_37 : Operation 186 [1/1] (0.74ns)   --->   "%word_cnt_5 = add i3 %word_cnt_3, 1" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 186 'add' 'word_cnt_5' <Predicate = true> <Delay = 0.74> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 0.74> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_37 : Operation 187 [1/1] (0.00ns)   --->   "br i1 %icmp_ln82, label %8, label %7" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 187 'br' <Predicate = true> <Delay = 0.00>
+ST_37 : Operation 188 [1/1] (0.00ns)   --->   "%zext_ln84 = zext i3 %word_cnt_3 to i64" [cg4002/myip_v1_0_HLS.cpp:84]   --->   Operation 188 'zext' 'zext_ln84' <Predicate = (!icmp_ln82)> <Delay = 0.00>
+ST_37 : Operation 189 [1/1] (0.00ns)   --->   "%v2_addr = getelementptr inbounds [6 x float]* %v2, i64 0, i64 %zext_ln84" [cg4002/myip_v1_0_HLS.cpp:84]   --->   Operation 189 'getelementptr' 'v2_addr' <Predicate = (!icmp_ln82)> <Delay = 0.00>
+ST_37 : Operation 190 [2/2] (0.79ns)   --->   "%write_output_data = load float* %v2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:84]   --->   Operation 190 'load' 'write_output_data' <Predicate = (!icmp_ln82)> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_37 : Operation 191 [1/1] (0.69ns)   --->   "%tmp_last = icmp eq i3 %word_cnt_3, -3" [cg4002/myip_v1_0_HLS.cpp:87]   --->   Operation 191 'icmp' 'tmp_last' <Predicate = (!icmp_ln82)> <Delay = 0.69> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_37 : Operation 192 [1/1] (0.00ns)   --->   "ret void" [cg4002/myip_v1_0_HLS.cpp:96]   --->   Operation 192 'ret' <Predicate = (icmp_ln82)> <Delay = 0.00>
+
+State 38 <SV = 5> <Delay = 0.79>
+ST_38 : Operation 193 [1/2] (0.79ns)   --->   "%write_output_data = load float* %v2_addr, align 4" [cg4002/myip_v1_0_HLS.cpp:84]   --->   Operation 193 'load' 'write_output_data' <Predicate = true> <Delay = 0.79> <Core = "RAM">   --->   Core 37 'RAM' <Latency = 1> <II = 1> <Delay = 0.79> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 6> <RAM>
+ST_38 : Operation 194 [2/2] (0.00ns)   --->   "call void @_ssdm_op_Write.axis.volatile.floatP.i1P(float* %M_AXIS_V_data, i1* %M_AXIS_V_last, float %write_output_data, i1 %tmp_last)" [cg4002/myip_v1_0_HLS.cpp:93]   --->   Operation 194 'write' <Predicate = true> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+
+State 39 <SV = 6> <Delay = 0.00>
+ST_39 : Operation 195 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecLoopName([19 x i8]* @p_str7) nounwind" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 195 'specloopname' <Predicate = true> <Delay = 0.00>
+ST_39 : Operation 196 [1/2] (0.00ns)   --->   "call void @_ssdm_op_Write.axis.volatile.floatP.i1P(float* %M_AXIS_V_data, i1* %M_AXIS_V_last, float %write_output_data, i1 %tmp_last)" [cg4002/myip_v1_0_HLS.cpp:93]   --->   Operation 196 'write' <Predicate = true> <Delay = 0.00> <Core = "AXI4Stream">   --->   Core 5 'AXI4Stream' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : >
+ST_39 : Operation 197 [1/1] (0.00ns)   --->   "br label %.preheader" [cg4002/myip_v1_0_HLS.cpp:82]   --->   Operation 197 'br' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 1.25ns.
+
+ <State 1>: 0.755ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('word_cnt') with incoming values : ('word_cnt', cg4002/myip_v1_0_HLS.cpp:43) [26]  (0.755 ns)
+
+ <State 2>: 1.35ns
+The critical path consists of the following:
+	'phi' operation ('word_cnt') with incoming values : ('word_cnt', cg4002/myip_v1_0_HLS.cpp:43) [26]  (0 ns)
+	'getelementptr' operation ('input_addr', cg4002/myip_v1_0_HLS.cpp:45) [36]  (0 ns)
+	'store' operation ('store_ln45', cg4002/myip_v1_0_HLS.cpp:45) of variable 'tmp.data', cg4002/myip_v1_0_HLS.cpp:44 on array 'input', cg4002/myip_v1_0_HLS.cpp:37 [37]  (1.35 ns)
+
+ <State 3>: 0.755ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('sum') with incoming values : ('sum', cg4002/myip_v1_0_HLS.cpp:51) [54]  (0.755 ns)
+
+ <State 4>: 2.52ns
+The critical path consists of the following:
+	'phi' operation ('i') with incoming values : ('i', cg4002/myip_v1_0_HLS.cpp:50) [55]  (0 ns)
+	'add' operation ('add_ln51', cg4002/myip_v1_0_HLS.cpp:51) [65]  (0 ns)
+	'add' operation ('add_ln51_1', cg4002/myip_v1_0_HLS.cpp:51) [66]  (1.17 ns)
+	'getelementptr' operation ('weights1_addr', cg4002/myip_v1_0_HLS.cpp:51) [68]  (0 ns)
+	'load' operation ('weights1_load', cg4002/myip_v1_0_HLS.cpp:51) on array 'weights1' [69]  (1.35 ns)
+
+ <State 5>: 1.35ns
+The critical path consists of the following:
+	'load' operation ('weights1_load', cg4002/myip_v1_0_HLS.cpp:51) on array 'weights1' [69]  (1.35 ns)
+
+ <State 6>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_3', cg4002/myip_v1_0_HLS.cpp:51) [72]  (8.29 ns)
+
+ <State 7>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_3', cg4002/myip_v1_0_HLS.cpp:51) [72]  (8.29 ns)
+
+ <State 8>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_3', cg4002/myip_v1_0_HLS.cpp:51) [72]  (8.29 ns)
+
+ <State 9>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:51) [73]  (7.72 ns)
+
+ <State 10>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:51) [73]  (7.72 ns)
+
+ <State 11>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:51) [73]  (7.72 ns)
+
+ <State 12>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:51) [73]  (7.72 ns)
+
+ <State 13>: 1.35ns
+The critical path consists of the following:
+	'load' operation ('bias1_load', cg4002/myip_v1_0_HLS.cpp:54) on array 'bias1' [77]  (1.35 ns)
+
+ <State 14>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:54) [78]  (7.72 ns)
+
+ <State 15>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:54) [78]  (7.72 ns)
+
+ <State 16>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:54) [78]  (7.72 ns)
+
+ <State 17>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum', cg4002/myip_v1_0_HLS.cpp:54) [78]  (7.72 ns)
+
+ <State 18>: 3.35ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_4', cg4002/myip_v1_0_HLS.cpp:56) [85]  (3.35 ns)
+
+ <State 19>: 4.66ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_4', cg4002/myip_v1_0_HLS.cpp:56) [85]  (3.35 ns)
+	'and' operation ('and_ln56', cg4002/myip_v1_0_HLS.cpp:56) [86]  (0 ns)
+	'select' operation ('sum', cg4002/myip_v1_0_HLS.cpp:56) [88]  (0.525 ns)
+	'store' operation ('store_ln57', cg4002/myip_v1_0_HLS.cpp:57) of variable 'sum', cg4002/myip_v1_0_HLS.cpp:56 on array 'v', cg4002/myip_v1_0_HLS.cpp:35 [89]  (0.79 ns)
+
+ <State 20>: 0.755ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('sum2') with incoming values : ('sum2', cg4002/myip_v1_0_HLS.cpp:67) [107]  (0.755 ns)
+
+ <State 21>: 2.24ns
+The critical path consists of the following:
+	'phi' operation ('x') with incoming values : ('x', cg4002/myip_v1_0_HLS.cpp:66) [108]  (0 ns)
+	'sub' operation ('sub_ln67', cg4002/myip_v1_0_HLS.cpp:67) [118]  (0 ns)
+	'add' operation ('add_ln67', cg4002/myip_v1_0_HLS.cpp:67) [119]  (0.885 ns)
+	'getelementptr' operation ('weights2_addr', cg4002/myip_v1_0_HLS.cpp:67) [121]  (0 ns)
+	'load' operation ('weights2_load', cg4002/myip_v1_0_HLS.cpp:67) on array 'weights2' [122]  (1.35 ns)
+
+ <State 22>: 1.35ns
+The critical path consists of the following:
+	'load' operation ('weights2_load', cg4002/myip_v1_0_HLS.cpp:67) on array 'weights2' [122]  (1.35 ns)
+
+ <State 23>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_8', cg4002/myip_v1_0_HLS.cpp:67) [125]  (8.29 ns)
+
+ <State 24>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_8', cg4002/myip_v1_0_HLS.cpp:67) [125]  (8.29 ns)
+
+ <State 25>: 8.29ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_8', cg4002/myip_v1_0_HLS.cpp:67) [125]  (8.29 ns)
+
+ <State 26>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:67) [126]  (7.72 ns)
+
+ <State 27>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:67) [126]  (7.72 ns)
+
+ <State 28>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:67) [126]  (7.72 ns)
+
+ <State 29>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:67) [126]  (7.72 ns)
+
+ <State 30>: 1.35ns
+The critical path consists of the following:
+	'load' operation ('bias2_load', cg4002/myip_v1_0_HLS.cpp:69) on array 'bias2' [130]  (1.35 ns)
+
+ <State 31>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:69) [131]  (7.72 ns)
+
+ <State 32>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:69) [131]  (7.72 ns)
+
+ <State 33>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:69) [131]  (7.72 ns)
+
+ <State 34>: 7.72ns
+The critical path consists of the following:
+	'fadd' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:69) [131]  (7.72 ns)
+
+ <State 35>: 3.35ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_6', cg4002/myip_v1_0_HLS.cpp:72) [138]  (3.35 ns)
+
+ <State 36>: 4.66ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_6', cg4002/myip_v1_0_HLS.cpp:72) [138]  (3.35 ns)
+	'and' operation ('and_ln72', cg4002/myip_v1_0_HLS.cpp:72) [139]  (0 ns)
+	'select' operation ('sum2', cg4002/myip_v1_0_HLS.cpp:72) [141]  (0.525 ns)
+	'store' operation ('store_ln73', cg4002/myip_v1_0_HLS.cpp:73) of variable 'sum2', cg4002/myip_v1_0_HLS.cpp:72 on array 'v2', cg4002/myip_v1_0_HLS.cpp:36 [142]  (0.79 ns)
+
+ <State 37>: 0.79ns
+The critical path consists of the following:
+	'phi' operation ('word_cnt') with incoming values : ('word_cnt', cg4002/myip_v1_0_HLS.cpp:82) [148]  (0 ns)
+	'getelementptr' operation ('v2_addr', cg4002/myip_v1_0_HLS.cpp:84) [156]  (0 ns)
+	'load' operation ('write_output.data', cg4002/myip_v1_0_HLS.cpp:84) on array 'v2', cg4002/myip_v1_0_HLS.cpp:36 [157]  (0.79 ns)
+
+ <State 38>: 0.79ns
+The critical path consists of the following:
+	'load' operation ('write_output.data', cg4002/myip_v1_0_HLS.cpp:84) on array 'v2', cg4002/myip_v1_0_HLS.cpp:36 [157]  (0.79 ns)
+
+ <State 39>: 0ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+	State 24
+	State 25
+	State 26
+	State 27
+	State 28
+	State 29
+	State 30
+	State 31
+	State 32
+	State 33
+	State 34
+	State 35
+	State 36
+	State 37
+	State 38
+	State 39
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

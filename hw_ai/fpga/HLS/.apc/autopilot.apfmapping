@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="myip_v1_0_HLS.cpp" path="D:\CG4002\cg4002\myip_v1_0_HLS.cpp"/>
+    <originFiles name="bias.h" path="D:\CG4002\cg4002\bias.h"/>
+    <originFiles name="weight.h" path="D:\CG4002\cg4002\weight.h"/>
+  </source>
+  <testbench>
+    <originFiles name="test_myip_v1_0_HLS.cpp" path="D:\CG4002\cg4002\test_myip_v1_0_HLS.cpp"/>
+  </testbench>
+</autopilotfilemapping:AutoPilotFileMapping>

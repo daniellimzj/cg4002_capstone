@@ -1,0 +1,8 @@
+sv work "glbl.v"
+sv xil_defaultlib "myip_v1_0_HLS.autotb.v"
+sv xil_defaultlib "AESL_fifo.v"
+sv xil_defaultlib "AESL_axi_s_S_AXIS.v"
+sv xil_defaultlib "AESL_axi_s_M_AXIS.v"
+sv xil_defaultlib "myip_v1_0_HLS.v"
+sv xil_defaultlib "regslice_core.v"
+

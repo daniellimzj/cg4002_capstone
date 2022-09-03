@@ -1,0 +1,108 @@
+ Transmitting Data for test case 0 ... 
+
+ Receiving data for test case 0 ... 
+
+ Transmitting Data for test case 1 ... 
+
+ Receiving data for test case 1 ... 
+
+ Comparing data ...
+
+Test Success
+
+
+D:\CG4002\cg4002\solution1\sim\verilog>set PATH= 
+
+D:\CG4002\cg4002\solution1\sim\verilog>call D:/Xilinx/Vivado/2019.2/bin/xelab xil_defaultlib.apatb_myip_v1_0_HLS_top glbl -prj myip_v1_0_HLS.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm --initfile "D:/Xilinx/Vivado/2019.2/data/xsim/ip/xsim_ip.ini" --lib "ieee_proposed=./ieee_proposed" -s myip_v1_0_HLS  
+INFO: [XSIM 43-3496] Using init file passed via -initfile option "D:/Xilinx/Vivado/2019.2/data/xsim/ip/xsim_ip.ini".
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe xil_defaultlib.apatb_myip_v1_0_HLS_top glbl -prj myip_v1_0_HLS.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm --initfile D:/Xilinx/Vivado/2019.2/data/xsim/ip/xsim_ip.ini --lib ieee_proposed=./ieee_proposed -s myip_v1_0_HLS 
+Multi-threading is on. Using 10 slave threads.
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/glbl.v" into library work
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/myip_v1_0_HLS.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_myip_v1_0_HLS_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_axi_s_S_AXIS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_axi_s_S_AXIS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_axi_s_M_AXIS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_axi_s_M_AXIS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/myip_v1_0_HLS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module myip_v1_0_HLS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/regslice_core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module regslice_both
+INFO: [VRFC 10-311] analyzing module regslice_forward
+INFO: [VRFC 10-311] analyzing module regslice_reverse
+INFO: [VRFC 10-311] analyzing module regslice_both_w1
+INFO: [VRFC 10-311] analyzing module regslice_forward_w1
+INFO: [VRFC 10-311] analyzing module regslice_reverse_w1
+INFO: [VRFC 10-311] analyzing module ibuf
+INFO: [VRFC 10-311] analyzing module obuf
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.ibuf(W=33)
+Compiling module xil_defaultlib.obuf(W=33)
+Compiling module xil_defaultlib.regslice_both_default
+Compiling module xil_defaultlib.ibuf(W=2)
+Compiling module xil_defaultlib.obuf(W=2)
+Compiling module xil_defaultlib.regslice_both_w1(DataWidth=1)
+Compiling module xil_defaultlib.myip_v1_0_HLS
+Compiling module xil_defaultlib.fifo(DEPTH=4,WIDTH=32)
+Compiling module xil_defaultlib.fifo(DEPTH=4,WIDTH=1)
+Compiling module xil_defaultlib.AESL_axi_s_S_AXIS
+Compiling module xil_defaultlib.AESL_axi_s_M_AXIS
+Compiling module xil_defaultlib.apatb_myip_v1_0_HLS_top
+Compiling module work.glbl
+Built simulation snapshot myip_v1_0_HLS
+
+****** Webtalk v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+  **** IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source D:/CG4002/cg4002/solution1/sim/verilog/xsim.dir/myip_v1_0_HLS/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] 'D:/CG4002/cg4002/solution1/sim/verilog/xsim.dir/myip_v1_0_HLS/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Fri Sep  2 13:30:44 2022. For additional details about this file, please refer to the WebTalk help file at D:/Xilinx/Vivado/2019.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Fri Sep  2 13:30:44 2022...
+
+****** xsim v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+  **** IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/myip_v1_0_HLS/xsim_script.tcl
+# xsim {myip_v1_0_HLS} -autoloadwcfg -tclbatch {myip_v1_0_HLS.tcl}
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source myip_v1_0_HLS.tcl
+## run all
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 2 [0.00%] @ "125000"
+// RTL Simulation : 1 / 2 [64.29%] @ "265000"
+// RTL Simulation : 2 / 2 [100.00%] @ "415000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 455 ns : File "D:/CG4002/cg4002/solution1/sim/verilog/myip_v1_0_HLS.autotb.v" Line 218
+## quit
+INFO: [Common 17-206] Exiting xsim at Fri Sep  2 13:31:05 2022...
+ Transmitting Data for test case 0 ... 
+
+ Receiving data for test case 0 ... 
+
+ Transmitting Data for test case 1 ... 
+
+ Receiving data for test case 1 ... 
+
+ Comparing data ...
+
+Test Success
+
