@@ -1,0 +1,7 @@
+Running: xsim.dir/myip_v1_0_HLS/xsimk.exe -simmode gui -wdb myip_v1_0_HLS.wdb -simrunnum 0 -socket 53894
+Design successfully loaded
+Design Loading Memory Usage: 7124 KB (Peak: 7124 KB)
+Design Loading CPU Usage: 15 ms
+Simulation completed
+Simulation Memory Usage: 8744 KB (Peak: 8744 KB)
+Simulation CPU Usage: 46 ms

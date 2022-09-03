@@ -1,0 +1,46 @@
+INFO: [XSIM 43-3496] Using init file passed via -initfile option "D:/Xilinx/Vivado/2019.2/data/xsim/ip/xsim_ip.ini".
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe xil_defaultlib.apatb_myip_v1_0_HLS_top glbl -prj myip_v1_0_HLS.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm --initfile D:/Xilinx/Vivado/2019.2/data/xsim/ip/xsim_ip.ini --lib ieee_proposed=./ieee_proposed -s myip_v1_0_HLS 
+Multi-threading is on. Using 10 slave threads.
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/glbl.v" into library work
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/myip_v1_0_HLS.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_myip_v1_0_HLS_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_axi_s_S_AXIS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_axi_s_S_AXIS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/AESL_axi_s_M_AXIS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module AESL_axi_s_M_AXIS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/myip_v1_0_HLS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module myip_v1_0_HLS
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CG4002/cg4002/solution1/sim/verilog/regslice_core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module regslice_both
+INFO: [VRFC 10-311] analyzing module regslice_forward
+INFO: [VRFC 10-311] analyzing module regslice_reverse
+INFO: [VRFC 10-311] analyzing module regslice_both_w1
+INFO: [VRFC 10-311] analyzing module regslice_forward_w1
+INFO: [VRFC 10-311] analyzing module regslice_reverse_w1
+INFO: [VRFC 10-311] analyzing module ibuf
+INFO: [VRFC 10-311] analyzing module obuf
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.ibuf(W=33)
+Compiling module xil_defaultlib.obuf(W=33)
+Compiling module xil_defaultlib.regslice_both_default
+Compiling module xil_defaultlib.ibuf(W=2)
+Compiling module xil_defaultlib.obuf(W=2)
+Compiling module xil_defaultlib.regslice_both_w1(DataWidth=1)
+Compiling module xil_defaultlib.myip_v1_0_HLS
+Compiling module xil_defaultlib.fifo(DEPTH=4,WIDTH=32)
+Compiling module xil_defaultlib.fifo(DEPTH=4,WIDTH=1)
+Compiling module xil_defaultlib.AESL_axi_s_S_AXIS
+Compiling module xil_defaultlib.AESL_axi_s_M_AXIS
+Compiling module xil_defaultlib.apatb_myip_v1_0_HLS_top
+Compiling module work.glbl
+Built simulation snapshot myip_v1_0_HLS

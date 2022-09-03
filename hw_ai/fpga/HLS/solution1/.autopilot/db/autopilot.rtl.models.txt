@@ -1,0 +1,12 @@
+myip_v1_0_HLS_faddEe
+myip_v1_0_HLS_fmueOg
+myip_v1_0_HLS_fcmfYi
+myip_v1_0_HLS_weibkb
+myip_v1_0_HLS_bias1
+myip_v1_0_HLS_weicud
+myip_v1_0_HLS_bias2
+myip_v1_0_HLS_v
+myip_v1_0_HLS_v2
+myip_v1_0_HLS_input
+regslice_core
+myip_v1_0_HLS
