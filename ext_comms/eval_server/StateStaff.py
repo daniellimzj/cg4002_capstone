@@ -28,7 +28,7 @@ class StateStaff(PlayerStateBase):
 
         # check for harm
         if action_opponent_is_valid:
-            if pos_self == 4 and pos_opponent != 4:
+            if (pos_self == 4 and pos_opponent != 4) or (pos_opponent == 4 and pos_self != 4):
                 # we are protected from harm
                 pass
             else:
