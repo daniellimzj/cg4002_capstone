@@ -19,9 +19,9 @@ if __name__ == "__main__":
 
         client.connect("localhost", 1883, 60)
 
-        client.publish("in_same_area", "1")
+        while True:
+            client.publish("in_same_area", input("are players in same area?"))
 
-        client.loop_forever()
 
     finally:
         client.disconnect()
