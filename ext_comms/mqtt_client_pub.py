@@ -17,9 +17,9 @@ if __name__ == "__main__":
         client.on_connect = on_connect
         client.on_message = on_message
 
-        client.connect("172.24.184.53", 1883, 60)
+        client.connect("localhost", 1883, 60)
 
-        client.publish("gamestate", "hello! this is using MQTT")
+        client.publish("in_same_area", "1")
 
         client.loop_forever()
 

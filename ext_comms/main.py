@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-from multiprocessing import Process, Queue
+import multiprocessing as mp
 import time
 
 import paho.mqtt.client as mqtt
@@ -11,13 +11,13 @@ from EvalClient import EvalClient
 from GameEngine import GameEngine
 
 
-def startEngineProcess(evalHost: str, evalPort: int, actionQueue: Queue):
+def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue):
 
     evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
     
-    mqttClient = mqtt.Client()
-    mqttClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    gameStateClient = mqtt.Client()
+    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     try:
         while True:
@@ -29,15 +29,15 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: Queue):
             resp = evalClient.recv_data()
             respObj = json.loads(resp)
             engine.confirm_player_state(respObj)
-            mqttClient.publish(MQTT.Topics.gameState, resp)
+            gameStateClient.publish(MQTT.Topics.gameState, resp)
 
     finally:
         evalClient.close()
         print("successfully closed eval client!")
-        mqttClient.disconnect()
+        gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
-def startMoveProcess(actionQueue: Queue, inputQueue: Queue):
+def startMoveProcess(actionQueue: mp.Queue, inputQueue: mp.Queue):
 
     while True:
         inputFromQueue = inputQueue.get(block = True)
@@ -46,6 +46,36 @@ def startMoveProcess(actionQueue: Queue, inputQueue: Queue):
         p2_action = todo[1]
         is_in_same_area = todo[2] == "true"
         actionQueue.put((p1_action, p2_action, is_in_same_area), block=True)
+
+
+def startAreaClient(isInSameArea):
+
+    def on_connect(client: mqtt.Client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        client.subscribe(MQTT.Topics.inSameArea)
+
+    def on_message(client, userdata, msg):
+        nonlocal isInSameArea
+        payload = str(msg.payload)
+        print(msg.topic + " " + payload)
+        with isInSameArea.get_lock():
+            isInSameArea =  payload[2]
+            print(isInSameArea)
+
+    try:
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+        client.loop_forever()
+
+    finally:
+        print("disconnecting area client...")
+        client.disconnect()
+
 
 if __name__ == '__main__':
     
@@ -57,15 +87,20 @@ if __name__ == '__main__':
             print('Eval Port: Port number of eval server')
             sys.exit()
 
-    actionQueue = Queue(1)
-    inputQueue = Queue(1)
+    actionQueue = mp.Queue(1)
+    inputQueue = mp.Queue(1)
+    isInSameArea = mp.Value('i', lock=True)
+    isInSameArea.get_obj
+
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
-    engineProcess = Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue))
-    moveProcess = Process(target = startMoveProcess, args = (actionQueue, inputQueue))
+    engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue))
+    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, inputQueue))
+    areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
 
     engineProcess.start()
     moveProcess.start()
+    areaClientProcess.start()
 
     while True:
         time.sleep(1)
@@ -75,11 +110,13 @@ if __name__ == '__main__':
             actionQueue.close()
             engineProcess.terminate()
             moveProcess.terminate()
+            areaClientProcess.terminate()
             break
         inputQueue.put(actions, block=True)
 
     engineProcess.join()
     moveProcess.join()
+    areaClientProcess.join()
 
     print("closing main")
 
