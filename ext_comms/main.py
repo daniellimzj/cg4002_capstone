@@ -1,4 +1,5 @@
 import json
+from multiprocessing.sharedctypes import SynchronizedBase
 import os
 import sys
 import multiprocessing as mp
@@ -11,7 +12,7 @@ from EvalClient import EvalClient
 from GameEngine import GameEngine
 
 
-def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue):
+def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isInSameArea: SynchronizedBase):
 
     evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
@@ -22,7 +23,15 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue):
     try:
         while True:
             inputs = tuple(actionQueue.get(block = True, timeout=100))
-            p1_action, p2_action, is_in_same_area = inputs
+            p1_action, p2_action = inputs
+
+            is_in_same_area = True
+
+            with isInSameArea.get_lock():
+                is_in_same_area = bool(isInSameArea.value)
+
+            print("engine is carrying out action with bool ", is_in_same_area)
+
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
             print("Now sending to eval server...")
             evalClient.send_data(engine.get_JSON_string())
@@ -44,8 +53,7 @@ def startMoveProcess(actionQueue: mp.Queue, inputQueue: mp.Queue):
         todo = str(inputFromQueue).split(' ')
         p1_action = todo[0]
         p2_action = todo[1]
-        is_in_same_area = todo[2] == "true"
-        actionQueue.put((p1_action, p2_action, is_in_same_area), block=True)
+        actionQueue.put((p1_action, p2_action), block=True)
 
 
 def startAreaClient(isInSameArea):
@@ -59,10 +67,10 @@ def startAreaClient(isInSameArea):
 
     def on_message(client, userdata, msg):
         nonlocal isInSameArea
-        payload = str(msg.payload)
-        print(msg.topic + " " + payload)
+        # print(msg.topic + " " + str(msg.payload))
+        received = int(msg.payload)
         with isInSameArea.get_lock():
-            isInSameArea =  payload[2]
+            isInSameArea.value = received
             print(isInSameArea)
 
     try:
@@ -90,11 +98,11 @@ if __name__ == '__main__':
     actionQueue = mp.Queue(1)
     inputQueue = mp.Queue(1)
     isInSameArea = mp.Value('i', lock=True)
-    isInSameArea.get_obj
+    isInSameArea.value = 1
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
-    engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue))
+    engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
     moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, inputQueue))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
 
