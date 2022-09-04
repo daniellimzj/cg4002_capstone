@@ -5,8 +5,8 @@ from socket import *
 if __name__ == "__main__":
 
     config = json.load(open('config.json'))
-    sunfirePassword = bytes(config["sunfirePassword"], encoding="utf-8")
-    xilinxPassword = bytes(config["xilinxPassword"], encoding="utf-8")
+    sunfirePassword = config["sunfirePassword"]
+    xilinxPassword = config["xilinxPassword"]
 
     with sshtunnel.open_tunnel(
         ssh_address_or_host=('sunfire.comp.nus.edu.sg', 22),
