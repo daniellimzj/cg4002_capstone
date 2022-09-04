@@ -20,7 +20,9 @@ if __name__ == "__main__":
         serverPort = 9696
         clientSocket = socket(AF_INET, SOCK_STREAM)
         clientSocket.connect((serverName, serverPort))
+        print("connected to:", serverName, serverPort)
         message = input('Enter a message: ')
         clientSocket.send(message.encode())
         receivedMsg = clientSocket.recv(2048)
+        print("Received back:", receivedMsg)
 
