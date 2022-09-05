@@ -866,3 +866,324 @@ INFO-FLOW: DBG:CMD:     exec D:/CG4002/cg4002/solution1/impl/ip/pack.bat
 Command   export_design done; 94.776 sec.
 Command ap_source done; 96.115 sec.
 Execute cleanup_all 
+INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Mon Sep 05 15:58:09 +0800 2022
+Execute     config_clock -quiet -name default -period 10 -default=false 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.lib 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.lib 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.lib 
+Command           ap_source done; 0.137 sec.
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.lib 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.lib 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.lib 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.lib 
+Command         ap_source done; 0.293 sec.
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.lib 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.lib 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.lib 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.lib 
+Command       ap_source done; 0.49 sec.
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Command       ap_source done; 0.15 sec.
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/dsp48e2.hlp 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Command     import_lib done; 0.755 sec.
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Command         ap_source done; 0.102 sec.
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.539 sec.
+Command     ap_source done; 0.559 sec.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.hlp 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+Execute     set_part xczu3eg-sbva484-1-i 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data single -quiet 
+Command       ap_part_info done; 0.909 sec.
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute       add_library xilinx/zynquplus/zynquplus:xczu3eg:-sbva484:-1-i 
+Execute         get_default_platform 
+Execute         ap_part_info -data single -name xczu3eg-sbva484-1-i 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data resources 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute         config_chip_info -quiet -resource {SLICE 8820} {LUT 70560} {FF 141120} {DSP48E 360} {BRAM 432} {URAM 0} 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute         config_chip_info -quiet -speed slow 
+Execute       add_library xilinx/zynquplus/zynquplus_fpv7 
+Execute         get_default_platform 
+INFO: [HLS 200-10] Setting target device to 'xczu3eg-sbva484-1-i'
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute       get_default_platform 
+Command     set_part done; 1.1 sec.
+Execute     ap_part_info -data single -name xczu3eg-sbva484-1-i 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data resources 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute     config_chip_info -quiet -resource {SLICE 8820} {LUT 70560} {FF 141120} {DSP48E 360} {BRAM 432} {URAM 0} 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute     config_chip_info -quiet -speed slow 
+Execute     config_export -format=ip_catalog 
+Execute     config_export -rtl=verilog 
+Command   open_solution done; 3.04 sec.
+Execute   export_design -rtl verilog -format ip_catalog 
+Execute     get_config_export -acc 
+Execute     get_config_export -clock_margin 
+Execute     get_config_export -custom_script 
+Execute     get_config_export -description 
+Execute     get_config_export -display_name 
+Execute     get_config_export -driver_input_dir 
+Execute     get_config_export -ipname 
+Execute     get_config_export -kernel_drc 
+Execute     get_config_export -library 
+Execute     get_config_export -qor_test 
+Execute     get_config_export -sdaccel 
+Execute     get_config_export -sim 
+Execute     get_config_export -taxonomy 
+Execute     get_config_export -use_ip 
+Execute     get_config_export -use_netlist 
+Execute     get_config_export -vendor 
+Execute     get_config_export -version 
+Execute     get_config_export -xo 
+Execute     config_export -format=ip_catalog -rtl=verilog 
+INFO-FLOW: DBG:CMD: export_design_wrap: -format ip_catalog -rtl verilog
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     get_config_export -vivado_clock 
+Execute     get_top 
+Execute     get_config_sdx -target 
+Execute     get_config_rtl -module_auto_prefix 
+Execute     get_config_sdx -target 
+Execute     get_config_sdx -target 
+INFO-FLOW: DBG:CMD:   auto_impl: pack: -export -tool vivado -rtl verilog -sdx-target none
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.102 sec.
+Command     ap_source done; 0.104 sec.
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: automg_wrap -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
+INFO-FLOW: DBG:CMD:     auto_generate -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.104 sec.
+Command     ap_source done; 0.104 sec.
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:       initCTypeInfo top_module=myip_v1_0_HLS xml_exists=1
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       export_impl_rtl
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.verilog
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command     ap_source done; 0.185 sec.
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=1 expOnly=1 dstVlogDir=impl/.pcores/verilog
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command     ap_source done; 0.129 sec.
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.pcores/verilog_sim
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       hasPcoreIpAdapter=false #gSsdmPorts=8
+INFO-FLOW: DBG:CMD:       copying IP vlog from D:/CG4002/cg4002/solution1/impl/verilog
+INFO-FLOW: DBG:CMD:       copying IP vhdl from D:/CG4002/cg4002/solution1/impl/vhdl
+INFO-FLOW: DBG:CMD:       generate_ip_script #gSsdmPorts=8
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     get_config_sdx -target 
+Execute     get_config_debug -directory 
+INFO-FLOW: DBG:CMD:       generate_ip_auxiliary
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD:       prepArgInfo -> loadAnalyze_DB top_module=myip_v1_0_HLS
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       generate_top_info
+INFO-FLOW: DBG:CMD:       prepArgInfo -> loadAnalyze_DB top_module=myip_v1_0_HLS
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO-FLOW: DBG:CMD:       generate_ip_bd_script
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
+INFO-FLOW: DBG:CMD:       generate_ipi_example_script
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO-FLOW: DBG:CMD:       generate_syn_sh
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD:       generate_imp_constraints
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       delete-temp-dirs (skipped for debug)
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.103 sec.
+Command     ap_source done; 0.104 sec.
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO-FLOW: DBG:CMD:     exec D:/CG4002/cg4002/solution1/impl/ip/pack.bat
+Command   export_design done; 32.79 sec.
+Command ap_source done; 35.924 sec.
+Execute cleanup_all 

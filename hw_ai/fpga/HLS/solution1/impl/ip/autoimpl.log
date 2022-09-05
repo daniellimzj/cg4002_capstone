@@ -5,12 +5,10 @@
     ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 
 source run_ippack.tcl -notrace
-create_project: Time (s): cpu = 00:00:02 ; elapsed = 00:00:10 . Memory (MB): peak = 440.281 ; gain = 162.520
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2019.2/data/ip'.
 WARNING: [IP_Flow 19-4832] The IP name 'myip_v1_0_HLS_ap_fadd_2_full_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
-create_ip: Time (s): cpu = 00:00:03 ; elapsed = 00:00:25 . Memory (MB): peak = 480.879 ; gain = 40.598
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'myip_v1_0_HLS_ap_fadd_2_full_dsp_32'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'myip_v1_0_HLS_ap_fadd_2_full_dsp_32'...
 WARNING: [IP_Flow 19-4832] The IP name 'myip_v1_0_HLS_ap_fcmp_0_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
@@ -22,4 +20,4 @@ INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'myip_v1_0_HLS_ap_
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2019.2/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Sat Sep  3 13:50:18 2022...
+INFO: [Common 17-206] Exiting Vivado at Mon Sep  5 15:58:38 2022...
