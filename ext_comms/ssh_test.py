@@ -13,7 +13,6 @@ if __name__ == "__main__":
         ssh_username="danielim",
         ssh_password=sunfirePassword,
         remote_bind_address=('192.168.95.234', 22),
-        local_bind_address=('localhost', 6969)
     ) as tunnel1:
         print('Connection to Sunfire from port ' + str(tunnel1.local_bind_port) + " OK...")
         with sshtunnel.open_tunnel(
