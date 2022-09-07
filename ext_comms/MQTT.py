@@ -1,8 +1,8 @@
 class Topics:
-    gameState = 'gamestate'
-    inSameArea = "in_same_area"
+    gameState = 'b11/gamestate'
+    inSameArea = "b11/is_in_same_area"
 
 class Configs:
-    broker = "localhost"
+    broker = "broker.hivemq.com"
     portNum = 1883
     
