@@ -2,8 +2,8 @@
 #define HANDSHAKE_STATE_ID 2
 #define DATA_STATE_ID 3
 
-#define TIMEOUT_ACK 80
-#define TIMEOUT_DATA 50
+#define TIMEOUT_ACK 8000 //testing
+#define TIMEOUT_DATA 50 //testing
 #define PACKET_SIZE 20
 
 //Packet Definitions (20 bytes each)
@@ -17,7 +17,7 @@ struct DataPacket {
   byte packetType = 'D';
   int accelData[3]; //x, y, z data points (6 bytes) TODO: WHAT OTHER DATA NEEDED?
   long timestamp; //TODO: need this? if not change padding (4 bytes)
-  byte padding[8];
+  byte padding[8] = {};
   byte checkSum;
 };
 
@@ -76,7 +76,7 @@ class DataState : public State {
         sendDummyData();
       }
     }
-} Read_State;
+} Data_State;
 
 class HandshakeState : public State {
   public:
@@ -107,7 +107,8 @@ void startBeetle() {
   if (Serial.read() == 'H') {
     nextState = &Handshake_State;
   } else if (Serial.read() == 'A') {
-    nextState = &Read_State;
+    Serial.println("Initiating Data State");
+    nextState = &Data_State;
   }
 }
 
@@ -122,5 +123,7 @@ void loop() {
 
 void setup() {
   Serial.begin(115200);
-  currState = &Start_State;
+  currState = &Data_State;
+  nextState = &Data_State;
+//  startBeetle();
 }
