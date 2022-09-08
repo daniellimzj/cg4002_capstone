@@ -2,7 +2,7 @@
 #define HANDSHAKE_STATE_ID 2
 #define DATA_STATE_ID 3
 
-#define TIMEOUT_ACK 8000 //testing
+#define TIMEOUT_ACK 80 //testing
 #define TIMEOUT_DATA 50 //testing
 #define PACKET_SIZE 20
 
@@ -13,11 +13,12 @@ struct AckPacket {
   byte checkSum = 'A'; //unsure about this
 } ackPacket;
 
-struct DataPacket {
+struct DataPacket { //change to mean, median, ...
   byte packetType = 'D';
-  int accelData[3]; //x, y, z data points (6 bytes) TODO: WHAT OTHER DATA NEEDED?
+  float accelData[3]; //x, y, z data points (6 bytes) TODO: WHAT OTHER DATA NEEDED?
+  float gyroData[3]; 
+  byte padding[5] = {};
   long timestamp; //TODO: need this? if not change padding (4 bytes)
-  byte padding[8] = {};
   byte checkSum;
 };
 
@@ -87,7 +88,7 @@ class HandshakeState : public State {
     }
 
     void run() override {
-      while (Serial.read() != 'A') { //No ack from laptop
+      while (Serial.available() && Serial.read() != 'A') { //No ack from laptop
         delay(TIMEOUT_ACK);
         sendAck();
       }
@@ -123,7 +124,9 @@ void loop() {
 
 void setup() {
   Serial.begin(115200);
-  currState = &Data_State;
-  nextState = &Data_State;
+//  currState = &Data_State;
+//  nextState = &Data_State;
+  currState = &Handshake_State;
+  nextState = &Handshake_State;
 //  startBeetle();
 }
