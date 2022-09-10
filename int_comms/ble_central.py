@@ -1,4 +1,5 @@
 from bluepy.btle import Peripheral, DefaultDelegate
+import struct
 
 # TODO: Implement Handshake
 # TODO: Test handshake functionality
@@ -22,15 +23,57 @@ class Comms(DefaultDelegate):
         self.serialChar = serialChar
         self.index = index
 
+    def sendAckPacket(self):
+        self.serialChar.write(bytes("A", "utf-8"))
+
     def handleAckPacket(self):
-        self.serialChar.write(bytes("A", "utf-8"))  # TODO: Change to 20bytes
+        self.sendAckPacket()  # TODO: Change to 20bytes
         btleHandshakes[self.index] = True
 
     def verifyChecksum(self, data):
-        pass
+        packetBytes = struct.unpack('<20b', data)
+        sum = 0
+        count = 0
+        byte = 0
+
+        for byte in packetBytes:
+            if count == 19:  # 19th byte
+                if sum == byte:
+                    return True
+                else:
+                    break
+
+            sum ^= byte
+            count += 1
+
+        return False
 
     def handleNotification(self, charHandle, data):
-        pass
+        try:
+            packetFormat = (
+                '<b'  # Packet Type
+                'f'   # Mean
+                'f'   # Median
+                'f'   # Standard Deviation
+                'f'   # Range
+                '?'   # Gun is Shot
+                '?'   # Got Shot
+                'b'   # Checksum
+            )
+            if struct.calcsize(data) == 20:
+                if not self.verifyChecksum(data):
+                    raise Exception("Incorrect checksum")
+                packet = struct.unpack(packetFormat, data)
+
+            packetType = packet[0]
+
+            if packetType == ord('A'):
+                self.handleAckPacket()
+            elif packetType == ord('D'):
+                self.handleDataPacket(packet)
+
+        except Exception as e:
+            print(e)
 
 
 def initHandshake(beetle, serialChar, index):
