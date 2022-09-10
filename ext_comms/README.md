@@ -6,6 +6,7 @@
 - The only other dependencies used are:
     - sshtunnel: https://pypi.org/project/sshtunnel/
     - paramiko: https://www.paramiko.org/
+    - paho MQTT https://pypi.org/project/paho-mqtt/
 
 ## SSH Tunneling
 
