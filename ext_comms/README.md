@@ -9,25 +9,29 @@
 
 ## SSH Tunneling
 
-There is a Python file `ssh_test.py` that automatically sets up the SSH tunnel for usage in our code. Alternatively, there are two options for manual setup as can be seen below:
-
-We use an SSH Tunnel from the laptop to Ultra96 like so:
-
-`ssh -L [laptopPort]:192.168.95.234:[ultra96Port] [user]@sunfire.comp.nus.edu.sg` \
-e.g. \
-`ssh -L 9696:192.168.95.234:9696 danielim@sunfire.comp.nus.edu.sg`
-
-Or we can also do the following: 
+We use a manual setup for the SSH tunnelling like so:
 
 On the laptop: \
-`ssh -L 9696:localhost:9696 danielim@sunfire.comp.nus.edu.sg` \
-On Sunfire: \
+`ssh -L 9696:localhost:9696 danielim@stu.comp.nus.edu.sg` \
+On the stu.comp.nus.edu.sg server: \
 `ssh -L 9696:localhost:9696 xilinx@192.168.95.234`
 
 In these cases, the "destination" is "localhost" because it is the localhost of the server we are using to SSH.
 
+### Legacy Methods
 
-## Running the HiveMQ CE Broker:
+Before Sunfire was deprecated and replaced by stu.comp.nus.edu.sg, there were two methods that worked as well. For completeness sake and in case the new server ever supports these methods, we will keep them below:
+
+There are two Python files `ssh_test.py` and `ssh_tunnel.py` that automatically sets up the SSH tunnel for usage in our code. 
+
+Alternatively, we can manually use an SSH Tunnel from the laptop to Ultra96 like so:
+
+`ssh -L [laptopPort]:192.168.95.234:[ultra96Port] [user]@stu.comp.nus.edu.sg` \
+e.g. \
+`ssh -L 9696:192.168.95.234:9696 danielim@stu.comp.nus.edu.sg`
+
+
+## Running the HiveMQ CE Broker Locally:
 To run a local instance of the MQTT broker, can refer to the following documentation:
 https://github.com/hivemq/hivemq-community-edition
 
