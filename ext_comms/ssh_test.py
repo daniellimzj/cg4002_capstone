@@ -9,7 +9,7 @@ if __name__ == "__main__":
     xilinxPassword = config["xilinxPassword"]
 
     with sshtunnel.open_tunnel(
-        ssh_address_or_host=('sunfire.comp.nus.edu.sg', 22),
+        ssh_address_or_host=('stu.comp.nus.edu.sg', 22),
         ssh_username="danielim",
         ssh_password=sunfirePassword,
         remote_bind_address=('192.168.95.234', 22),
