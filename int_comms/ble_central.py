@@ -1,3 +1,4 @@
+from operator import index
 from bluepy.btle import Peripheral, DefaultDelegate
 import struct
 
@@ -6,6 +7,7 @@ import struct
 # TODO: Standardise packets to 20 bytes
 # TODO: Handle packet fragmentation; wait for 20 bytes of data before processing
 
+TIMEOUT_NOTIFICATION = 1000
 TIMEOUT_HANDSHAKE = 50
 
 btleAddrs = [
@@ -107,27 +109,44 @@ def initHandshake(beetle, serialChar, index):
             pass
 
 
+def watchForDisconnect(beetle, index):
+    while True:
+        if not beetle.watchForNotifications(TIMEOUT_NOTIFICATION):
+            break
+
+    print("No data, attempting to reconnect")
+    btleHandshakes[index]
+    beetle.disconnect()  # Disconnects first and try to reconnect again
+
+
 def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
     isFirstLoop = True
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
 
-    try:
-        print("Searching for Beetle", str(index))
-        beetle.connect(addr)
-        print("Connecting...")
+    while True:
+        try:
+            print("Searching for Beetle", str(index))
+            beetle.connect(addr)
+            print("Connecting...")
 
-        if isFirstLoop:
-            serialSvc = beetle.getServiceByUUID(
-                "0000dfb0-0000-1000-8000-00805f9b34fb")
-            serialChar = serialSvc.getCharacteristics(
-                "0000dfb1-0000-1000-8000-00805f9b34fb")
-            delegate = Comms(serialChar, index)
-            beetle.withDelegate(delegate)
+            if isFirstLoop:
+                serialSvc = beetle.getServiceByUUID(
+                    "0000dfb0-0000-1000-8000-00805f9b34fb")
+                serialChar = serialSvc.getCharacteristics(
+                    "0000dfb1-0000-1000-8000-00805f9b34fb")
+                delegate = Comms(serialChar, index)
+                beetle.withDelegate(delegate)
 
-        if not btleHandshakes[index]:
-            initHandshake(beetle, serialChar, index)
+            if not btleHandshakes[index]:
+                initHandshake(beetle, serialChar, index)
+                isFirstLoop = False
 
-    except Exception as e:
-        print(e)
+            watchForDisconnect(beetle, index)
+
+        except Exception as e:
+            print(e)
+
+
+beetleThread(btleAddrs[0], 0)
