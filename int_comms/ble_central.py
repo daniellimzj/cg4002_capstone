@@ -30,6 +30,28 @@ class Comms(DefaultDelegate):
         self.sendAckPacket()  # TODO: Change to 20bytes
         btleHandshakes[self.index] = True
 
+    def handleDataPacket(self, packet):
+        # Packet Indexing:
+        # 0 - Packet Type
+        # 1 - Mean
+        # 2 - Median
+        # 3 - Standard Deviation
+        # 4 - Range
+        # 5 - Shoots Gun
+        # 6 - Gets Shot
+
+        self.sendAckPacket()
+        data = {
+            'BeetleID': self.index,
+            'Mean': packet[1],
+            'Median': packet[2],
+            'Standard Deviation': packet[3],
+            'Range': packet[4],
+            'Has Shot Gun': packet[5],
+            'Is Shot': packet[6]
+        }
+        print(data)
+
     def verifyChecksum(self, data):
         packetBytes = struct.unpack('<20b', data)
         sum = 0
