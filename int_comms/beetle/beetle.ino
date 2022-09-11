@@ -1,25 +1,28 @@
 #define START_STATE_ID 1
-#define HANDSHAKE_STATE_ID 2
-#define DATA_STATE_ID 3
+#define SLEEP_STATE_ID 2
+#define HANDSHAKE_STATE_ID 3
+#define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 80  // testing
-#define TIMEOUT_DATA 50 // testing
+#define TIMEOUT_ACK 150  // testing
+#define TIMEOUT_DATA 100 // testing
 #define PACKET_SIZE 20
+
+// NonBlockingDelay ackDelay, dataDelay;
 
 // Packet Definitions (20 bytes each)
 struct AckPacket
 {
   byte packetType = 'A';
   byte padding[18];
-  byte checkSum = 'A'; 
+  byte checkSum = 'A';
 } ackPacket;
 
 struct DataPacket
-{ // change to mean, median, ...
+{
   byte packetType = 'D';
   float mean; // 4 bytes
   float median;
-  float stdDev; //standard deviation
+  float stdDev; // standard deviation
   float range;
   boolean isGunShot;
   boolean isHit;
@@ -86,11 +89,7 @@ public:
 
   void run() override
   {
-    while (Serial.read() != 'A')
-    { // No ack from laptop
-      delay(TIMEOUT_DATA);
-      sendDummyData();
-    }
+    //    dataDelay.repeat(TIMEOUT_DATA, sendDummyData);
   }
 } Data_State;
 
@@ -106,13 +105,15 @@ public:
 
   void run() override
   {
-    while (Serial.available() && Serial.read() != 'A')
-    { // No ack from laptop
-      delay(TIMEOUT_ACK);
-      sendAck();
-    }
+    nextState = &Data_State;
   }
 } Handshake_State;
+
+class SleepState : public State
+{
+public:
+  SleepState() : State(SLEEP_STATE_ID) {}
+} Sleep_State;
 
 class StartState : public State
 {
@@ -121,24 +122,32 @@ public:
 
   void init() override
   {
-    nextState = &Handshake_State;
+    nextState = &Sleep_State;
   }
 } Start_State;
 
-void startBeetle()
+void serialEvent() // Called when serial data is available
 {
-  if (Serial.read() == 'H')
+  if (Serial.available() && Serial.read() == 'H')
   {
     nextState = &Handshake_State;
   }
-  else if (Serial.read() == 'A')
+  else if (Serial.available() && Serial.read() == 'A')
   {
-    Serial.println("Initiating Data State");
     nextState = &Data_State;
   }
 }
 
 // Main Program Loop
+void setup()
+{
+  Serial.begin(115200);
+  currState = &Start_State;
+  nextState = &Sleep_State;
+  //  currState = &Data_State;
+  //  nextState = &Data_State;
+}
+
 void loop()
 {
   if (currState->getID() != nextState->getID())
@@ -147,14 +156,4 @@ void loop()
     currState->init();
   }
   currState->run();
-}
-
-void setup()
-{
-  Serial.begin(115200);
-  //  currState = &Data_State;
-  //  nextState = &Data_State;
-  currState = &Handshake_State;
-  nextState = &Handshake_State;
-  //  startBeetle();
 }
