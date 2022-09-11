@@ -1,9 +1,9 @@
 import json
 from multiprocessing.sharedctypes import SynchronizedBase
 import os
+from socket import *
 import sys
 import multiprocessing as mp
-import time
 
 import paho.mqtt.client as mqtt
 
@@ -49,11 +49,18 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
         gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
-def startMoveProcess(actionQueue: mp.Queue, inputQueue: mp.Queue):
+def startMoveProcess(actionQueue: mp.Queue):
+
+    serverPort = 9696
+    serverSocket = socket(AF_INET, SOCK_STREAM)
+    serverSocket.bind(('', serverPort))
+    serverSocket.listen()
+    print('Server is ready to receive message at port', serverPort)
+    connectionSocket, clientAddr = serverSocket.accept()
 
     while True:
-        inputFromQueue = inputQueue.get(block = True)
-        todo = str(inputFromQueue).split(' ')
+        message = connectionSocket.recv(2048)
+        todo = message.decode().split(' ')
         p1_action = todo[0]
         p2_action = todo[1]
         actionQueue.put((p1_action, p2_action), block=True)
@@ -98,37 +105,30 @@ if __name__ == '__main__':
             print('Eval Port: Port number of eval server')
             sys.exit()
 
-    actionQueue = mp.Queue(1)
-    inputQueue = mp.Queue(1)
+    actionQueue = mp.Queue()
     isInSameArea = mp.Value('i', lock=True)
     isInSameArea.value = 1
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
-    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, inputQueue))
+    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue,))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
 
-    engineProcess.start()
-    moveProcess.start()
-    areaClientProcess.start()
+    try:
+        engineProcess.start()
+        moveProcess.start()
+        areaClientProcess.start()
 
-    while True:
-        time.sleep(1)
-        actions = input("Next move: ")
-        if actions == "exit":
-            inputQueue.close()
-            actionQueue.close()
-            engineProcess.terminate()
-            moveProcess.terminate()
-            areaClientProcess.terminate()
-            break
-        inputQueue.put(actions, block=True)
+        engineProcess.join()
+        moveProcess.join()
+        areaClientProcess.join()
 
-    engineProcess.join()
-    moveProcess.join()
-    areaClientProcess.join()
-
-    print("closing main")
+    finally:
+        actionQueue.close()
+        engineProcess.terminate()
+        moveProcess.terminate()
+        areaClientProcess.terminate()
+        print("closing main")
 
 
