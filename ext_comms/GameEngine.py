@@ -1,3 +1,4 @@
+from asyncio import current_task
 import json
 import os
 import sys
@@ -27,9 +28,11 @@ class GameEngine:
         self.p1.update(is_in_same_area, p1_action, p2_action, is_p2_action_valid)
         self.p2.update(is_in_same_area, p2_action, p1_action, is_p1_action_valid)
 
-    def confirm_player_state(self, correct_resp: dict):
-        self.p1.update_correct_state(correct_resp['p1'])
-        self.p2.update_correct_state(correct_resp['p2'])
+    def check_and_update_player_states(self, correct_resp: dict) -> bool:
+        is_p1_state_correct = self.p1.check_and_update_correct_state(correct_resp['p1'])
+        is_p2_state_correct = self.p2.check_and_update_correct_state(correct_resp['p2'])
+
+        return is_p1_state_correct and is_p2_state_correct
 
 if __name__ == '__main__':
 
@@ -53,15 +56,20 @@ if __name__ == '__main__':
             todo = input("Next move: ").split(' ')
             p1_action = todo[0]
             p2_action = todo[1]
-            is_in_same_area = todo[2] == "true"
+            is_in_same_area = True
 
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
-            print("Now sending to eval server...")
-            evalClient.send_data(engine.get_JSON_string())
+            currState = engine.get_JSON_string()
+
+            mqttClient.publish(MQTT.Topics.gameState, currState)
+            evalClient.send_data(currState)
+
             resp = evalClient.recv_data()
             respObj = json.loads(resp)
-            engine.confirm_player_state(respObj)
-            mqttClient.publish(MQTT.Topics.gameState, resp)
+
+            if not engine.check_and_update_player_states(respObj):
+                print("Since state was not correct, publishing correct state to MQTT")
+                mqttClient.publish(MQTT.Topics.gameState, resp)
 
 
     finally:

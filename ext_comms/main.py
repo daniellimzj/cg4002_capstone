@@ -31,14 +31,17 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
                 is_in_same_area = bool(isInSameArea.value)
 
             print("engine is carrying out action with bool ", is_in_same_area)
-
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
+
+            currState = engine.get_JSON_string()
             print("Now sending to eval server...")
-            evalClient.send_data(engine.get_JSON_string())
+            evalClient.send_data(currState)
+            gameStateClient.publish(MQTT.Topics.gameState, currState)
+
             resp = evalClient.recv_data()
             respObj = json.loads(resp)
-            engine.confirm_player_state(respObj)
-            gameStateClient.publish(MQTT.Topics.gameState, resp)
+            if not engine.check_and_update_player_states(respObj):
+                gameStateClient.publish(MQTT.Topics.gameState, resp)
 
     finally:
         evalClient.close()
