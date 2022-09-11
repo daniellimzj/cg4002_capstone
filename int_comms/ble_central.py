@@ -108,6 +108,16 @@ class Comms(DefaultDelegate):
                 self.handleAckPacket()
             elif packetType == ord('D'):
                 self.handleDataPacket(packet)
+
+        except struct.error:
+            print("********************************")
+            print("STRUCT ERROR")
+            self.buffer = self.buffer + data
+            if len(self.buffer) == 20:
+                print("FRAGMENTED DATA PREVENTED")
+                print(self.buffer)
+                self.handleNotification(None, self.buffer)
+                self.buffer = b''
             
         except Exception as e:
             print(e, type(e))
