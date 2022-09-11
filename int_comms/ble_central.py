@@ -1,18 +1,15 @@
-from operator import index
 from bluepy.btle import Peripheral, DefaultDelegate
 import struct
 
-# TODO: Implement Handshake
-# TODO: Test handshake functionality
+# TODO: Implement Workaround for weird fragmentation: 11bytes + 20bytes + 9bytes
 # TODO: Standardise packets to 20 bytes
-# TODO: Handle packet fragmentation; wait for 20 bytes of data before processing
 
 TIMEOUT_NOTIFICATION = 5
 TIMEOUT_HANDSHAKE = 50/100
 
 btleAddrs = [
     "D0:39:72:BF:CA:CF",
-    "D0:39:72:BF:CA:CF",
+    "D0:39:72:BF:CA:FA",
     "D0:39:72:BF:CA:CF"
 ]
 
@@ -113,7 +110,7 @@ class Comms(DefaultDelegate):
             print("********************************")
             print("STRUCT ERROR")
             self.buffer = self.buffer + data
-            if len(self.buffer) == 20:
+            if len(self.buffer) == 20: #Need to handle if fragmented weirdly?
                 print("FRAGMENTED DATA PREVENTED")
                 print(self.buffer)
                 self.handleNotification(None, self.buffer)
@@ -125,7 +122,7 @@ class Comms(DefaultDelegate):
 
 def initHandshake(beetle, serialChar, index):
     while not btleHandshakes[index]:
-        # print("Sending Hello Packet")
+        print("Starting Handshake Protocol...")
         serialChar.write(bytes("H", "utf-8"))
 
         if beetle.waitForNotifications(TIMEOUT_HANDSHAKE):
@@ -163,17 +160,18 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
                 beetle.withDelegate(delegate)
 
             if not btleHandshakes[index]:
-                print("Starting Handshake Protocol...")
                 initHandshake(beetle, serialChar, index)
                 print("Handshake Successful!")
                 print(btleHandshakes)
                 isFirstLoop = False
 
-            watchForDisconnect(beetle, index)
+            if btleHandshakes[index]:
+                watchForDisconnect(beetle, index)
+
         except KeyboardInterrupt:
             beetle.disconnect()
         except Exception as e:
             print(e)
 
 
-beetleThread(btleAddrs[0], 0)
+beetleThread(btleAddrs[1], 1)
