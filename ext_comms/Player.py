@@ -143,7 +143,7 @@ class Player:
                 self.bullets = self.magazine_size
 
 
-    def update_correct_state(self, correct_data):
+    def check_and_update_correct_state(self, correct_data: dict) -> bool:
 
         isCorrect = True
         
@@ -189,3 +189,5 @@ class Player:
 
         if isCorrect:
             print("State of " + str(self.id) + " is correct! :)")
+
+        return isCorrect

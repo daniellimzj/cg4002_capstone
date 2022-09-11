@@ -1,18 +1,15 @@
-from operator import index
 from bluepy.btle import Peripheral, DefaultDelegate
 import struct
 
-# TODO: Implement Handshake
-# TODO: Test handshake functionality
+# TODO: Implement Workaround for weird fragmentation: 11bytes + 20bytes + 9bytes
 # TODO: Standardise packets to 20 bytes
-# TODO: Handle packet fragmentation; wait for 20 bytes of data before processing
 
-TIMEOUT_NOTIFICATION = 1000
-TIMEOUT_HANDSHAKE = 50
+TIMEOUT_NOTIFICATION = 5
+TIMEOUT_HANDSHAKE = 50/100
 
 btleAddrs = [
     "D0:39:72:BF:CA:CF",
-    "D0:39:72:BF:CA:CF",
+    "D0:39:72:BF:CA:FA",
     "D0:39:72:BF:CA:CF"
 ]
 
@@ -24,8 +21,10 @@ class Comms(DefaultDelegate):
         DefaultDelegate.__init__(self)
         self.serialChar = serialChar
         self.index = index
+        self.buffer = b''
 
     def sendAckPacket(self):
+        print("Sending ack!")
         self.serialChar.write(bytes("A", "utf-8"))
 
     def handleAckPacket(self):
@@ -55,7 +54,9 @@ class Comms(DefaultDelegate):
         print(data)
 
     def verifyChecksum(self, data):
+        print("start verify")
         packetBytes = struct.unpack('<20b', data)
+        print("unpacked")
         sum = 0
         count = 0
         byte = 0
@@ -63,6 +64,7 @@ class Comms(DefaultDelegate):
         for byte in packetBytes:
             if count == 19:  # 19th byte
                 if sum == byte:
+                    print("Checksum is true, packet valid!")
                     return True
                 else:
                     break
@@ -74,6 +76,7 @@ class Comms(DefaultDelegate):
 
     def handleNotification(self, charHandle, data):
         try:
+            packet = ()
             packetFormat = (
                 '<b'  # Packet Type
                 'f'   # Mean
@@ -84,10 +87,17 @@ class Comms(DefaultDelegate):
                 '?'   # Got Shot
                 'b'   # Checksum
             )
-            if struct.calcsize(data) == 20:
+            print(data, type(data))
+            packet = struct.unpack_from(packetFormat, data, 0)
+            # print(packet)
+            # for i in packet:
+            #     print(i, type(i))
+            # print(len(packet))
+            if len(packet) == 8:
+                # print("hi")
                 if not self.verifyChecksum(data):
                     raise Exception("Incorrect checksum")
-                packet = struct.unpack(packetFormat, data)
+                # packet = struct.unpack(packetFormat, data)
 
             packetType = packet[0]
 
@@ -96,13 +106,23 @@ class Comms(DefaultDelegate):
             elif packetType == ord('D'):
                 self.handleDataPacket(packet)
 
+        except struct.error:
+            print("********************************")
+            print("STRUCT ERROR")
+            self.buffer = self.buffer + data
+            if len(self.buffer) == 20: #Need to handle if fragmented weirdly?
+                print("FRAGMENTED DATA PREVENTED")
+                print(self.buffer)
+                self.handleNotification(None, self.buffer)
+                self.buffer = b''
+            
         except Exception as e:
-            print(e)
+            print(e, type(e))
 
 
 def initHandshake(beetle, serialChar, index):
     while not btleHandshakes[index]:
-        print("Sending Hello Packet")
+        print("Starting Handshake Protocol...")
         serialChar.write(bytes("H", "utf-8"))
 
         if beetle.waitForNotifications(TIMEOUT_HANDSHAKE):
@@ -111,11 +131,11 @@ def initHandshake(beetle, serialChar, index):
 
 def watchForDisconnect(beetle, index):
     while True:
-        if not beetle.watchForNotifications(TIMEOUT_NOTIFICATION):
+        if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
             break
 
-    print("No data, attempting to reconnect")
-    btleHandshakes[index]
+    print("No data for 5 seconds, attempting to reconnect...")
+    btleHandshakes[index] = False
     beetle.disconnect()  # Disconnects first and try to reconnect again
 
 
@@ -135,18 +155,23 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
                 serialSvc = beetle.getServiceByUUID(
                     "0000dfb0-0000-1000-8000-00805f9b34fb")
                 serialChar = serialSvc.getCharacteristics(
-                    "0000dfb1-0000-1000-8000-00805f9b34fb")
+                    "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
                 delegate = Comms(serialChar, index)
                 beetle.withDelegate(delegate)
 
             if not btleHandshakes[index]:
                 initHandshake(beetle, serialChar, index)
+                print("Handshake Successful!")
+                print(btleHandshakes)
                 isFirstLoop = False
 
-            watchForDisconnect(beetle, index)
+            if btleHandshakes[index]:
+                watchForDisconnect(beetle, index)
 
+        except KeyboardInterrupt:
+            beetle.disconnect()
         except Exception as e:
             print(e)
 
 
-beetleThread(btleAddrs[0], 0)
+beetleThread(btleAddrs[1], 1)
