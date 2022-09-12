@@ -1,0 +1,955 @@
+
+
+================================================================
+== Vivado HLS Report for 'generic_tanh_double_s'
+================================================================
+* Date:           Tue Sep 13 00:38:27 2022
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        cg4002
+* Solution:       solution1
+* Product family: zynquplus
+* Target device:  xczu3eg-sbva484-1-i
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  | 10.00 ns | 8.655 ns |   1.25 ns  |
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max   | min | max |   Type  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |        1|       50| 10.000 ns | 0.500 us |    1|   50|   none  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 88
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 79 2 51 
+2 --> 3 51 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 19 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 20 52 
+20 --> 21 
+21 --> 22 
+22 --> 23 
+23 --> 24 
+24 --> 25 
+25 --> 26 
+26 --> 27 
+27 --> 28 
+28 --> 29 
+29 --> 30 
+30 --> 31 
+31 --> 32 
+32 --> 33 
+33 --> 34 
+34 --> 35 
+35 --> 36 
+36 --> 37 
+37 --> 38 
+38 --> 39 
+39 --> 40 
+40 --> 41 
+41 --> 42 
+42 --> 43 
+43 --> 44 
+44 --> 45 
+45 --> 46 
+46 --> 47 
+47 --> 48 
+48 --> 49 
+49 --> 50 
+50 --> 51 
+51 --> 
+52 --> 53 
+53 --> 54 
+54 --> 55 
+55 --> 56 
+56 --> 57 
+57 --> 58 
+58 --> 59 
+59 --> 60 
+60 --> 61 
+61 --> 62 
+62 --> 63 
+63 --> 64 
+64 --> 65 
+65 --> 66 
+66 --> 67 
+67 --> 68 
+68 --> 69 
+69 --> 70 
+70 --> 71 
+71 --> 72 
+72 --> 73 
+73 --> 74 
+74 --> 75 
+75 --> 76 
+76 --> 77 
+77 --> 78 
+78 --> 51 
+79 --> 80 
+80 --> 81 
+81 --> 82 
+82 --> 83 
+83 --> 84 
+84 --> 85 
+85 --> 86 
+86 --> 87 
+87 --> 88 
+88 --> 51 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 6.91>
+ST_1 : Operation 89 [1/1] (0.00ns)   --->   "%t_in_read = call double @_ssdm_op_Read.ap_auto.double(double %t_in) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:57]   --->   Operation 89 'read' 't_in_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 90 [1/1] (0.00ns)   --->   "%p_Val2_s = bitcast double %t_in_read to i64" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:475->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61]   --->   Operation 90 'bitcast' 'p_Val2_s' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 91 [1/1] (0.00ns)   --->   "%p_Result_s = call i1 @_ssdm_op_BitSelect.i1.i64.i32(i64 %p_Val2_s, i32 63)" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:476->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61]   --->   Operation 91 'bitselect' 'p_Result_s' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 92 [1/1] (0.00ns)   --->   "%tmp_V = call i11 @_ssdm_op_PartSelect.i11.i64.i32.i32(i64 %p_Val2_s, i32 52, i32 62)" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:477->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61]   --->   Operation 92 'partselect' 'tmp_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 93 [1/1] (0.00ns)   --->   "%tmp_V_1 = trunc i64 %p_Val2_s to i52" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:478->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61]   --->   Operation 93 'trunc' 'tmp_V_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 94 [1/1] (0.00ns)   --->   "%trunc_ln368 = trunc i64 %p_Val2_s to i63" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:495->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:512->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:526->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_fabs.h:13->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:62]   --->   Operation 94 'trunc' 'trunc_ln368' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 95 [1/1] (0.00ns)   --->   "%p_Result_8 = call i64 @_ssdm_op_BitConcatenate.i64.i1.i63(i1 false, i63 %trunc_ln368)" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:495->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:512->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:526->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_fabs.h:13->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:62]   --->   Operation 95 'bitconcatenate' 'p_Result_8' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 96 [1/1] (0.00ns)   --->   "%abst_in = bitcast i64 %p_Result_8 to double" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:512->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:526->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_fabs.h:13->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:62]   --->   Operation 96 'bitcast' 'abst_in' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 97 [1/1] (0.85ns)   --->   "%icmp_ln833 = icmp eq i11 %tmp_V, -1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:65]   --->   Operation 97 'icmp' 'icmp_ln833' <Predicate = true> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 98 [1/1] (0.00ns)   --->   "br i1 %icmp_ln833, label %1, label %2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:65]   --->   Operation 98 'br' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 99 [1/1] (0.85ns)   --->   "%icmp_ln849 = icmp ult i11 %tmp_V, 968" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:74]   --->   Operation 99 'icmp' 'icmp_ln849' <Predicate = (!icmp_ln833)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 100 [1/1] (0.00ns)   --->   "br i1 %icmp_ln849, label %._crit_edge56, label %3" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:74]   --->   Operation 100 'br' <Predicate = (!icmp_ln833)> <Delay = 0.00>
+ST_1 : Operation 101 [1/1] (0.85ns)   --->   "%icmp_ln833_1 = icmp eq i11 %tmp_V, 968" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:75]   --->   Operation 101 'icmp' 'icmp_ln833_1' <Predicate = (!icmp_ln833 & !icmp_ln849)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 102 [1/1] (1.34ns)   --->   "%icmp_ln833_2 = icmp eq i52 %tmp_V_1, 0" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:75]   --->   Operation 102 'icmp' 'icmp_ln833_2' <Predicate = (!icmp_ln833 & !icmp_ln849)> <Delay = 1.34> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 103 [1/1] (0.33ns)   --->   "%and_ln75 = and i1 %icmp_ln833_1, %icmp_ln833_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:75]   --->   Operation 103 'and' 'and_ln75' <Predicate = (!icmp_ln833 & !icmp_ln849)> <Delay = 0.33> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 104 [1/1] (0.00ns)   --->   "br i1 %and_ln75, label %._crit_edge56, label %._crit_edge57" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:75]   --->   Operation 104 'br' <Predicate = (!icmp_ln833 & !icmp_ln849)> <Delay = 0.00>
+ST_1 : Operation 105 [2/2] (3.61ns)   --->   "%tmp_4 = fcmp olt double %abst_in, 2.200000e+01" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:80]   --->   Operation 105 'dcmp' 'tmp_4' <Predicate = (!icmp_ln833 & !icmp_ln849 & !and_ln75)> <Delay = 3.61> <Core = "DCmp">   --->   Core 120 'DCmp' <Latency = 1> <II = 1> <Delay = 3.61> <FuncUnit> <Opcode : 'dcmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 106 [5/5] (6.91ns)   --->   "%tmp_s = fadd double %abst_in, 1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 106 'dadd' 'tmp_s' <Predicate = (!icmp_ln833 & and_ln75) | (!icmp_ln833 & icmp_ln849)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 107 [1/1] (1.34ns)   --->   "%icmp_ln837 = icmp eq i52 %tmp_V_1, 0" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67]   --->   Operation 107 'icmp' 'icmp_ln837' <Predicate = (icmp_ln833)> <Delay = 1.34> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 108 [1/1] (0.49ns)   --->   "%select_ln67 = select i1 %icmp_ln837, double 1.000000e+00, double 0x7FFFFFFFFFFFFFFF" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67]   --->   Operation 108 'select' 'select_ln67' <Predicate = (icmp_ln833)> <Delay = 0.49> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_1 : Operation 109 [1/1] (2.04ns)   --->   "br label %._crit_edge_ifconv" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67]   --->   Operation 109 'br' <Predicate = (icmp_ln833)> <Delay = 2.04>
+
+State 2 <SV = 1> <Delay = 5.65>
+ST_2 : Operation 110 [1/2] (3.61ns)   --->   "%tmp_4 = fcmp olt double %abst_in, 2.200000e+01" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:80]   --->   Operation 110 'dcmp' 'tmp_4' <Predicate = true> <Delay = 3.61> <Core = "DCmp">   --->   Core 120 'DCmp' <Latency = 1> <II = 1> <Delay = 3.61> <FuncUnit> <Opcode : 'dcmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 111 [1/1] (2.04ns)   --->   "br i1 %tmp_4, label %_ifconv, label %._crit_edge_ifconv" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:80]   --->   Operation 111 'br' <Predicate = true> <Delay = 2.04>
+ST_2 : Operation 112 [1/1] (0.85ns)   --->   "%icmp_ln849_1 = icmp ult i11 %tmp_V, 1023" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:83]   --->   Operation 112 'icmp' 'icmp_ln849_1' <Predicate = (tmp_4)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+
+State 3 <SV = 2> <Delay = 7.36>
+ST_3 : Operation 113 [1/1] (0.44ns)   --->   "%xor_ln84 = xor i64 %p_Result_8, -9223372036854775808" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 113 'xor' 'xor_ln84' <Predicate = (icmp_ln849_1)> <Delay = 0.44> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 114 [1/1] (0.00ns)   --->   "%bitcast_ln84 = bitcast i64 %xor_ln84 to double" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 114 'bitcast' 'bitcast_ln84' <Predicate = (icmp_ln849_1)> <Delay = 0.00>
+ST_3 : Operation 115 [5/5] (6.91ns)   --->   "%x = fsub double %bitcast_ln84, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 115 'dsub' 'x' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 116 [5/5] (6.91ns)   --->   "%x_2 = fadd double %abst_in, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:87]   --->   Operation 116 'dadd' 'x_2' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 6.91>
+ST_4 : Operation 117 [4/5] (6.91ns)   --->   "%x = fsub double %bitcast_ln84, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 117 'dsub' 'x' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 118 [4/5] (6.91ns)   --->   "%x_2 = fadd double %abst_in, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:87]   --->   Operation 118 'dadd' 'x_2' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 5 <SV = 4> <Delay = 6.91>
+ST_5 : Operation 119 [3/5] (6.91ns)   --->   "%x = fsub double %bitcast_ln84, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 119 'dsub' 'x' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 120 [3/5] (6.91ns)   --->   "%x_2 = fadd double %abst_in, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:87]   --->   Operation 120 'dadd' 'x_2' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 6 <SV = 5> <Delay = 6.91>
+ST_6 : Operation 121 [2/5] (6.91ns)   --->   "%x = fsub double %bitcast_ln84, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 121 'dsub' 'x' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 122 [2/5] (6.91ns)   --->   "%x_2 = fadd double %abst_in, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:87]   --->   Operation 122 'dadd' 'x_2' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 8.60>
+ST_7 : Operation 123 [1/5] (6.91ns)   --->   "%x = fsub double %bitcast_ln84, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84]   --->   Operation 123 'dsub' 'x' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 124 [1/5] (6.91ns)   --->   "%x_2 = fadd double %abst_in, %abst_in" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:87]   --->   Operation 124 'dadd' 'x_2' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 125 [1/1] (0.49ns)   --->   "%x_3 = select i1 %icmp_ln849_1, double %x, double %x_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:83]   --->   Operation 125 'select' 'x_3' <Predicate = true> <Delay = 0.49> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_7 : Operation 126 [1/1] (0.00ns)   --->   "%p_Val2_1 = bitcast double %x_3 to i64" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:475->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:8->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 126 'bitcast' 'p_Val2_1' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 127 [1/1] (0.00ns)   --->   "%p_Result_7 = call i1 @_ssdm_op_BitSelect.i1.i64.i32(i64 %p_Val2_1, i32 63)" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:476->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:8->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 127 'bitselect' 'p_Result_7' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 128 [1/1] (0.00ns)   --->   "%tmp_V_2 = call i11 @_ssdm_op_PartSelect.i11.i64.i32.i32(i64 %p_Val2_1, i32 52, i32 62) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:477->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:8->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 128 'partselect' 'tmp_V_2' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 129 [1/1] (0.00ns)   --->   "br i1 %p_Result_7, label %4, label %.critedge.i" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 129 'br' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 130 [1/1] (0.85ns)   --->   "%icmp_ln10 = icmp ugt i11 %tmp_V_2, 996" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:10->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 130 'icmp' 'icmp_ln10' <Predicate = (!p_Result_7)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 131 [1/1] (0.85ns)   --->   "%icmp_ln837_2 = icmp eq i11 %tmp_V_2, 0" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:10->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 131 'icmp' 'icmp_ln837_2' <Predicate = (!p_Result_7)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 132 [1/1] (0.33ns)   --->   "%or_ln10 = or i1 %icmp_ln10, %icmp_ln837_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:10->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 132 'or' 'or_ln10' <Predicate = (!p_Result_7)> <Delay = 0.33> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 133 [1/1] (0.85ns)   --->   "%icmp_ln9 = icmp ugt i11 %tmp_V_2, 995" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 133 'icmp' 'icmp_ln9' <Predicate = (p_Result_7)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 134 [1/1] (0.85ns)   --->   "%icmp_ln837_1 = icmp eq i11 %tmp_V_2, 0" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 134 'icmp' 'icmp_ln837_1' <Predicate = (p_Result_7)> <Delay = 0.85> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 1.34> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 135 [1/1] (0.33ns)   --->   "%or_ln9 = or i1 %icmp_ln9, %icmp_ln837_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 135 'or' 'or_ln9' <Predicate = (p_Result_7)> <Delay = 0.33> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 7.76>
+ST_8 : Operation 136 [1/1] (0.75ns)   --->   "br i1 %or_ln10, label %._crit_edge44.i, label %expm1.exit" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:10->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 136 'br' <Predicate = (!p_Result_7)> <Delay = 0.75>
+ST_8 : Operation 137 [1/1] (0.75ns)   --->   "br i1 %or_ln9, label %._crit_edge44.i, label %expm1.exit" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 137 'br' <Predicate = (p_Result_7)> <Delay = 0.75>
+ST_8 : Operation 138 [7/7] (7.76ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 138 'call' 'tmp_i' <Predicate = (p_Result_7 & or_ln9) | (!p_Result_7 & or_ln10)> <Delay = 7.76> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 9 <SV = 8> <Delay = 8.65>
+ST_9 : Operation 139 [6/7] (8.65ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 139 'call' 'tmp_i' <Predicate = true> <Delay = 8.65> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 10 <SV = 9> <Delay = 8.65>
+ST_10 : Operation 140 [5/7] (8.65ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 140 'call' 'tmp_i' <Predicate = true> <Delay = 8.65> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 11 <SV = 10> <Delay = 8.65>
+ST_11 : Operation 141 [4/7] (8.65ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 141 'call' 'tmp_i' <Predicate = true> <Delay = 8.65> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 12 <SV = 11> <Delay = 8.65>
+ST_12 : Operation 142 [3/7] (8.65ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 142 'call' 'tmp_i' <Predicate = true> <Delay = 8.65> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 13 <SV = 12> <Delay = 8.65>
+ST_13 : Operation 143 [2/7] (8.65ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 143 'call' 'tmp_i' <Predicate = true> <Delay = 8.65> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 14 <SV = 13> <Delay = 7.91>
+ST_14 : Operation 144 [1/7] (0.99ns)   --->   "%tmp_i = call fastcc double @"exp_generic<double>"(double %x_3) nounwind" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 144 'call' 'tmp_i' <Predicate = true> <Delay = 0.99> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+ST_14 : Operation 145 [5/5] (6.91ns)   --->   "%tmp_i_40 = fadd double %tmp_i, -1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 145 'dadd' 'tmp_i_40' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 14> <Delay = 6.91>
+ST_15 : Operation 146 [4/5] (6.91ns)   --->   "%tmp_i_40 = fadd double %tmp_i, -1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 146 'dadd' 'tmp_i_40' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 15> <Delay = 6.91>
+ST_16 : Operation 147 [3/5] (6.91ns)   --->   "%tmp_i_40 = fadd double %tmp_i, -1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 147 'dadd' 'tmp_i_40' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 16> <Delay = 6.91>
+ST_17 : Operation 148 [2/5] (6.91ns)   --->   "%tmp_i_40 = fadd double %tmp_i, -1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 148 'dadd' 'tmp_i_40' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 18 <SV = 17> <Delay = 6.91>
+ST_18 : Operation 149 [1/5] (6.91ns)   --->   "%tmp_i_40 = fadd double %tmp_i, -1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 149 'dadd' 'tmp_i_40' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 150 [1/1] (0.75ns)   --->   "br label %expm1.exit" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90]   --->   Operation 150 'br' <Predicate = true> <Delay = 0.75>
+
+State 19 <SV = 18> <Delay = 6.91>
+ST_19 : Operation 151 [1/1] (0.00ns)   --->   "%expx = phi double [ %tmp_i_40, %._crit_edge44.i ], [ %x_3, %4 ], [ %x_3, %.critedge.i ]"   --->   Operation 151 'phi' 'expx' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 152 [1/1] (0.00ns)   --->   "br i1 %icmp_ln849_1, label %5, label %6" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:92]   --->   Operation 152 'br' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 153 [5/5] (6.91ns)   --->   "%tmp_1 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 153 'dadd' 'tmp_1' <Predicate = (!icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 154 [5/5] (6.91ns)   --->   "%tmp_9 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 154 'dadd' 'tmp_9' <Predicate = (icmp_ln849_1)> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 20 <SV = 19> <Delay = 6.91>
+ST_20 : Operation 155 [4/5] (6.91ns)   --->   "%tmp_1 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 155 'dadd' 'tmp_1' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 21 <SV = 20> <Delay = 6.91>
+ST_21 : Operation 156 [3/5] (6.91ns)   --->   "%tmp_1 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 156 'dadd' 'tmp_1' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 22 <SV = 21> <Delay = 6.91>
+ST_22 : Operation 157 [2/5] (6.91ns)   --->   "%tmp_1 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 157 'dadd' 'tmp_1' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 23 <SV = 22> <Delay = 6.91>
+ST_23 : Operation 158 [1/5] (6.91ns)   --->   "%tmp_1 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 158 'dadd' 'tmp_1' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 24 <SV = 23> <Delay = 7.28>
+ST_24 : Operation 159 [22/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 159 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 25 <SV = 24> <Delay = 7.28>
+ST_25 : Operation 160 [21/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 160 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 26 <SV = 25> <Delay = 7.28>
+ST_26 : Operation 161 [20/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 161 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 27 <SV = 26> <Delay = 7.28>
+ST_27 : Operation 162 [19/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 162 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 28 <SV = 27> <Delay = 7.28>
+ST_28 : Operation 163 [18/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 163 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 29 <SV = 28> <Delay = 7.28>
+ST_29 : Operation 164 [17/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 164 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 30 <SV = 29> <Delay = 7.28>
+ST_30 : Operation 165 [16/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 165 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 31 <SV = 30> <Delay = 7.28>
+ST_31 : Operation 166 [15/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 166 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 32 <SV = 31> <Delay = 7.28>
+ST_32 : Operation 167 [14/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 167 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 33 <SV = 32> <Delay = 7.28>
+ST_33 : Operation 168 [13/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 168 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 34 <SV = 33> <Delay = 7.28>
+ST_34 : Operation 169 [12/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 169 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 35 <SV = 34> <Delay = 7.28>
+ST_35 : Operation 170 [11/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 170 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 36 <SV = 35> <Delay = 7.28>
+ST_36 : Operation 171 [10/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 171 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 37 <SV = 36> <Delay = 7.28>
+ST_37 : Operation 172 [9/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 172 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 38 <SV = 37> <Delay = 7.28>
+ST_38 : Operation 173 [8/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 173 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 39 <SV = 38> <Delay = 7.28>
+ST_39 : Operation 174 [7/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 174 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 40 <SV = 39> <Delay = 7.28>
+ST_40 : Operation 175 [6/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 175 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 41 <SV = 40> <Delay = 7.28>
+ST_41 : Operation 176 [5/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 176 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 42 <SV = 41> <Delay = 7.28>
+ST_42 : Operation 177 [4/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 177 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 43 <SV = 42> <Delay = 7.28>
+ST_43 : Operation 178 [3/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 178 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 44 <SV = 43> <Delay = 7.28>
+ST_44 : Operation 179 [2/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 179 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 45 <SV = 44> <Delay = 7.28>
+ST_45 : Operation 180 [1/22] (7.28ns)   --->   "%tmp_2 = fdiv double 2.000000e+00, %tmp_1" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 180 'ddiv' 'tmp_2' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 46 <SV = 45> <Delay = 6.91>
+ST_46 : Operation 181 [5/5] (6.91ns)   --->   "%resultf_2 = fsub double 1.000000e+00, %tmp_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 181 'dsub' 'resultf_2' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 47 <SV = 46> <Delay = 6.91>
+ST_47 : Operation 182 [4/5] (6.91ns)   --->   "%resultf_2 = fsub double 1.000000e+00, %tmp_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 182 'dsub' 'resultf_2' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 48 <SV = 47> <Delay = 6.91>
+ST_48 : Operation 183 [3/5] (6.91ns)   --->   "%resultf_2 = fsub double 1.000000e+00, %tmp_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 183 'dsub' 'resultf_2' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 49 <SV = 48> <Delay = 6.91>
+ST_49 : Operation 184 [2/5] (6.91ns)   --->   "%resultf_2 = fsub double 1.000000e+00, %tmp_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 184 'dsub' 'resultf_2' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 50 <SV = 49> <Delay = 6.91>
+ST_50 : Operation 185 [1/5] (6.91ns)   --->   "%resultf_2 = fsub double 1.000000e+00, %tmp_2" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100]   --->   Operation 185 'dsub' 'resultf_2' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 51 <SV = 50> <Delay = 2.54>
+ST_51 : Operation 186 [1/1] (2.04ns)   --->   "br label %._crit_edge_ifconv"   --->   Operation 186 'br' <Predicate = (!icmp_ln833 & !icmp_ln849 & !and_ln75 & tmp_4 & !icmp_ln849_1)> <Delay = 2.04>
+ST_51 : Operation 187 [1/1] (0.00ns)   --->   "%resultf_4 = phi double [ %resultf, %._crit_edge56 ], [ %resultf_1, %5 ], [ %resultf_2, %6 ], [ 1.000000e+00, %._crit_edge57 ], [ %select_ln67, %1 ]"   --->   Operation 187 'phi' 'resultf_4' <Predicate = true> <Delay = 0.00>
+ST_51 : Operation 188 [1/1] (0.00ns) (grouped into LUT with out node select_ln775)   --->   "%bitcast_ln112 = bitcast double %resultf_4 to i64" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:112]   --->   Operation 188 'bitcast' 'bitcast_ln112' <Predicate = (p_Result_s)> <Delay = 0.00>
+ST_51 : Operation 189 [1/1] (0.00ns) (grouped into LUT with out node select_ln775)   --->   "%xor_ln112 = xor i64 %bitcast_ln112, -9223372036854775808" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:112]   --->   Operation 189 'xor' 'xor_ln112' <Predicate = (p_Result_s)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_51 : Operation 190 [1/1] (0.00ns) (grouped into LUT with out node select_ln775)   --->   "%bitcast_ln112_1 = bitcast i64 %xor_ln112 to double" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:112]   --->   Operation 190 'bitcast' 'bitcast_ln112_1' <Predicate = (p_Result_s)> <Delay = 0.00>
+ST_51 : Operation 191 [1/1] (0.49ns) (out node of the LUT)   --->   "%select_ln775 = select i1 %p_Result_s, double %bitcast_ln112_1, double %resultf_4" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:476->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61]   --->   Operation 191 'select' 'select_ln775' <Predicate = true> <Delay = 0.49> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_51 : Operation 192 [1/1] (0.00ns)   --->   "ret double %select_ln775" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:114]   --->   Operation 192 'ret' <Predicate = true> <Delay = 0.00>
+
+State 52 <SV = 19> <Delay = 6.91>
+ST_52 : Operation 193 [4/5] (6.91ns)   --->   "%tmp_9 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 193 'dadd' 'tmp_9' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 53 <SV = 20> <Delay = 6.91>
+ST_53 : Operation 194 [3/5] (6.91ns)   --->   "%tmp_9 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 194 'dadd' 'tmp_9' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 54 <SV = 21> <Delay = 6.91>
+ST_54 : Operation 195 [2/5] (6.91ns)   --->   "%tmp_9 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 195 'dadd' 'tmp_9' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 55 <SV = 22> <Delay = 6.91>
+ST_55 : Operation 196 [1/5] (6.91ns)   --->   "%tmp_9 = fadd double %expx, 2.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 196 'dadd' 'tmp_9' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 56 <SV = 23> <Delay = 7.72>
+ST_56 : Operation 197 [1/1] (0.00ns)   --->   "%bitcast_ln95 = bitcast double %expx to i64" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 197 'bitcast' 'bitcast_ln95' <Predicate = true> <Delay = 0.00>
+ST_56 : Operation 198 [1/1] (0.44ns)   --->   "%xor_ln95 = xor i64 %bitcast_ln95, -9223372036854775808" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 198 'xor' 'xor_ln95' <Predicate = true> <Delay = 0.44> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.44> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_56 : Operation 199 [1/1] (0.00ns)   --->   "%bitcast_ln95_1 = bitcast i64 %xor_ln95 to double" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 199 'bitcast' 'bitcast_ln95_1' <Predicate = true> <Delay = 0.00>
+ST_56 : Operation 200 [22/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 200 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 57 <SV = 24> <Delay = 7.28>
+ST_57 : Operation 201 [21/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 201 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 58 <SV = 25> <Delay = 7.28>
+ST_58 : Operation 202 [20/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 202 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 59 <SV = 26> <Delay = 7.28>
+ST_59 : Operation 203 [19/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 203 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 60 <SV = 27> <Delay = 7.28>
+ST_60 : Operation 204 [18/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 204 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 61 <SV = 28> <Delay = 7.28>
+ST_61 : Operation 205 [17/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 205 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 62 <SV = 29> <Delay = 7.28>
+ST_62 : Operation 206 [16/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 206 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 63 <SV = 30> <Delay = 7.28>
+ST_63 : Operation 207 [15/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 207 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 64 <SV = 31> <Delay = 7.28>
+ST_64 : Operation 208 [14/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 208 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 65 <SV = 32> <Delay = 7.28>
+ST_65 : Operation 209 [13/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 209 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 66 <SV = 33> <Delay = 7.28>
+ST_66 : Operation 210 [12/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 210 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 67 <SV = 34> <Delay = 7.28>
+ST_67 : Operation 211 [11/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 211 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 68 <SV = 35> <Delay = 7.28>
+ST_68 : Operation 212 [10/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 212 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 69 <SV = 36> <Delay = 7.28>
+ST_69 : Operation 213 [9/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 213 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 70 <SV = 37> <Delay = 7.28>
+ST_70 : Operation 214 [8/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 214 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 71 <SV = 38> <Delay = 7.28>
+ST_71 : Operation 215 [7/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 215 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 72 <SV = 39> <Delay = 7.28>
+ST_72 : Operation 216 [6/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 216 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 73 <SV = 40> <Delay = 7.28>
+ST_73 : Operation 217 [5/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 217 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 74 <SV = 41> <Delay = 7.28>
+ST_74 : Operation 218 [4/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 218 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 75 <SV = 42> <Delay = 7.28>
+ST_75 : Operation 219 [3/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 219 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 76 <SV = 43> <Delay = 7.28>
+ST_76 : Operation 220 [2/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 220 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 77 <SV = 44> <Delay = 7.28>
+ST_77 : Operation 221 [1/22] (7.28ns)   --->   "%resultf_1 = fdiv double %bitcast_ln95_1, %tmp_9" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95]   --->   Operation 221 'ddiv' 'resultf_1' <Predicate = true> <Delay = 7.28> <Core = "DDiv">   --->   Core 117 'DDiv' <Latency = 21> <II = 1> <Delay = 7.28> <FuncUnit> <Opcode : 'ddiv' 'drem'> <InPorts = 2> <OutPorts = 1>
+
+State 78 <SV = 45> <Delay = 2.04>
+ST_78 : Operation 222 [1/1] (2.04ns)   --->   "br label %._crit_edge_ifconv" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:96]   --->   Operation 222 'br' <Predicate = true> <Delay = 2.04>
+
+State 79 <SV = 1> <Delay = 6.91>
+ST_79 : Operation 223 [4/5] (6.91ns)   --->   "%tmp_s = fadd double %abst_in, 1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 223 'dadd' 'tmp_s' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 80 <SV = 2> <Delay = 6.91>
+ST_80 : Operation 224 [3/5] (6.91ns)   --->   "%tmp_s = fadd double %abst_in, 1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 224 'dadd' 'tmp_s' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 81 <SV = 3> <Delay = 6.91>
+ST_81 : Operation 225 [2/5] (6.91ns)   --->   "%tmp_s = fadd double %abst_in, 1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 225 'dadd' 'tmp_s' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 82 <SV = 4> <Delay = 6.91>
+ST_82 : Operation 226 [1/5] (6.91ns)   --->   "%tmp_s = fadd double %abst_in, 1.000000e+00" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 226 'dadd' 'tmp_s' <Predicate = true> <Delay = 6.91> <Core = "DAddSub">   --->   Core 115 'DAddSub' <Latency = 4> <II = 1> <Delay = 6.91> <FuncUnit> <Opcode : 'dadd' 'dsub'> <InPorts = 2> <OutPorts = 1>
+
+State 83 <SV = 5> <Delay = 8.33>
+ST_83 : Operation 227 [5/5] (8.33ns)   --->   "%resultf = fmul double %abst_in, %tmp_s" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 227 'dmul' 'resultf' <Predicate = true> <Delay = 8.33> <Core = "DMul">   --->   Core 116 'DMul' <Latency = 4> <II = 1> <Delay = 8.33> <FuncUnit> <Opcode : 'dmul'> <InPorts = 2> <OutPorts = 1>
+
+State 84 <SV = 6> <Delay = 8.33>
+ST_84 : Operation 228 [4/5] (8.33ns)   --->   "%resultf = fmul double %abst_in, %tmp_s" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 228 'dmul' 'resultf' <Predicate = true> <Delay = 8.33> <Core = "DMul">   --->   Core 116 'DMul' <Latency = 4> <II = 1> <Delay = 8.33> <FuncUnit> <Opcode : 'dmul'> <InPorts = 2> <OutPorts = 1>
+
+State 85 <SV = 7> <Delay = 8.33>
+ST_85 : Operation 229 [3/5] (8.33ns)   --->   "%resultf = fmul double %abst_in, %tmp_s" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 229 'dmul' 'resultf' <Predicate = true> <Delay = 8.33> <Core = "DMul">   --->   Core 116 'DMul' <Latency = 4> <II = 1> <Delay = 8.33> <FuncUnit> <Opcode : 'dmul'> <InPorts = 2> <OutPorts = 1>
+
+State 86 <SV = 8> <Delay = 8.33>
+ST_86 : Operation 230 [2/5] (8.33ns)   --->   "%resultf = fmul double %abst_in, %tmp_s" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 230 'dmul' 'resultf' <Predicate = true> <Delay = 8.33> <Core = "DMul">   --->   Core 116 'DMul' <Latency = 4> <II = 1> <Delay = 8.33> <FuncUnit> <Opcode : 'dmul'> <InPorts = 2> <OutPorts = 1>
+
+State 87 <SV = 9> <Delay = 8.33>
+ST_87 : Operation 231 [1/5] (8.33ns)   --->   "%resultf = fmul double %abst_in, %tmp_s" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78]   --->   Operation 231 'dmul' 'resultf' <Predicate = true> <Delay = 8.33> <Core = "DMul">   --->   Core 116 'DMul' <Latency = 4> <II = 1> <Delay = 8.33> <FuncUnit> <Opcode : 'dmul'> <InPorts = 2> <OutPorts = 1>
+
+State 88 <SV = 10> <Delay = 2.04>
+ST_88 : Operation 232 [1/1] (2.04ns)   --->   "br label %._crit_edge_ifconv" [r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:79]   --->   Operation 232 'br' <Predicate = true> <Delay = 2.04>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 1.25ns.
+
+ <State 1>: 6.92ns
+The critical path consists of the following:
+	wire read on port 't_in' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:57) [8]  (0 ns)
+	'dadd' operation ('tmp_s', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [70]  (6.92 ns)
+
+ <State 2>: 5.66ns
+The critical path consists of the following:
+	'dcmp' operation ('tmp_4', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:80) [27]  (3.61 ns)
+	multiplexor before 'phi' operation ('resultf') with incoming values : ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) ('select_ln67', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67) [78]  (2.04 ns)
+
+ <State 3>: 7.36ns
+The critical path consists of the following:
+	'xor' operation ('xor_ln84', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [31]  (0.441 ns)
+	'dsub' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [33]  (6.92 ns)
+
+ <State 4>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [33]  (6.92 ns)
+
+ <State 5>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [33]  (6.92 ns)
+
+ <State 6>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [33]  (6.92 ns)
+
+ <State 7>: 8.61ns
+The critical path consists of the following:
+	'dsub' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:84) [33]  (6.92 ns)
+	'select' operation ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:83) [35]  (0.499 ns)
+	'icmp' operation ('icmp_ln837_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [47]  (0.86 ns)
+	'or' operation ('or_ln9', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [48]  (0.331 ns)
+
+ <State 8>: 7.77ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (7.77 ns)
+
+ <State 9>: 8.66ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (8.66 ns)
+
+ <State 10>: 8.66ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (8.66 ns)
+
+ <State 11>: 8.66ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (8.66 ns)
+
+ <State 12>: 8.66ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (8.66 ns)
+
+ <State 13>: 8.66ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (8.66 ns)
+
+ <State 14>: 7.92ns
+The critical path consists of the following:
+	'call' operation ('tmp_i', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) to 'exp_generic<double>' [51]  (0.998 ns)
+	'dadd' operation ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [52]  (6.92 ns)
+
+ <State 15>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [52]  (6.92 ns)
+
+ <State 16>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [52]  (6.92 ns)
+
+ <State 17>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [52]  (6.92 ns)
+
+ <State 18>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [52]  (6.92 ns)
+
+ <State 19>: 6.92ns
+The critical path consists of the following:
+	'phi' operation ('x') with incoming values : ('x', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:83) ('tmp_i_40', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:11->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) [55]  (0 ns)
+	'dadd' operation ('tmp_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [58]  (6.92 ns)
+
+ <State 20>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [58]  (6.92 ns)
+
+ <State 21>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [58]  (6.92 ns)
+
+ <State 22>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [58]  (6.92 ns)
+
+ <State 23>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_1', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [58]  (6.92 ns)
+
+ <State 24>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 25>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 26>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 27>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 28>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 29>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 30>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 31>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 32>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 33>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 34>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 35>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 36>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 37>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 38>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 39>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 40>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 41>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 42>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 43>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 44>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 45>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('tmp_2', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [59]  (7.29 ns)
+
+ <State 46>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [60]  (6.92 ns)
+
+ <State 47>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [60]  (6.92 ns)
+
+ <State 48>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [60]  (6.92 ns)
+
+ <State 49>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [60]  (6.92 ns)
+
+ <State 50>: 6.92ns
+The critical path consists of the following:
+	'dsub' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) [60]  (6.92 ns)
+
+ <State 51>: 2.54ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('resultf') with incoming values : ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) ('select_ln67', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67) [78]  (2.04 ns)
+	'phi' operation ('resultf') with incoming values : ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) ('select_ln67', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67) [78]  (0 ns)
+	'select' operation ('select_ln775', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:476->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:479->r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:61) [82]  (0.499 ns)
+
+ <State 52>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_9', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [66]  (6.92 ns)
+
+ <State 53>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_9', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [66]  (6.92 ns)
+
+ <State 54>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_9', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [66]  (6.92 ns)
+
+ <State 55>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_9', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [66]  (6.92 ns)
+
+ <State 56>: 7.73ns
+The critical path consists of the following:
+	'xor' operation ('xor_ln95', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [64]  (0.441 ns)
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 57>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 58>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 59>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 60>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 61>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 62>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 63>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 64>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 65>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 66>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 67>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 68>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 69>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 70>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 71>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 72>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 73>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 74>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 75>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 76>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 77>: 7.29ns
+The critical path consists of the following:
+	'ddiv' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) [67]  (7.29 ns)
+
+ <State 78>: 2.04ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('resultf') with incoming values : ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) ('select_ln67', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67) [78]  (2.04 ns)
+
+ <State 79>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_s', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [70]  (6.92 ns)
+
+ <State 80>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_s', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [70]  (6.92 ns)
+
+ <State 81>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_s', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [70]  (6.92 ns)
+
+ <State 82>: 6.92ns
+The critical path consists of the following:
+	'dadd' operation ('tmp_s', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [70]  (6.92 ns)
+
+ <State 83>: 8.33ns
+The critical path consists of the following:
+	'dmul' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [71]  (8.33 ns)
+
+ <State 84>: 8.33ns
+The critical path consists of the following:
+	'dmul' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [71]  (8.33 ns)
+
+ <State 85>: 8.33ns
+The critical path consists of the following:
+	'dmul' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [71]  (8.33 ns)
+
+ <State 86>: 8.33ns
+The critical path consists of the following:
+	'dmul' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [71]  (8.33 ns)
+
+ <State 87>: 8.33ns
+The critical path consists of the following:
+	'dmul' operation ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) [71]  (8.33 ns)
+
+ <State 88>: 2.04ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('resultf') with incoming values : ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:100) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:95) ('resultf', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:78) ('select_ln67', r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:67) [78]  (2.04 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+	State 24
+	State 25
+	State 26
+	State 27
+	State 28
+	State 29
+	State 30
+	State 31
+	State 32
+	State 33
+	State 34
+	State 35
+	State 36
+	State 37
+	State 38
+	State 39
+	State 40
+	State 41
+	State 42
+	State 43
+	State 44
+	State 45
+	State 46
+	State 47
+	State 48
+	State 49
+	State 50
+	State 51
+	State 52
+	State 53
+	State 54
+	State 55
+	State 56
+	State 57
+	State 58
+	State 59
+	State 60
+	State 61
+	State 62
+	State 63
+	State 64
+	State 65
+	State 66
+	State 67
+	State 68
+	State 69
+	State 70
+	State 71
+	State 72
+	State 73
+	State 74
+	State 75
+	State 76
+	State 77
+	State 78
+	State 79
+	State 80
+	State 81
+	State 82
+	State 83
+	State 84
+	State 85
+	State 86
+	State 87
+	State 88
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

@@ -19,8 +19,8 @@ using namespace sc_dt;
 struct myip_v1_0_HLS_v_ram : public sc_core::sc_module {
 
   static const unsigned DataWidth = 32;
-  static const unsigned AddressRange = 5;
-  static const unsigned AddressWidth = 3;
+  static const unsigned AddressRange = 50;
+  static const unsigned AddressWidth = 6;
 
 //latency = 1
 //input_reg = 1
@@ -76,8 +76,8 @@ SC_MODULE(myip_v1_0_HLS_v) {
 
 
 static const unsigned DataWidth = 32;
-static const unsigned AddressRange = 5;
-static const unsigned AddressWidth = 3;
+static const unsigned AddressRange = 50;
+static const unsigned AddressWidth = 6;
 
 sc_core::sc_in <sc_lv<AddressWidth> > address0;
 sc_core::sc_in<sc_logic> ce0;

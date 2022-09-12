@@ -1,4 +1,4 @@
-INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Sat Sep 03 13:46:52 +0800 2022
+INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Tue Sep 13 00:38:04 +0800 2022
 Execute     config_clock -quiet -name default -period 10 -default=false 
 INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
 Execute     open_platform DefaultPlatform 
@@ -42,8 +42,8 @@ Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.112 sec.
-Command     ap_source done; 0.112 sec.
+Command       ap_source done; 0.108 sec.
+Command     ap_source done; 0.108 sec.
 Execute     open_platform DefaultPlatform 
 Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7 
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
@@ -58,7 +58,7 @@ Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zy
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
 Execute     set_part xczu3eg-sbva484-1-i 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data single -quiet 
-Command       ap_part_info done; 0.945 sec.
+Command       ap_part_info done; 0.937 sec.
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
 Execute       add_library xilinx/zynquplus/zynquplus:xczu3eg:-sbva484:-1-i 
 Execute         get_default_platform 
@@ -74,7 +74,7 @@ Execute         get_default_platform
 INFO: [HLS 200-10] Setting target device to 'xczu3eg-sbva484-1-i'
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
 Execute       get_default_platform 
-Command     set_part done; 1.104 sec.
+Command     set_part done; 1.098 sec.
 Execute     ap_part_info -data single -name xczu3eg-sbva484-1-i 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data resources 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
@@ -84,7 +84,7 @@ Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info
 Execute     config_chip_info -quiet -speed slow 
 Execute     config_export -format=ip_catalog 
 Execute     config_export -rtl=verilog 
-Command   open_solution done; 1.524 sec.
+Command   open_solution done; 1.535 sec.
 Execute   set_part xczu3eg-sbva484-1-i 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data single -quiet 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
@@ -101,10 +101,8 @@ Execute     add_library xilinx/zynquplus/zynquplus_fpv7
 Execute       get_default_platform 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
 Execute     get_default_platform 
-Command   set_part done; 0.159 sec.
+Command   set_part done; 0.16 sec.
 Execute   create_clock -period 10 -name default 
-Execute     config_clock -quiet -name default -period 10 -default=false 
-INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
 Execute   config_export -format ip_catalog -rtl verilog 
 Execute   csynth_design 
 Execute     get_config_compile -dump_cfg 
@@ -132,105 +130,215 @@ INFO-FLOW: Running: GCC PP
 INFO-FLOW: Source preprocessing
 Execute       clang  -fno-limit-debug-info -gcc-toolchain "D:/Xilinx/Vivado/2019.2/msys" -hls  -fno-exceptions  -D__llvm__  -E "cg4002/myip_v1_0_HLS.cpp"     -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit  -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -D__cdecl= -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__  -o "D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp" 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain D:/Xilinx/Vivado/2019.2/msys -hls -fno-exceptions -D__llvm__ -E cg4002/myip_v1_0_HLS.cpp -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -D__cdecl= -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp
-Command       clang done; 1.777 sec.
+Command       clang done; 1.064 sec.
 Execute       tidy_31 xilinx-xfmat-array-geometry D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp std=gnu++98 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-xfmat-array-geometry -quiet -fix D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
-Command       tidy_31 done; 1.481 sec.
+Command       tidy_31 done; 0.841 sec.
 INFO-FLOW: Syntax Checking before pre-processing...
 Execute       clang -syntaxcheck -src D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp  -fno-limit-debug-info -gcc-toolchain "D:/Xilinx/Vivado/2019.2/msys" -hls    -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit  -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -D__cdecl= -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__  "D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp"  -o "D:/CG4002/cg4002/solution1/.autopilot/db/useless.bc"  
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain D:/Xilinx/Vivado/2019.2/msys -hls -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -D__cdecl= -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -o D:/CG4002/cg4002/solution1/.autopilot/db/useless.bc
-Command       clang done; 2.41 sec.
-INFO-FLOW: Done: GCC PP time: 5.7 seconds per iteration
+Command       clang done; 2.697 sec.
+INFO-FLOW: Done: GCC PP time: 4.6 seconds per iteration
 Execute       source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/yaml/huddle.tcl 
 Execute       source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/yaml/json2huddle.tcl 
 Execute         source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/try/try.tcl 
 Execute       list_core -type functional_unit 
 Execute       tidy_31 xilinx-systemc-detector D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp std=gnu++98 -directive=D:/CG4002/cg4002/solution1/.autopilot/db/.systemc_flag 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-systemc-detector -import-directive=D:/CG4002/cg4002/solution1/.autopilot/db/.systemc_flag -quiet -fix-errors D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
-Command       tidy_31 done; 0.454 sec.
+Command       tidy_31 done; 0.783 sec.
 INFO-FLOW: Running: tidy-3.1 CDT preprocess
 Execute       tidy_31 xilinx-directive2pragma D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp std=gnu++98 -directive=D:/CG4002/cg4002/solution1/.autopilot/db/all.directive.json 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-directive2pragma -import-directive=D:/CG4002/cg4002/solution1/.autopilot/db/all.directive.json -quiet -fix-errors D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
-Command       tidy_31 done; 0.471 sec.
+Command       tidy_31 done; 0.784 sec.
 Execute       get_config_dataflow -strict_mode 
 Execute       ap_eval exec -ignorestderr D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/xilinx-dataflow-lawyer -export-fixes=D:/CG4002/cg4002/solution1/.autopilot/db/xilinx-dataflow-lawyer.myip_v1_0_HLS.pp.0.cpp.diag.yml D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 -fstrict-dataflow > D:/CG4002/cg4002/solution1/.autopilot/db/xilinx-dataflow-lawyer.myip_v1_0_HLS.pp.0.cpp.out.log 2> D:/CG4002/cg4002/solution1/.autopilot/db/xilinx-dataflow-lawyer.myip_v1_0_HLS.pp.0.cpp.err.log 
-Command       ap_eval done; 1.09 sec.
+Command       ap_eval done; 0.749 sec.
 Execute       tidy_31 -errorcheck xilinx-constantarray-param,xilinx-resource-pragma-transformer,xilinx-xfmat-array-geometry D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp std=gnu++98 
 Execute         ap_eval exec -ignorestderr D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/tidy-3.1 -export-fixes=D:/CG4002/cg4002/solution1/.autopilot/db/tidy-3.1.myip_v1_0_HLS.pp.0.cpp.diag.yml -header-filter=.* -checks=-*,xilinx-constantarray-param,xilinx-resource-pragma-transformer,xilinx-xfmat-array-geometry -quiet -fix-errors D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 > D:/CG4002/cg4002/solution1/.autopilot/db/tidy-3.1.myip_v1_0_HLS.pp.0.cpp.out.log 2> D:/CG4002/cg4002/solution1/.autopilot/db/tidy-3.1.myip_v1_0_HLS.pp.0.cpp.err.log 
-Command         ap_eval done; 0.559 sec.
+Command         ap_eval done; 0.925 sec.
+Execute         source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/yaml/yaml.tcl 
+Execute           source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/cmdline/cmdline.tcl 
 Execute         ap_eval exec -ignorestderr D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/xilinx-legacy-rewriter D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 > D:/CG4002/cg4002/solution1/.autopilot/db/xilinx-legacy-rewriter.myip_v1_0_HLS.pp.0.cpp.out.log 2> D:/CG4002/cg4002/solution1/.autopilot/db/xilinx-legacy-rewriter.myip_v1_0_HLS.pp.0.cpp.err.log 
-Command         ap_eval done; 0.88 sec.
-Command       tidy_31 done; 1.45 sec.
+Command         ap_eval done; 0.518 sec.
+Command       tidy_31 done; 1.465 sec.
 INFO-FLOW: Done: tidy-3.1 CDT preprocess time: 3 seconds per iteration
 INFO-FLOW: Pragma Handling...
 Execute       tidy_31 xilinx-ssdm-intrinsics-arguments D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pragma.1.cpp std=gnu++98 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-ssdm-intrinsics-arguments -quiet -fix-errors D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pragma.1.cpp -- -std=gnu++98 -fhls -ferror-limit=0
-Command       tidy_31 done; 0.523 sec.
+Command       tidy_31 done; 0.972 sec.
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
 INFO-FLOW: Processing labels
 Execute       clang -src D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pragma.2.cpp  -fno-limit-debug-info -gcc-toolchain D:/Xilinx/Vivado/2019.2/msys -hls -hls-analyze-label -hls-analyze-pragma -fno-exceptions  -D__llvm__  -w  "D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pragma.2.cpp"    -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -g -o "D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.bc" 
 INFO-FLOW: exec D:/Xilinx/Vivado/2019.2/win64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain D:/Xilinx/Vivado/2019.2/msys -hls -hls-analyze-label -hls-analyze-pragma -fno-exceptions -D__llvm__ -w D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.pragma.2.cpp -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot -I D:/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -g -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.bc
-Command       clang done; 2.041 sec.
+Command       clang done; 2.817 sec.
 INFO-FLOW: Linking Debug ...
 Execute       llvm-ld D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.g.bc -hls-opt -except-internalize myip_v1_0_HLS -LD:/Xilinx/Vivado/2019.2/win64/lib -lhlsm -lhlsmc++ -o D:/CG4002/cg4002/solution1/.autopilot/db/a.g 
-Command       llvm-ld done; 8.859 sec.
-INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:01 ; elapsed = 00:00:23 . Memory (MB): peak = 198.461 ; gain = 106.109
-INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:01 ; elapsed = 00:00:23 . Memory (MB): peak = 198.461 ; gain = 106.109
+Command       llvm-ld done; 1.698 sec.
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:01 ; elapsed = 00:00:16 . Memory (MB): peak = 197.777 ; gain = 105.484
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:01 ; elapsed = 00:00:16 . Memory (MB): peak = 197.777 ; gain = 105.484
 Execute       get_config_sdx -target 
 Execute       opt_and_import_c a -opt_level=2 -skip_syncheck=0 -ng=0 -keep_printf=0 
 Execute         cleanup_all_models 
 INFO: [HLS 200-10] Starting code transformations ...
 Execute         transform -promote-dbg-pointer D:/CG4002/cg4002/solution1/.autopilot/db/a.pp.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.pp.0.bc -f 
-Command         transform done; 0.599 sec.
+Command         transform done; 0.429 sec.
 Execute         llvm-ld D:/CG4002/cg4002/solution1/.autopilot/db/a.pp.0.bc -disable-opt -LD:/Xilinx/Vivado/2019.2/win64/lib -lfloatconversion -o D:/CG4002/cg4002/solution1/.autopilot/db/a.g.0 
-Command         llvm-ld done; 0.598 sec.
+Command         llvm-ld done; 1.267 sec.
 INFO-FLOW: Running Standard Transforms...
 Execute         transform -hls -share-std-xform -demangle-name -inline-byval-memcpy -always-inline -promote-dbg-pointer -interface-preproc -mem2reg -scalarrepl -mem2reg -keep-read-access -instcombine -dce -promote-dbg-pointer -bitop-raise -loop-simplify -indvarspre -indvars -loop-simplify -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -basicaa -simplifycfg -mem2reg -globalopt -global-constprop -deadargelim -instcombine -simplifycfg -prune-eh -simplifycfg -scalarrepl -instcombine -reassociate -licm -simplifycfg -loop-simplify -indvars -instcombine -simplifycfg -mem2reg -loop-simplify -indvars -instcombine -gvn -gvn -instcombine -adce -break-crit-edges -simplifycfg -loop-delete -global-array-opt -dce -dse -adce -find-syn-modules -top myip_v1_0_HLS -deadargelim -mem2reg -instcombine -dce -presyn-prepare -auto-rom-infer -interface-preproc -syn-check -check-rec-only -find-region -simplifycfg -func-extr -function-inline -globaldce -mem2reg -instcombine -dce -gvn -globaldce -adce -adse -constprop -instcombine -bit-constprop -instcombine -dce -simplifycfg -bitop-raise -simplifycfg -dce -loop-delete -reassociate -globalopt -global-privatize -mem2reg -dce -global-constprop -pointer-simplify -constprop -dce -func-inst -deadargelim -auto-shift-reg-idiom -promote-dbg-pointer -norm-name D:/CG4002/cg4002/solution1/.autopilot/db/a.g.0.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.g.1.bc -f -phase std-opt 
-Command         transform done; 0.334 sec.
-INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:01 ; elapsed = 00:00:25 . Memory (MB): peak = 198.461 ; gain = 106.109
+Command         transform done; 1.241 sec.
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:03 ; elapsed = 00:00:20 . Memory (MB): peak = 270.871 ; gain = 178.578
 INFO: [HLS 200-10] Checking synthesizability ...
 INFO-FLOW: Checking Synthesizability 1/2..
 Execute         transform -hls -syn-check -check-rec-only -disaggr -scalarrepl -norm-name -dce -mem2reg -instcombine -function-uniquify -directive-preproc -mem2reg -dse -dce -auto-rom-infer -dce -pag -array-normalize -instcombine -dce -warn-fifo-pointer -array-seg-normalize -instcombine -dce -array-flatten -instcombine -dce -array-burst -dce -deadargelim -promote-global-argument -simplifycfg -mem2reg -globaldce -dce -deadargelim -dce -instcombine -function-inline -globaldce -dce -doublePtrSimplify -doublePtrElim -dce -doublePtrSimplify -promote-dbg-pointer -dce -scalarrepl -dse -adse -instcombine -ptrLegalization -simplifycfg -dce -instcombine -pointer-simplify -ptrArgReplace -dce -instcombine -resolve-double-ptr -disaggr -scalarrepl -norm-name -dce -mem2reg -instcombine -ptrLegalization -simplifycfg -deadargelim -instcombine -dce -inst-simplify -function-uniquify -directive-preproc -mem2reg -dse -dce -globaldce -check-dspbuiltin D:/CG4002/cg4002/solution1/.autopilot/db/a.g.1.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.g.2.prechk.bc -f 
-Command         transform done; 0.107 sec.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::data' into 'fp_struct<double>::to_double' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:512) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_double' into 'fp_struct<double>::to_ieee' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:526) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'generic_copysign<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_copysign<double>' into 'generic_fabs<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_fabs.h:13) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'generic_nan<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_nan.h:15) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_isnan<double>' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:209) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_isinf<double>' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:210) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:219) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::expv' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:237) automatically.
+INFO: [XFORM 203-602] Inlining function 'exp_reduce_::exp_traits<double>::exp_Z1P_m_1' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:322) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_fabs<double>' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:62) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_nan<double>' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:68) automatically.
+INFO: [XFORM 203-602] Inlining function 'exp_reduce_::expm1' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) automatically.
+INFO: [XFORM 203-602] Inlining function 'tanh' into 'myip_v1_0_HLS' (cg4002/myip_v1_0_HLS.cpp:58) automatically.
+Command         transform done; 0.556 sec.
 INFO-FLOW: Checking Synthesizability 2/2..
 Execute         transform -syn-check D:/CG4002/cg4002/solution1/.autopilot/db/a.g.2.prechk.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.g.2.bc -f -phase syn-check 
-INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:01 ; elapsed = 00:00:25 . Memory (MB): peak = 198.461 ; gain = 106.109
+Command         transform done; 0.266 sec.
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:03 ; elapsed = 00:00:20 . Memory (MB): peak = 315.871 ; gain = 223.578
 INFO-FLOW: Compiler optimizing ...
 INFO-FLOW: Share syncheck's 1.bc for syn flow: copy D:/CG4002/cg4002/solution1/.autopilot/db/a.g.1.bc to D:/CG4002/cg4002/solution1/.autopilot/db/a.o.1.bc
 INFO-FLOW: Presyn 1...
 Execute         transform -hls -tmp D:/CG4002/cg4002/solution1/.autopilot/db -interface-port-rename -type-info -function-uniquify -directive-preproc -mem2reg -dse -dce -disaggr -scalarrepl -norm-name -deadargelim -mem2reg -instcombine -dce -simplifycfg -auto-rom-infer -dce -function-uniquify -resource-proc -clib-intrinsic-prepare -dce -func-buffer -dce -pag -array-normalize -func-legal -instcombine -gvn -constprop -dce -simplifycfg -mem2reg -globaldce -resolve-double-ptr -dce -deadargelim -dce -instcombine -ptrArgReplace -mem2reg -dce -array-seg-normalize -deadargelim -instcombine -dce -pointer-simplify -dce -port-alignment -dce -interface-preproc -data-pack -instcombine -dce -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -loop-simplify -indvars -instcombine -gvn -loop-simplify -mem2reg -dce -find-region -instcombine -auto-loop-pipeline -inst-simplify -interface-preproc -cfgopt -instcombine -indvars -auto-loop-unroll -loop-simplify -loop-bound -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -clean-region -attach-range -gvn -inst-simplify -constprop -simplifycfg -dce -pointer-simplify -dce -globalopt -constprop -dce -array-promote -constprop -dce -ptrArgReplace -mem2reg -simplifycfg -dce -auto-par -instcombine -dce -array-transform-check -array-reshape -instcombine -simplifycfg -dce -ptrArgReplace -deadargelim -mem2reg -instcombine -simplifycfg -dce -indvars -loop-simplify -loop-bound -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -duplicate-dataflow-processes -globaldce -instcombine -array-partition -instcombine -simplifycfg -dce -ptrArgReplace -global-constprop -deadargelim -mem2reg -func-legal -dce -global-constprop -deadargelim -mem2reg -simplifycfg -dce -merge-param -deadargelim -globalopt -constprop -dce -array-promote -constprop -dce -ptrArgReplace -mem2reg -simplifycfg -dce -mem-intrinsic-preproc -dce -global-internalize -global-privatize -mem2reg -globaldce -promote-global-argument -ptrArgReplace -mem2reg -dce -globalopt -mergereturn -simplify-global-access -mem2reg -dce -pointer-simplify -dce -functionattrs -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -dce -norm-name -function-inline -complex-op-raise -inst-simplify -globaldce -func-inst -constprop -instcombine -simplifycfg -dce -func-legal -dce -loop-bound -arraycheck -bitwidthmin -on-by-dataflow -loop-delete -instcombine -simplifycfg -globaldce -dce -gvn -deadargelim -dce -loop-simplify -clean-region -simplifycfg -propagate-stable-arguments -loop-stream -instcombine -simplifycfg -dce -globaldce -duplicate-dataflow-processes -stream-intrinsic-preproc -dce -check-ap-stream -loop-simplify -eliminate-keepreads -extract-dataflow-in-loop -loop-simplify -dce -gvn -deadargelim -dse -check-dataflow-syntax -legalize-stream-variable -legalize-global -extract-subproc -dce -dead-channel-elimination -canonicalize-gep -globaldce -dce -gvn -deadargelim -annotate-dataflow-channels -scalar-propagation -deadargelim -globaldce -mem2reg -check-dataflow-channels -function-stream -dce -globaldce -prop-fifo-spec -internal-stream-gen -canonicalize-gep -globaldce -dce -gvn -deadargelim -mergereturn -indvars -loop-simplify -instcombine -array-stream -array-seg-normalize -array-partition -func-legal -instcombine -simplifycfg -dce -bundle-memfifo-ops -deadargelim -function-uniquify -directive-preproc -mem2reg -dse -dce -group-axi-access -licm -simplifycfg -dce -loop-delete -norm-name D:/CG4002/cg4002/solution1/.autopilot/db/a.o.1.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.o.1.tmp.bc -f 
-Command         transform done; 0.126 sec.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::data' into 'fp_struct<double>::to_double' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:512) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_double' into 'fp_struct<double>::to_ieee' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:526) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'generic_copysign<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_copysign<double>' into 'generic_fabs<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_fabs.h:13) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'generic_nan<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_nan.h:15) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_isnan<double>' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:209) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_isinf<double>' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:210) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::to_ieee' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:219) automatically.
+INFO: [XFORM 203-602] Inlining function 'fp_struct<double>::expv' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:237) automatically.
+INFO: [XFORM 203-602] Inlining function 'exp_reduce_::exp_traits<double>::exp_Z1P_m_1' into 'exp_reduce_::exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:322) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_fabs<double>' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:62) automatically.
+INFO: [XFORM 203-602] Inlining function 'generic_nan<double>' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:68) automatically.
+INFO: [XFORM 203-602] Inlining function 'exp_reduce_::expm1' into 'explog_based::generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:90) automatically.
+INFO: [XFORM 203-602] Inlining function 'tanh' into 'myip_v1_0_HLS' (cg4002/myip_v1_0_HLS.cpp:58) automatically.
+Command         transform done; 0.926 sec.
 INFO-FLOW: Presyn 2...
 Execute         transform -hls -keep-callgraph -scalarrepl -mem2reg -port-alignment -attach-range -dce -pipe-mux-gen -indvars -loop-bound -inst-simplify -instcombine -dce -merge-array-access -mem2reg -dce -clean-region -mergereturn -if-conv -instcombine -dce -constprop -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -scalarrepl -mem2reg -global-constprop -deadargelim -deadargelim -instcombine -dce -simplifycfg -ptrArgReplace -mem2reg -function-inline -globaldce -mem2reg -instcombine -dce -expr-balance -instcombine -dce -bitwidthmin -interface-preproc -directive-preproc -inst-rectify -instcombine -dce -functionattrs -constprop -instcombine -bit-constprop -simplify-global-access -globalopt -globaldce -inst-simplify -instcombine -elimdeaddata -dce -loop-delete -simplifycfg -loop-simplify -auto-burst -norm-name D:/CG4002/cg4002/solution1/.autopilot/db/a.o.1.tmp.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.o.2.bc -f -phase presyn 
-INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:01 ; elapsed = 00:00:25 . Memory (MB): peak = 198.461 ; gain = 106.109
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:108:8) to (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:114:3) in function 'explog_based::generic_tanh<double>'... converting 3 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:83:10) to (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/src/common/hls_exp_double.cpp:9:11) in function 'explog_based::generic_tanh<double>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:185:19) to (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:368:3) in function 'exp_reduce_::exp_generic<double>'... converting 12 basic blocks.
+Command         transform done; 0.447 sec.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:05 ; elapsed = 00:00:22 . Memory (MB): peak = 404.742 ; gain = 312.449
 INFO-FLOW: Building ssdm...
 Execute         transform -hls -function-uniquify -auto-function-inline -globaldce -ptrArgReplace -mem2reg -dce -reset-lda -loop-simplify -indvars -licm -loop-dep -loop-bound -licm -loop-simplify -flattenloopnest -array-flatten -gvn -instcombine -dce -array-map -dce -func-legal -gvn -adce -instcombine -cfgopt -simplifycfg -loop-simplify -array-burst -promote-global-argument -dce -ptrLegalization -axi4-lower -array-seg-normalize -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -gvn -gvn -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -dse -adse -adce -licm -inst-simplify -dce -globaldce -instcombine -array-stream -eliminate-keepreads -instcombine -dce -deadargelim -doublePtrSimplify -doublePtrElim -dce -doublePtrSimplify -promote-dbg-pointer -dce -scalarrepl -mem2reg -disaggr -norm-name -mem2reg -instcombine -dse -adse -adce -ptrLegalization -dce -auto-rom-infer -array-flatten -dce -instcombine -check-doubleptr -loop-rot -constprop -cfgopt -simplifycfg -loop-simplify -indvars -pointer-simplify -dce -loop-bound -loop-simplify -loop-preproc -constprop -global-constprop -gvn -mem2reg -instcombine -dce -loop-bound -loop-merge -dce -bitwidthmin -deadargelim -dce -canonicalize-dataflow -dce -scalar-propagation -deadargelim -globaldce -mem2reg -read-loop-dep -interface-preproc -directive-preproc -interface-gen -bram-byte-enable -deadargelim -inst-simplify -dce -gvn -mem2reg -instcombine -dce -adse -loop-bound -instcombine -cfgopt -simplifycfg -loop-simplify -clean-region -io-protocol -find-region -mem2reg -bitop-raise -complex-op-raise -inst-simplify -inst-rectify -instcombine -adce -deadargelim -loop-simplify -phi-opt -bitop-raise -cfgopt -simplifycfg -strip-dead-prototypes -interface-lower -bitop-lower -intrinsic-lower -auto-function-inline -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -inst-simplify -simplifycfg -loop-simplify -mergereturn -inst-simplify -inst-rectify -dce -load-elim -bitop-lower -loop-rewind -pointer-simplify -dce -cfgopt -dce -loop-bound -loop-dep -read-loop-dep -dce -check-stream -norm-name -legalize -validate-dataflow -inst-clarity -bitwidth -dump-loop-dep-to-ir -check-all-ssdm -cdfg-build D:/CG4002/cg4002/solution1/.autopilot/db/a.o.2.bc -o D:/CG4002/cg4002/solution1/.autopilot/db/a.o.3.bc -f -phase build-ssdm 
-INFO: [HLS 200-472] Inferring partial write operation for 'input' (cg4002/myip_v1_0_HLS.cpp:45:4)
-INFO: [HLS 200-472] Inferring partial write operation for 'v' (cg4002/myip_v1_0_HLS.cpp:57:5)
-INFO: [HLS 200-472] Inferring partial write operation for 'v2' (cg4002/myip_v1_0_HLS.cpp:73:5)
-Command         transform done; 0.323 sec.
-INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:02 ; elapsed = 00:00:25 . Memory (MB): peak = 198.461 ; gain = 106.109
+WARNING: [XFORM 203-631] Renaming function 'explog_based::generic_tanh<double>' to 'generic_tanh<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_tanh.h:57)
+WARNING: [XFORM 203-631] Renaming function 'exp_reduce_::exp_generic<double>' to 'exp_generic<double>' (r:/builds/2019.2/continuous/2019_11_06_2708876/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_exp_.h:185)
+INFO: [HLS 200-472] Inferring partial write operation for 'input' (cg4002/myip_v1_0_HLS.cpp:48:4)
+INFO: [HLS 200-472] Inferring partial write operation for 'v' (cg4002/myip_v1_0_HLS.cpp:58:18)
+INFO: [HLS 200-472] Inferring partial write operation for 'v2' (cg4002/myip_v1_0_HLS.cpp:68:19)
+INFO: [HLS 200-472] Inferring partial write operation for 'v3' (cg4002/myip_v1_0_HLS.cpp:78:4)
+Command         transform done; 0.903 sec.
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:05 ; elapsed = 00:00:23 . Memory (MB): peak = 437.504 ; gain = 345.211
 INFO-FLOW: Finish building internal data model.
-Command       opt_and_import_c done; 2.425 sec.
-Command     elaborate done; 23.479 sec.
+Command       opt_and_import_c done; 6.304 sec.
+Command     elaborate done; 20.753 sec.
 Execute     autosyn -from_csynth_design=1 
 INFO: [HLS 200-10] Starting hardware synthesis ...
 INFO-FLOW: Synthesizing C/C++ design ...
 INFO: [HLS 200-10] Synthesizing 'myip_v1_0_HLS' ...
 Execute       ap_set_top_model myip_v1_0_HLS 
+WARNING: [SYN 201-103] Legalizing function name 'exp_generic<double>' to 'exp_generic_double_s'.
+WARNING: [SYN 201-103] Legalizing function name 'generic_tanh<double>' to 'generic_tanh_double_s'.
 Execute       get_model_list myip_v1_0_HLS -filter all-wo-channel -topdown 
 Execute       preproc_iomode -model myip_v1_0_HLS 
+Execute       preproc_iomode -model generic_tanh<double> 
+Execute       preproc_iomode -model exp_generic<double> 
 Execute       get_model_list myip_v1_0_HLS -filter all-wo-channel 
-INFO-FLOW: Model list for configure: myip_v1_0_HLS
+INFO-FLOW: Model list for configure: exp_generic<double> generic_tanh<double> myip_v1_0_HLS
+INFO-FLOW: Configuring Module : exp_generic<double> ...
+Execute       set_default_model exp_generic<double> 
+Execute       apply_spec_resource_limit exp_generic<double> 
+INFO-FLOW: Configuring Module : generic_tanh<double> ...
+Execute       set_default_model generic_tanh<double> 
+Execute       apply_spec_resource_limit generic_tanh<double> 
 INFO-FLOW: Configuring Module : myip_v1_0_HLS ...
 Execute       set_default_model myip_v1_0_HLS 
 Execute       apply_spec_resource_limit myip_v1_0_HLS 
-INFO-FLOW: Model list for preprocess: myip_v1_0_HLS
+INFO-FLOW: Model list for preprocess: exp_generic<double> generic_tanh<double> myip_v1_0_HLS
+INFO-FLOW: Preprocessing Module: exp_generic<double> ...
+Execute       set_default_model exp_generic<double> 
+Execute       cdfg_preprocess -model exp_generic<double> 
+Execute       rtl_gen_preprocess exp_generic<double> 
+INFO-FLOW: Preprocessing Module: generic_tanh<double> ...
+Execute       set_default_model generic_tanh<double> 
+Execute       cdfg_preprocess -model generic_tanh<double> 
+Execute       rtl_gen_preprocess generic_tanh<double> 
 INFO-FLOW: Preprocessing Module: myip_v1_0_HLS ...
 Execute       set_default_model myip_v1_0_HLS 
 Execute       cdfg_preprocess -model myip_v1_0_HLS 
 Execute       rtl_gen_preprocess myip_v1_0_HLS 
-INFO-FLOW: Model list for synthesis: myip_v1_0_HLS
+INFO-FLOW: Model list for synthesis: exp_generic<double> generic_tanh<double> myip_v1_0_HLS
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'exp_generic_double_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       set_default_model exp_generic<double> 
+Execute       schedule -model exp_generic<double> 
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'exp_generic<double>'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 7.
+INFO: [SCHED 204-11] Finished scheduling.
+Command       schedule done; 0.115 sec.
+INFO: [HLS 200-111]  Elapsed time: 23.019 seconds; current allocated memory: 368.044 MB.
+Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.verbose.sched.rpt 
+Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.sched.adb -f 
+INFO-FLOW: Finish scheduling exp_generic<double>.
+Execute       set_default_model exp_generic<double> 
+Execute       bind -model exp_generic<double> 
+BIND OPTION: model=exp_generic<double>
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.329 seconds; current allocated memory: 368.602 MB.
+Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.verbose.bind.rpt 
+Command       syn_report done; 0.101 sec.
+Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.bind.adb -f 
+Command       db_write done; 0.11 sec.
+INFO-FLOW: Finish binding exp_generic<double>.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'generic_tanh_double_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       set_default_model generic_tanh<double> 
+Execute       schedule -model generic_tanh<double> 
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+Command       schedule done; 0.555 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.856 seconds; current allocated memory: 369.065 MB.
+Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.verbose.sched.rpt 
+Command       syn_report done; 0.107 sec.
+Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.sched.adb -f 
+INFO-FLOW: Finish scheduling generic_tanh<double>.
+Execute       set_default_model generic_tanh<double> 
+Execute       bind -model generic_tanh<double> 
+BIND OPTION: model=generic_tanh<double>
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.313 seconds; current allocated memory: 369.498 MB.
+Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.verbose.bind.rpt 
+Command       syn_report done; 0.19 sec.
+Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.bind.adb -f 
+INFO-FLOW: Finish binding generic_tanh<double>.
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-42] -- Implementing module 'myip_v1_0_HLS' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -238,12 +346,10 @@ Execute       set_default_model myip_v1_0_HLS
 Execute       schedule -model myip_v1_0_HLS 
 INFO: [SCHED 204-11] Starting scheduling ...
 INFO: [SCHED 204-11] Finished scheduling.
-Command       schedule done; 0.389 sec.
-INFO: [HLS 200-111]  Elapsed time: 25.947 seconds; current allocated memory: 111.819 MB.
+Command       schedule done; 0.148 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.506 seconds; current allocated memory: 370.057 MB.
 Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.verbose.sched.rpt 
-Command       syn_report done; 0.106 sec.
 Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.sched.adb -f 
-Command       db_write done; 0.112 sec.
 INFO-FLOW: Finish scheduling myip_v1_0_HLS.
 Execute       set_default_model myip_v1_0_HLS 
 Execute       bind -model myip_v1_0_HLS 
@@ -253,14 +359,72 @@ INFO: [BIND 205-101] Performing variable lifetime analysis.
 INFO: [BIND 205-101] Exploring resource sharing.
 INFO: [BIND 205-101] Binding ...
 INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.413 seconds; current allocated memory: 112.328 MB.
+Command       bind done; 0.102 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.315 seconds; current allocated memory: 370.650 MB.
 Execute       syn_report -verbosereport -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.verbose.bind.rpt 
+Command       syn_report done; 0.197 sec.
 Execute       db_write -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.bind.adb -f 
+Command       db_write done; 0.103 sec.
 INFO-FLOW: Finish binding myip_v1_0_HLS.
 Execute       get_model_list myip_v1_0_HLS -filter all-wo-channel 
 INFO-FLOW: Preprocessing for RTLGen ...
+Execute       rtl_gen_preprocess exp_generic<double> 
+Execute       rtl_gen_preprocess generic_tanh<double> 
 Execute       rtl_gen_preprocess myip_v1_0_HLS 
-INFO-FLOW: Model list for RTL generation: myip_v1_0_HLS
+INFO-FLOW: Model list for RTL generation: exp_generic<double> generic_tanh<double> myip_v1_0_HLS
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'exp_generic_double_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       get_config_rtl -module_prefix 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       create_rtl_model exp_generic<double> -vendor xilinx -mg_file D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+INFO: [SYN 201-210] Renamed object name 'exp_generic_double_s_table_exp_Z1_array_s' to 'exp_generic_doublbkb' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'exp_generic_double_s_table_f_Z3_array_V' to 'exp_generic_doublcud' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'exp_generic_double_s_table_f_Z2_array_V' to 'exp_generic_doubldEe' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_mac_muladd_16ns_16s_19s_31_1_1' to 'myip_v1_0_HLS_maceOg' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_maceOg': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'exp_generic_double_s'.
+Command       create_rtl_model done; 0.112 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.811 seconds; current allocated memory: 371.920 MB.
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute       gen_rtl exp_generic<double> -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o D:/CG4002/cg4002/solution1/syn/systemc/exp_generic_double_s -synmodules exp_generic<double> generic_tanh<double> myip_v1_0_HLS 
+Execute       gen_rtl exp_generic<double> -style xilinx -f -lang vhdl -o D:/CG4002/cg4002/solution1/syn/vhdl/exp_generic_double_s 
+Execute       gen_rtl exp_generic<double> -style xilinx -f -lang vlog -o D:/CG4002/cg4002/solution1/syn/verilog/exp_generic_double_s 
+Execute       syn_report -csynth -model exp_generic<double> -o D:/CG4002/cg4002/solution1/syn/report/exp_generic_double_s_csynth.rpt 
+Execute       syn_report -rtlxml -model exp_generic<double> -o D:/CG4002/cg4002/solution1/syn/report/exp_generic_double_s_csynth.xml 
+Execute       syn_report -verbosereport -model exp_generic<double> -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.verbose.rpt 
+Command       syn_report done; 0.134 sec.
+Execute       db_write -model exp_generic<double> -f -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.adb 
+Command       db_write done; 0.178 sec.
+Execute       gen_tb_info exp_generic<double> -p D:/CG4002/cg4002/solution1/.autopilot/db -o D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'generic_tanh_double_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       get_config_rtl -module_prefix 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       create_rtl_model generic_tanh<double> -vendor xilinx -mg_file D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_dadddsub_64ns_64ns_64_5_full_dsp_1' to 'myip_v1_0_HLS_dadfYi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_dmul_64ns_64ns_64_5_max_dsp_1' to 'myip_v1_0_HLS_dmug8j' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_ddiv_64ns_64ns_64_22_1' to 'myip_v1_0_HLS_ddihbi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_dcmp_64ns_64ns_1_2_1' to 'myip_v1_0_HLS_dcmibs' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_dadfYi': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_dcmibs': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_ddihbi': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_dmug8j': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'generic_tanh_double_s'.
+Command       create_rtl_model done; 0.117 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.749 seconds; current allocated memory: 373.420 MB.
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
+Execute       gen_rtl generic_tanh<double> -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o D:/CG4002/cg4002/solution1/syn/systemc/generic_tanh_double_s -synmodules exp_generic<double> generic_tanh<double> myip_v1_0_HLS 
+Execute       gen_rtl generic_tanh<double> -style xilinx -f -lang vhdl -o D:/CG4002/cg4002/solution1/syn/vhdl/generic_tanh_double_s 
+Execute       gen_rtl generic_tanh<double> -style xilinx -f -lang vlog -o D:/CG4002/cg4002/solution1/syn/verilog/generic_tanh_double_s 
+Execute       syn_report -csynth -model generic_tanh<double> -o D:/CG4002/cg4002/solution1/syn/report/generic_tanh_double_s_csynth.rpt 
+Execute       syn_report -rtlxml -model generic_tanh<double> -o D:/CG4002/cg4002/solution1/syn/report/generic_tanh_double_s_csynth.xml 
+Execute       syn_report -verbosereport -model generic_tanh<double> -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.verbose.rpt 
+Command       syn_report done; 0.198 sec.
+Execute       db_write -model generic_tanh<double> -f -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.adb 
+Command       db_write done; 0.12 sec.
+Execute       gen_tb_info generic_tanh<double> -p D:/CG4002/cg4002/solution1/.autopilot/db -o D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s 
 INFO: [HLS 200-10] ----------------------------------------------------------------
 INFO: [HLS 200-10] -- Generating RTL for module 'myip_v1_0_HLS' 
 INFO: [HLS 200-10] ----------------------------------------------------------------
@@ -272,31 +436,34 @@ INFO: [RTGEN 206-500] Setting interface mode on port 'myip_v1_0_HLS/S_AXIS_V_las
 INFO: [RTGEN 206-500] Setting interface mode on port 'myip_v1_0_HLS/M_AXIS_V_data' to 'axis' (register, both mode).
 INFO: [RTGEN 206-500] Setting interface mode on port 'myip_v1_0_HLS/M_AXIS_V_last' to 'axis' (register, both mode).
 INFO: [RTGEN 206-500] Setting interface mode on function 'myip_v1_0_HLS' to 'ap_ctrl_none'.
-INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_weights1' to 'myip_v1_0_HLS_weibkb' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_weights2' to 'myip_v1_0_HLS_weicud' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fadd_32ns_32ns_32_4_full_dsp_1' to 'myip_v1_0_HLS_faddEe' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fmul_32ns_32ns_32_3_max_dsp_1' to 'myip_v1_0_HLS_fmueOg' due to the length limit 20
-INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fcmp_32ns_32ns_1_2_1' to 'myip_v1_0_HLS_fcmfYi' due to the length limit 20
-INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_faddEe': 1 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fcmfYi': 1 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fmueOg': 1 instance(s).
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_weights1' to 'myip_v1_0_HLS_weijbC' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_weights2' to 'myip_v1_0_HLS_weikbM' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_weights3' to 'myip_v1_0_HLS_weilbW' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fadd_32ns_32ns_32_4_full_dsp_1' to 'myip_v1_0_HLS_fadmb6' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fmul_32ns_32ns_32_3_max_dsp_1' to 'myip_v1_0_HLS_fmuncg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fptrunc_64ns_32_2_1' to 'myip_v1_0_HLS_fptocq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'myip_v1_0_HLS_fpext_32ns_64_2_1' to 'myip_v1_0_HLS_fpepcA' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fadmb6': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fmuncg': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fpepcA': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'myip_v1_0_HLS_fptocq': 1 instance(s).
 INFO: [RTGEN 206-100] Finished creating RTL model for 'myip_v1_0_HLS'.
-Command       create_rtl_model done; 0.319 sec.
-INFO: [HLS 200-111]  Elapsed time: 0.764 seconds; current allocated memory: 113.362 MB.
+Command       create_rtl_model done; 0.347 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.904 seconds; current allocated memory: 374.863 MB.
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute       gen_rtl myip_v1_0_HLS -istop -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o D:/CG4002/cg4002/solution1/syn/systemc/myip_v1_0_HLS -synmodules myip_v1_0_HLS 
+Execute       gen_rtl myip_v1_0_HLS -istop -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o D:/CG4002/cg4002/solution1/syn/systemc/myip_v1_0_HLS -synmodules exp_generic<double> generic_tanh<double> myip_v1_0_HLS 
 Execute       gen_rtl myip_v1_0_HLS -istop -style xilinx -f -lang vhdl -o D:/CG4002/cg4002/solution1/syn/vhdl/myip_v1_0_HLS 
-Command       gen_rtl done; 0.193 sec.
 Execute       gen_rtl myip_v1_0_HLS -istop -style xilinx -f -lang vlog -o D:/CG4002/cg4002/solution1/syn/verilog/myip_v1_0_HLS 
 Execute       syn_report -csynth -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/syn/report/myip_v1_0_HLS_csynth.rpt 
 Execute       syn_report -rtlxml -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/syn/report/myip_v1_0_HLS_csynth.xml 
 Execute       syn_report -verbosereport -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.verbose.rpt 
-Command       syn_report done; 0.103 sec.
+Command       syn_report done; 0.223 sec.
 Execute       db_write -model myip_v1_0_HLS -f -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.adb 
-Command       db_write done; 0.125 sec.
+Command       db_write done; 0.173 sec.
 Execute       gen_tb_info myip_v1_0_HLS -p D:/CG4002/cg4002/solution1/.autopilot/db -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS 
 Execute       export_constraint_db -f -tool general -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
 Execute       syn_report -designview -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.design.xml 
+Command       syn_report done; 0.161 sec.
 Execute       get_config_rtl -disable_wave_debug 
 Execute       syn_report -wcfg -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS_dataflow_ana.wcfg 
 Execute       syn_report -protoinst -model myip_v1_0_HLS -o D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.protoinst 
@@ -304,45 +471,86 @@ Execute       get_config_debug -directory
 Execute       sc_get_clocks myip_v1_0_HLS 
 Execute       get_config_export -vivado_clock 
 Execute       sc_get_portdomain myip_v1_0_HLS 
-INFO-FLOW: Model list for RTL component generation: myip_v1_0_HLS
+INFO-FLOW: Model list for RTL component generation: exp_generic<double> generic_tanh<double> myip_v1_0_HLS
+INFO-FLOW: Handling components in module [exp_generic_double_s] ... 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+INFO-FLOW: Found component myip_v1_0_HLS_maceOg.
+INFO-FLOW: Append model myip_v1_0_HLS_maceOg
+INFO-FLOW: Found component exp_generic_doublbkb.
+INFO-FLOW: Append model exp_generic_doublbkb
+INFO-FLOW: Found component exp_generic_doublcud.
+INFO-FLOW: Append model exp_generic_doublcud
+INFO-FLOW: Found component exp_generic_doubldEe.
+INFO-FLOW: Append model exp_generic_doubldEe
+INFO-FLOW: Handling components in module [generic_tanh_double_s] ... 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
+INFO-FLOW: Found component myip_v1_0_HLS_dadfYi.
+INFO-FLOW: Append model myip_v1_0_HLS_dadfYi
+INFO-FLOW: Found component myip_v1_0_HLS_dmug8j.
+INFO-FLOW: Append model myip_v1_0_HLS_dmug8j
+INFO-FLOW: Found component myip_v1_0_HLS_ddihbi.
+INFO-FLOW: Append model myip_v1_0_HLS_ddihbi
+INFO-FLOW: Found component myip_v1_0_HLS_dcmibs.
+INFO-FLOW: Append model myip_v1_0_HLS_dcmibs
 INFO-FLOW: Handling components in module [myip_v1_0_HLS] ... 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
-INFO-FLOW: Found component myip_v1_0_HLS_faddEe.
-INFO-FLOW: Append model myip_v1_0_HLS_faddEe
-INFO-FLOW: Found component myip_v1_0_HLS_fmueOg.
-INFO-FLOW: Append model myip_v1_0_HLS_fmueOg
-INFO-FLOW: Found component myip_v1_0_HLS_fcmfYi.
-INFO-FLOW: Append model myip_v1_0_HLS_fcmfYi
-INFO-FLOW: Found component myip_v1_0_HLS_weibkb.
-INFO-FLOW: Append model myip_v1_0_HLS_weibkb
+INFO-FLOW: Found component myip_v1_0_HLS_fadmb6.
+INFO-FLOW: Append model myip_v1_0_HLS_fadmb6
+INFO-FLOW: Found component myip_v1_0_HLS_fmuncg.
+INFO-FLOW: Append model myip_v1_0_HLS_fmuncg
+INFO-FLOW: Found component myip_v1_0_HLS_fptocq.
+INFO-FLOW: Append model myip_v1_0_HLS_fptocq
+INFO-FLOW: Found component myip_v1_0_HLS_fpepcA.
+INFO-FLOW: Append model myip_v1_0_HLS_fpepcA
+INFO-FLOW: Found component myip_v1_0_HLS_weijbC.
+INFO-FLOW: Append model myip_v1_0_HLS_weijbC
 INFO-FLOW: Found component myip_v1_0_HLS_bias1.
 INFO-FLOW: Append model myip_v1_0_HLS_bias1
-INFO-FLOW: Found component myip_v1_0_HLS_weicud.
-INFO-FLOW: Append model myip_v1_0_HLS_weicud
+INFO-FLOW: Found component myip_v1_0_HLS_weikbM.
+INFO-FLOW: Append model myip_v1_0_HLS_weikbM
 INFO-FLOW: Found component myip_v1_0_HLS_bias2.
 INFO-FLOW: Append model myip_v1_0_HLS_bias2
+INFO-FLOW: Found component myip_v1_0_HLS_weilbW.
+INFO-FLOW: Append model myip_v1_0_HLS_weilbW
+INFO-FLOW: Found component myip_v1_0_HLS_bias3.
+INFO-FLOW: Append model myip_v1_0_HLS_bias3
 INFO-FLOW: Found component myip_v1_0_HLS_v.
 INFO-FLOW: Append model myip_v1_0_HLS_v
-INFO-FLOW: Found component myip_v1_0_HLS_v2.
-INFO-FLOW: Append model myip_v1_0_HLS_v2
+INFO-FLOW: Found component myip_v1_0_HLS_v3.
+INFO-FLOW: Append model myip_v1_0_HLS_v3
 INFO-FLOW: Found component myip_v1_0_HLS_input.
 INFO-FLOW: Append model myip_v1_0_HLS_input
 INFO-FLOW: Found component regslice_core.
 INFO-FLOW: Append model regslice_core
+INFO-FLOW: Append model exp_generic_double_s
+INFO-FLOW: Append model generic_tanh_double_s
 INFO-FLOW: Append model myip_v1_0_HLS
 INFO-FLOW: Generating RTL model list ...
-INFO-FLOW: All models in this session: myip_v1_0_HLS_faddEe myip_v1_0_HLS_fmueOg myip_v1_0_HLS_fcmfYi myip_v1_0_HLS_weibkb myip_v1_0_HLS_bias1 myip_v1_0_HLS_weicud myip_v1_0_HLS_bias2 myip_v1_0_HLS_v myip_v1_0_HLS_v2 myip_v1_0_HLS_input regslice_core myip_v1_0_HLS
-INFO-FLOW: To file: write model myip_v1_0_HLS_faddEe
-INFO-FLOW: To file: write model myip_v1_0_HLS_fmueOg
-INFO-FLOW: To file: write model myip_v1_0_HLS_fcmfYi
-INFO-FLOW: To file: write model myip_v1_0_HLS_weibkb
+INFO-FLOW: All models in this session: myip_v1_0_HLS_maceOg exp_generic_doublbkb exp_generic_doublcud exp_generic_doubldEe myip_v1_0_HLS_dadfYi myip_v1_0_HLS_dmug8j myip_v1_0_HLS_ddihbi myip_v1_0_HLS_dcmibs myip_v1_0_HLS_fadmb6 myip_v1_0_HLS_fmuncg myip_v1_0_HLS_fptocq myip_v1_0_HLS_fpepcA myip_v1_0_HLS_weijbC myip_v1_0_HLS_bias1 myip_v1_0_HLS_weikbM myip_v1_0_HLS_bias2 myip_v1_0_HLS_weilbW myip_v1_0_HLS_bias3 myip_v1_0_HLS_v myip_v1_0_HLS_v3 myip_v1_0_HLS_input regslice_core exp_generic_double_s generic_tanh_double_s myip_v1_0_HLS
+INFO-FLOW: To file: write model myip_v1_0_HLS_maceOg
+INFO-FLOW: To file: write model exp_generic_doublbkb
+INFO-FLOW: To file: write model exp_generic_doublcud
+INFO-FLOW: To file: write model exp_generic_doubldEe
+INFO-FLOW: To file: write model myip_v1_0_HLS_dadfYi
+INFO-FLOW: To file: write model myip_v1_0_HLS_dmug8j
+INFO-FLOW: To file: write model myip_v1_0_HLS_ddihbi
+INFO-FLOW: To file: write model myip_v1_0_HLS_dcmibs
+INFO-FLOW: To file: write model myip_v1_0_HLS_fadmb6
+INFO-FLOW: To file: write model myip_v1_0_HLS_fmuncg
+INFO-FLOW: To file: write model myip_v1_0_HLS_fptocq
+INFO-FLOW: To file: write model myip_v1_0_HLS_fpepcA
+INFO-FLOW: To file: write model myip_v1_0_HLS_weijbC
 INFO-FLOW: To file: write model myip_v1_0_HLS_bias1
-INFO-FLOW: To file: write model myip_v1_0_HLS_weicud
+INFO-FLOW: To file: write model myip_v1_0_HLS_weikbM
 INFO-FLOW: To file: write model myip_v1_0_HLS_bias2
+INFO-FLOW: To file: write model myip_v1_0_HLS_weilbW
+INFO-FLOW: To file: write model myip_v1_0_HLS_bias3
 INFO-FLOW: To file: write model myip_v1_0_HLS_v
-INFO-FLOW: To file: write model myip_v1_0_HLS_v2
+INFO-FLOW: To file: write model myip_v1_0_HLS_v3
 INFO-FLOW: To file: write model myip_v1_0_HLS_input
 INFO-FLOW: To file: write model regslice_core
+INFO-FLOW: To file: write model exp_generic_double_s
+INFO-FLOW: To file: write model generic_tanh_double_s
 INFO-FLOW: To file: write model myip_v1_0_HLS
 INFO-FLOW: Finished generating RTL model list.
 
@@ -352,9 +560,143 @@ INFO-FLOW: CAS Generation done.
 INFO-FLOW: CBC Generation done.
 Execute       syn_report -model myip_v1_0_HLS -printsummary 
 INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
-INFO: [HLS 200-789] **** Estimated Fmax: 120.69 MHz
+INFO: [HLS 200-789] **** Estimated Fmax: 107.21 MHz
 INFO-FLOW: DBG:CMD: auto_generate_csynth_design
 INFO-FLOW: DBG:CMD:     auto_generate --sim-model -phase csynth_design -d D:/CG4002/cg4002/solution1
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command         ap_source done; 0.104 sec.
+Command       ap_source done; 0.104 sec.
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=1 export=0 expOnly=0 dstVlogDir=syn/verilog
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'exp_generic_doublbkb_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'exp_generic_doublcud_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'exp_generic_doubldEe_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command       ap_source done; 0.51 sec.
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command       ap_source done; 0.642 sec.
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_weijbC_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_bias1_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_weikbM_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_bias2_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_weilbW_rom' using auto ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_bias3_rom' using distributed ROMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_v_ram (RAM)' using block RAMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_v3_ram (RAM)' using distributed RAMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_input_ram (RAM)' using block RAMs.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command       ap_source done; 2.044 sec.
+INFO-FLOW: DBG:CMD:     auto_generate -export -impltomg_flag -rtl both -tool Vivado -pcore_version 1.00.a -phase csynth_design -d D:/CG4002/cg4002/solution1
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
@@ -382,86 +724,6 @@ Command         ap_source done; 0.107 sec.
 Command       ap_source done; 0.107 sec.
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
-INFO-FLOW: DBG:CMD:       generate_ip_cores sim=1 export=0 expOnly=0 dstVlogDir=syn/verilog
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_weibkb_rom' using auto ROMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_bias1_rom' using distributed ROMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_weicud_rom' using distributed ROMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-279] Implementing memory 'myip_v1_0_HLS_bias2_rom' using distributed ROMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_v_ram (RAM)' using distributed RAMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_v2_ram (RAM)' using distributed RAMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO: [RTMG 210-278] Implementing memory 'myip_v1_0_HLS_input_ram (RAM)' using block RAMs.
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command       ap_source done; 1.735 sec.
-INFO-FLOW: DBG:CMD:     auto_generate -export -impltomg_flag -rtl both -tool Vivado -pcore_version 1.00.a -phase csynth_design -d D:/CG4002/cg4002/solution1
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
-Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command         ap_source done; 0.108 sec.
-Command       ap_source done; 0.108 sec.
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
 INFO-FLOW: DBG:CMD:       initCTypeInfo top_module=myip_v1_0_HLS xml_exists=0
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
@@ -471,6 +733,17 @@ Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbge
 INFO-FLOW: DBG:CMD:       export_impl_rtl
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.verilog
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command       ap_source done; 0.349 sec.
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -478,9 +751,13 @@ Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command       ap_source done; 0.446 sec.
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command       ap_source done; 0.363 sec.
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=1 expOnly=1 dstVlogDir=impl/.pcores/verilog
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -494,11 +771,13 @@ Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command       ap_source done; 0.49 sec.
+Command       ap_source done; 0.126 sec.
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.pcores/verilog_sim
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -511,9 +790,8 @@ Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.cons
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
 INFO-FLOW: DBG:CMD:       hasPcoreIpAdapter=false #gSsdmPorts=8
 INFO-FLOW: DBG:CMD: Skipping loadAnalyze_DB, #g_database=4
-INFO-FLOW: DBG:CMD:       generate_json is_phase_csynth=1 g_has_adaptors=false generate_bd_files=1 #modelList=12 #gSsdmPorts=8
+INFO-FLOW: DBG:CMD:       generate_json is_phase_csynth=1 g_has_adaptors=false generate_bd_files=1 #modelList=25 #gSsdmPorts=8
 Execute       source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/fileutil/fileutil.tcl 
-Execute         source D:/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/cmdline/cmdline.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 Execute       get_config_export -xo 
@@ -533,9 +811,16 @@ Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 Execute       get_config_debug -directory 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_dadddsub_3_full_dsp_64_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_dcmp_0_no_dsp_64_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_ddiv_20_no_dsp_64_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_dmul_3_max_dsp_64_ip.tcl 
 Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_fadd_2_full_dsp_32_ip.tcl 
-Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_fcmp_0_no_dsp_32_ip.tcl 
 Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_fmul_1_max_dsp_32_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_fpext_0_no_dsp_32_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/impl/misc/myip_v1_0_HLS_ap_fptrunc_0_no_dsp_64_ip.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.tbgen.tcl 
+Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.tbgen.tcl 
 Execute       source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
 Execute       get_config_sdx -target 
 Execute       get_config_sdx -profile 
@@ -544,14 +829,14 @@ Execute       get_config_rtl -stall_sig_gen
 Execute       get_config_rtl -profile 
 INFO-FLOW: DBG:CMD: add_json_sdx_info kernel file does not exist, skipping opencl info: D:/CG4002/cg4002/solution1/.autopilot/db/kernel.internal.xml
 INFO-FLOW: DBG:CMD:       delete-temp-dirs (skipped for debug)
-INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:03 ; elapsed = 00:00:36 . Memory (MB): peak = 198.461 ; gain = 106.109
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:11 ; elapsed = 00:00:38 . Memory (MB): peak = 457.953 ; gain = 365.660
 INFO: [VHDL 208-304] Generating VHDL RTL for myip_v1_0_HLS.
 INFO: [VLOG 209-307] Generating Verilog RTL for myip_v1_0_HLS.
-Command     autosyn done; 10.777 sec.
-Command   csynth_design done; 34.261 sec.
-Command ap_source done; 35.985 sec.
+Command     autosyn done; 15.477 sec.
+Command   csynth_design done; 36.236 sec.
+Command ap_source done; 37.976 sec.
 Execute cleanup_all 
-INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Sat Sep 03 13:48:48 +0800 2022
+INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Tue Sep 13 00:38:55 +0800 2022
 Execute     config_clock -quiet -name default -period 10 -default=false 
 INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
 Execute     open_platform DefaultPlatform 
@@ -580,267 +865,6 @@ Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interfac
 Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
 Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.112 sec.
-Command     ap_source done; 0.112 sec.
-Execute     open_platform DefaultPlatform 
-Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.hlp 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
-Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
-Execute             source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-Execute     set_part xczu3eg-sbva484-1-i 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data single -quiet 
-Command       ap_part_info done; 0.947 sec.
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute       add_library xilinx/zynquplus/zynquplus:xczu3eg:-sbva484:-1-i 
-Execute         get_default_platform 
-Execute         ap_part_info -data single -name xczu3eg-sbva484-1-i 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data resources 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute         config_chip_info -quiet -resource {SLICE 8820} {LUT 70560} {FF 141120} {DSP48E 360} {BRAM 432} {URAM 0} 
-Execute         ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute         config_chip_info -quiet -speed slow 
-Execute       add_library xilinx/zynquplus/zynquplus_fpv7 
-Execute         get_default_platform 
-INFO: [HLS 200-10] Setting target device to 'xczu3eg-sbva484-1-i'
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute       get_default_platform 
-Command     set_part done; 1.116 sec.
-Execute     ap_part_info -data single -name xczu3eg-sbva484-1-i 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data resources 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute     config_chip_info -quiet -resource {SLICE 8820} {LUT 70560} {FF 141120} {DSP48E 360} {BRAM 432} {URAM 0} 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
-Execute     config_chip_info -quiet -speed slow 
-Execute     config_export -format=ip_catalog 
-Execute     config_export -rtl=verilog 
-Command   open_solution done; 1.331 sec.
-Execute   export_design -rtl verilog -format ip_catalog 
-Execute     get_config_export -acc 
-Execute     get_config_export -clock_margin 
-Execute     get_config_export -custom_script 
-Execute     get_config_export -description 
-Execute     get_config_export -display_name 
-Execute     get_config_export -driver_input_dir 
-Execute     get_config_export -ipname 
-Execute     get_config_export -kernel_drc 
-Execute     get_config_export -library 
-Execute     get_config_export -qor_test 
-Execute     get_config_export -sdaccel 
-Execute     get_config_export -sim 
-Execute     get_config_export -taxonomy 
-Execute     get_config_export -use_ip 
-Execute     get_config_export -use_netlist 
-Execute     get_config_export -vendor 
-Execute     get_config_export -version 
-Execute     get_config_export -xo 
-Execute     config_export -format=ip_catalog -rtl=verilog 
-INFO-FLOW: DBG:CMD: export_design_wrap: -format ip_catalog -rtl verilog
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     get_config_export -vivado_clock 
-Execute     get_top 
-Execute     get_config_sdx -target 
-Execute     get_config_rtl -module_auto_prefix 
-Execute     get_config_sdx -target 
-Execute     get_config_sdx -target 
-INFO-FLOW: DBG:CMD:   auto_impl: pack: -export -tool vivado -rtl verilog -sdx-target none
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.107 sec.
-Command     ap_source done; 0.107 sec.
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: automg_wrap -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
-INFO-FLOW: DBG:CMD:     auto_generate -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.106 sec.
-Command     ap_source done; 0.106 sec.
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-INFO-FLOW: DBG:CMD:       initCTypeInfo top_module=myip_v1_0_HLS xml_exists=1
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-INFO-FLOW: DBG:CMD:       export_impl_rtl
-INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.verilog
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command     ap_source done; 0.35 sec.
-INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=1 expOnly=1 dstVlogDir=impl/.pcores/verilog
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command     ap_source done; 0.636 sec.
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.pcores/verilog_sim
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-INFO-FLOW: DBG:CMD:       hasPcoreIpAdapter=false #gSsdmPorts=8
-INFO-FLOW: DBG:CMD:       copying IP vlog from D:/CG4002/cg4002/solution1/impl/verilog
-INFO-FLOW: DBG:CMD:       copying IP vhdl from D:/CG4002/cg4002/solution1/impl/vhdl
-INFO-FLOW: DBG:CMD:       generate_ip_script #gSsdmPorts=8
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     get_config_sdx -target 
-Execute     get_config_debug -directory 
-INFO-FLOW: DBG:CMD:       generate_ip_auxiliary
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD:       prepArgInfo -> loadAnalyze_DB top_module=myip_v1_0_HLS
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-INFO-FLOW: DBG:CMD:       generate_top_info
-INFO-FLOW: DBG:CMD:       prepArgInfo -> loadAnalyze_DB top_module=myip_v1_0_HLS
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO-FLOW: DBG:CMD:       generate_ip_bd_script
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
-INFO-FLOW: DBG:CMD:       generate_ipi_example_script
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO-FLOW: DBG:CMD:       generate_syn_sh
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD:       generate_imp_constraints
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.constraint.tcl 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.tcl 
-INFO-FLOW: DBG:CMD:       delete-temp-dirs (skipped for debug)
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
@@ -857,67 +881,7 @@ Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
 Command       ap_source done; 0.11 sec.
-Command     ap_source done; 0.111 sec.
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-INFO-FLOW: DBG:CMD:     exec D:/CG4002/cg4002/solution1/impl/ip/pack.bat
-Command   export_design done; 94.776 sec.
-Command ap_source done; 96.115 sec.
-Execute cleanup_all 
-INFO-FLOW: Workspace D:/CG4002/cg4002/solution1 opened at Mon Sep 05 15:58:09 +0800 2022
-Execute     config_clock -quiet -name default -period 10 -default=false 
-INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
-Execute     open_platform DefaultPlatform 
-Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.lib 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.lib 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.lib 
-Command           ap_source done; 0.137 sec.
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.lib 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.lib 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.lib 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.lib 
-Command         ap_source done; 0.293 sec.
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.lib 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.lib 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.lib 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.lib 
-Command       ap_source done; 0.49 sec.
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
-Command       ap_source done; 0.15 sec.
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/dsp48e2.hlp 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
-Command     import_lib done; 0.755 sec.
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Command         ap_source done; 0.102 sec.
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.539 sec.
-Command     ap_source done; 0.559 sec.
+Command     ap_source done; 0.11 sec.
 Execute     open_platform DefaultPlatform 
 Execute     import_lib D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7 
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
@@ -932,7 +896,7 @@ Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zy
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
 Execute     set_part xczu3eg-sbva484-1-i 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data single -quiet 
-Command       ap_part_info done; 0.909 sec.
+Command       ap_part_info done; 0.922 sec.
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
 Execute       add_library xilinx/zynquplus/zynquplus:xczu3eg:-sbva484:-1-i 
 Execute         get_default_platform 
@@ -948,7 +912,7 @@ Execute         get_default_platform
 INFO: [HLS 200-10] Setting target device to 'xczu3eg-sbva484-1-i'
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info 
 Execute       get_default_platform 
-Command     set_part done; 1.1 sec.
+Command     set_part done; 1.077 sec.
 Execute     ap_part_info -data single -name xczu3eg-sbva484-1-i 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data resources 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info 
@@ -958,7 +922,7 @@ Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info
 Execute     config_chip_info -quiet -speed slow 
 Execute     config_export -format=ip_catalog 
 Execute     config_export -rtl=verilog 
-Command   open_solution done; 3.04 sec.
+Command   open_solution done; 1.274 sec.
 Execute   export_design -rtl verilog -format ip_catalog 
 Execute     get_config_export -acc 
 Execute     get_config_export -clock_margin 
@@ -988,41 +952,6 @@ Execute     get_config_rtl -module_auto_prefix
 Execute     get_config_sdx -target 
 Execute     get_config_sdx -target 
 INFO-FLOW: DBG:CMD:   auto_impl: pack: -export -tool vivado -rtl verilog -sdx-target none
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
-Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
-Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
-Command       ap_source done; 0.102 sec.
-Command     ap_source done; 0.104 sec.
-Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
-Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
-INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
-Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
-Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
-INFO-FLOW: DBG:CMD: automg_wrap -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
-INFO-FLOW: DBG:CMD:     auto_generate -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
 INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
 Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
@@ -1050,6 +979,41 @@ Command       ap_source done; 0.104 sec.
 Command     ap_source done; 0.104 sec.
 Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: automg_wrap -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
+INFO-FLOW: DBG:CMD:     auto_generate -export -pcore_version 1.00.a -rtl vlog -sdx-target none -tool Vivado -impltomg_flag
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.102 sec.
+Command     ap_source done; 0.102 sec.
+Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
+Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
 INFO-FLOW: DBG:CMD:       initCTypeInfo top_module=myip_v1_0_HLS xml_exists=1
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.rtl_wrap.cfg.tcl 
@@ -1059,6 +1023,17 @@ Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.tbgen.
 INFO-FLOW: DBG:CMD:       export_impl_rtl
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.verilog
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command     ap_source done; 0.506 sec.
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -1066,9 +1041,13 @@ Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command     ap_source done; 0.185 sec.
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
+Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
+Command     ap_source done; 0.507 sec.
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=1 expOnly=1 dstVlogDir=impl/.pcores/verilog
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -1082,11 +1061,13 @@ Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute       ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
-Command     ap_source done; 0.129 sec.
+Command     ap_source done; 0.356 sec.
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.pcores/verilog_sim
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/global.setting.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/exp_generic_double_s.compgen.tcl 
+Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/generic_tanh_double_s.compgen.tcl 
 Execute     source D:/CG4002/cg4002/solution1/.autopilot/db/myip_v1_0_HLS.compgen.tcl 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
@@ -1178,12 +1159,12 @@ Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
 Execute         source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
 Command       ap_source done; 0.103 sec.
-Command     ap_source done; 0.104 sec.
+Command     ap_source done; 0.103 sec.
 Execute     source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/zynquplus/zynquplus_fpv7.gen 
 Execute       source D:/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data names -quiet 
 Execute     ap_part_info -name xczu3eg-sbva484-1-i -data info -quiet 
 INFO-FLOW: DBG:CMD:     exec D:/CG4002/cg4002/solution1/impl/ip/pack.bat
-Command   export_design done; 32.79 sec.
-Command ap_source done; 35.924 sec.
+Command   export_design done; 31.113 sec.
+Command ap_source done; 32.395 sec.
 Execute cleanup_all 
