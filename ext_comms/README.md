@@ -10,22 +10,16 @@
 
 ## SSH Tunneling
 
-We use a manual setup for the SSH tunnelling like so:
+The file `ssh_tunnel.py` shows an example of how to set up the SSH tunnelling in Python.
+
+Alternatively, there are two ways to manually set up the SSH tunnel:
 
 On the laptop: \
 `ssh -L 9696:localhost:9696 danielim@stu.comp.nus.edu.sg` \
 On the stu.comp.nus.edu.sg server: \
 `ssh -L 9696:localhost:9696 xilinx@192.168.95.234`
 
-In these cases, the "destination" is "localhost" because it is the localhost of the server we are using to SSH.
-
-### Legacy Methods
-
-Before Sunfire was deprecated and replaced by stu.comp.nus.edu.sg, there were two methods that worked as well. For completeness sake and in case the new server ever supports these methods, we will keep them below:
-
-There are two Python files `ssh_test.py` and `ssh_tunnel.py` that automatically sets up the SSH tunnel for usage in our code. 
-
-Alternatively, we can manually use an SSH Tunnel from the laptop to Ultra96 like so:
+From the laptop to Ultra96 like so:
 
 `ssh -L [laptopPort]:192.168.95.234:[ultra96Port] [user]@stu.comp.nus.edu.sg` \
 e.g. \
