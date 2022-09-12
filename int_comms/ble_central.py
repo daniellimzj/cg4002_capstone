@@ -1,5 +1,7 @@
-from bluepy.btle import Peripheral, DefaultDelegate
 import struct
+import multiprocessing as mp
+
+from bluepy.btle import Peripheral, DefaultDelegate
 
 # TODO: Implement Workaround for weird fragmentation: 11bytes + 20bytes + 9bytes
 # TODO: Standardise packets to 20 bytes
@@ -51,9 +53,9 @@ class Comms(DefaultDelegate):
             'Has Shot Gun': packet[5],
             'Is Shot': packet[6]
         }
-        print(data)
+        print((','.join([str(value) for value in data.values()])))
+        # print(data)
         self.sendAckPacket()
-
 
     def verifyChecksum(self, data):
         print("start verify")
@@ -115,12 +117,12 @@ class Comms(DefaultDelegate):
             print("********************************")
             print("STRUCT ERROR")
             self.buffer = self.buffer + data
-            if len(self.buffer) == 20: #Need to handle if fragmented weirdly?
+            if len(self.buffer) == 20:  # Need to handle if fragmented weirdly?
                 print("FRAGMENTED DATA PREVENTED")
                 print(self.buffer)
                 self.handleNotification(None, self.buffer)
                 self.buffer = b''
-            
+
         except Exception as e:
             print(e, type(e))
 
@@ -158,7 +160,7 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
             serialSvc = beetle.getServiceByUUID(
                 "0000dfb0-0000-1000-8000-00805f9b34fb")
             serialChar = serialSvc.getCharacteristics(
-                    "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
+                "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
             delegate = Comms(serialChar, index)
             beetle.withDelegate(delegate)
 
@@ -177,4 +179,22 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
             print(e)
 
 
-beetleThread(btleAddrs[0], 0)
+if __name__ == "__main__":
+    beetle0Process = mp.Process(target=beetleThread, args=(btleAddrs[0], 0))
+    # beetle1Process = mp.Process(target=beetleThread, args=(btleAddrs[1], 1))
+    # beetle2Process = mp.Process(target=beetleThread, args=(btleAddrs[2], 2))
+
+    try:
+        beetle0Process.start()
+        # beetle1Process.start()
+        # beetle2Process.start()
+
+        beetle0Process.join()
+        # beetle1Process.join()
+        # beetle2Process.join()
+    finally:
+        beetle0Process.terminate()
+        # beetle1Process.terminate()
+        # beetle2Process.terminate()
+
+        print("Closing main")
