@@ -41,7 +41,7 @@ class Comms(DefaultDelegate):
         # 5 - Shoots Gun
         # 6 - Gets Shot
 
-        self.sendAckPacket()
+        # self.sendAckPacket()
         data = {
             'BeetleID': self.index,
             'Mean': packet[1],
@@ -52,6 +52,8 @@ class Comms(DefaultDelegate):
             'Is Shot': packet[6]
         }
         print(data)
+        self.sendAckPacket()
+
 
     def verifyChecksum(self, data):
         print("start verify")
@@ -76,6 +78,7 @@ class Comms(DefaultDelegate):
 
     def handleNotification(self, charHandle, data):
         try:
+            print("handling notification now")
             packet = ()
             packetFormat = (
                 '<b'  # Packet Type
@@ -102,8 +105,10 @@ class Comms(DefaultDelegate):
             packetType = packet[0]
 
             if packetType == ord('A'):
+                print("handling ack")
                 self.handleAckPacket()
             elif packetType == ord('D'):
+                print("handling data")
                 self.handleDataPacket(packet)
 
         except struct.error:
@@ -140,7 +145,6 @@ def watchForDisconnect(beetle, index):
 
 
 def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
-    isFirstLoop = True
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
@@ -151,13 +155,12 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
             beetle.connect(addr)
             print("Connecting...")
 
-            if isFirstLoop:
-                serialSvc = beetle.getServiceByUUID(
-                    "0000dfb0-0000-1000-8000-00805f9b34fb")
-                serialChar = serialSvc.getCharacteristics(
+            serialSvc = beetle.getServiceByUUID(
+                "0000dfb0-0000-1000-8000-00805f9b34fb")
+            serialChar = serialSvc.getCharacteristics(
                     "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
-                delegate = Comms(serialChar, index)
-                beetle.withDelegate(delegate)
+            delegate = Comms(serialChar, index)
+            beetle.withDelegate(delegate)
 
             if not btleHandshakes[index]:
                 initHandshake(beetle, serialChar, index)
@@ -174,4 +177,4 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
             print(e)
 
 
-beetleThread(btleAddrs[1], 1)
+beetleThread(btleAddrs[0], 0)
