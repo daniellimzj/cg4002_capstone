@@ -1,10 +1,13 @@
 import struct
 import multiprocessing as mp
+import time
 
 from bluepy.btle import Peripheral, DefaultDelegate
 
-TIMEOUT_NOTIFICATION = 2
-TIMEOUT_HANDSHAKE = 50/100
+TIMEOUT_NOTIFICATION = 2 #s
+TIMEOUT_HANDSHAKE = 50/100 #s
+
+TIME_DATA_RATE_COUNT = 10 #s
 
 btleAddrs = [
     "D0:39:72:BF:CA:CF",
@@ -151,21 +154,31 @@ def initHandshake(beetle, serialChar, index):
 
 
 def watchForDisconnect(beetle, index):
+    packetCount = 0
+    startTime = time.time()
     while True:
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
+            # runs here if disconnected
+            # disconnected = True
             break
+        packetCount += 1
+        if time.time() - startTime >= TIME_DATA_RATE_COUNT:
+            dataRate = (packetCount * 20) / TIME_DATA_RATE_COUNT
+            print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, TIME_DATA_RATE_COUNT, dataRate))
+            return False
 
     print("No data for 2 seconds, attempting to reconnect...")
     btleHandshakes[index] = False
     beetle.disconnect()  # Disconnects first and try to reconnect again
-
+    return True
 
 def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
+    notStop = True
 
-    while True:
+    while notStop:
         try:
             print("Searching for Beetle", str(index))
             beetle.connect(addr)
@@ -184,7 +197,7 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
                 print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
             if btleHandshakes[index]:
-                watchForDisconnect(beetle, index)
+                notStop = watchForDisconnect(beetle, index)
 
         except KeyboardInterrupt:
             beetle.disconnect()
