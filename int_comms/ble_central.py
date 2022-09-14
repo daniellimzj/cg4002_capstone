@@ -7,7 +7,7 @@ from bluepy.btle import Peripheral, DefaultDelegate
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
 
-TIME_DATA_RATE_COUNT = 10 #s
+TIME_DATA_RATE_COUNT = 70 #s
 
 btleAddrs = [
     "D0:39:72:BF:CA:CF",
@@ -172,7 +172,7 @@ def watchForDisconnect(beetle, index):
     beetle.disconnect()  # Disconnects first and try to reconnect again
     return True
 
-def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
+def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
@@ -206,9 +206,9 @@ def beetleThread(addr, index):  # Curr beetle addr, curr beetle index
 
 
 if __name__ == "__main__":
-    beetle0Process = mp.Process(target=beetleThread, args=(btleAddrs[0], 0))
-    beetle1Process = mp.Process(target=beetleThread, args=(btleAddrs[1], 1))
-    beetle2Process = mp.Process(target=beetleThread, args=(btleAddrs[2], 2))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[0], 0))
+    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
+    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
 
     try:
         beetle0Process.start()
