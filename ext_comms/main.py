@@ -30,7 +30,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
             with isInSameArea.get_lock():
                 is_in_same_area = bool(isInSameArea.value)
 
-            print("engine is carrying out action with bool ", is_in_same_area)
+            print("engine is carrying out action with bool", is_in_same_area)
             engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
 
             currState = engine.get_JSON_string()
@@ -81,7 +81,6 @@ def startAreaClient(isInSameArea):
         received = int(msg.payload)
         with isInSameArea.get_lock():
             isInSameArea.value = received
-            print(isInSameArea)
 
     try:
         client = mqtt.Client()
