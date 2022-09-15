@@ -6,7 +6,7 @@
 <Project Version="7" Minor="44" Path="D:/CG4002/cg4002/solution1/impl/ip/tmp.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="d373938c07be4251990afe975dee27e4"/>
+    <Option Name="Id" Val="e64b68ce29e34e76b75d5fd7f998faf2"/>
     <Option Name="Part" Val="xczu3eg-sbva484-1-i"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -58,6 +58,34 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_dadddsub_3_full_dsp_64/myip_v1_0_HLS_ap_dadddsub_3_full_dsp_64.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_dcmp_0_no_dsp_64/myip_v1_0_HLS_ap_dcmp_0_no_dsp_64.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_ddiv_20_no_dsp_64/myip_v1_0_HLS_ap_ddiv_20_no_dsp_64.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_dmul_3_max_dsp_64/myip_v1_0_HLS_ap_dmul_3_max_dsp_64.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fadd_2_full_dsp_32/myip_v1_0_HLS_ap_fadd_2_full_dsp_32.xci">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -65,14 +93,21 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fcmp_0_no_dsp_32/myip_v1_0_HLS_ap_fcmp_0_no_dsp_32.xci">
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fmul_1_max_dsp_32/myip_v1_0_HLS_ap_fmul_1_max_dsp_32.xci">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fmul_1_max_dsp_32/myip_v1_0_HLS_ap_fmul_1_max_dsp_32.xci">
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fpext_0_no_dsp_32/myip_v1_0_HLS_ap_fpext_0_no_dsp_32.xci">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/ip/myip_v1_0_HLS_ap_fptrunc_0_no_dsp_64/myip_v1_0_HLS_ap_fptrunc_0_no_dsp_64.xci">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>

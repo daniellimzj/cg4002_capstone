@@ -37,7 +37,8 @@ void myip_v1_0_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_A
 //int test_input_memory [NUMBER_OF_TEST_VECTORS*NUMBER_OF_INPUT_WORDS] = {0x01, 0x02, 0x03, 0x04, 0x02, 0x03, 0x04, 0x05}; // 4 inputs * 2
 //int test_result_expected_memory [NUMBER_OF_TEST_VECTORS*NUMBER_OF_OUTPUT_WORDS];// 4 outputs *2
 float result_memory [NUMBER_OF_TEST_VECTORS*NUMBER_OF_OUTPUT_WORDS]; // same size as test_result_expected_memory
-float test_yh[NUMBER_OF_INPUT_WORDS] = {1.51190225999999,1.175706,0.124010463087184,1.5646025,-1.15061442,0.431065999999999,0.0163457758017208,-1.216116,-2.51870439,6.280483,0.449042987558603,-2.52445849999999,0.06068828,5.779239,2.34714912650658,0.1856425,0.08336651,7.280324,2.10804922927687,0.255263999999999,0.0317874099999999,5.61297,1.75224167279753,0.0568874999999999,0.00878895999999998,2.84349199999999,0.22415354210618,0.008634,0.00956118,1.607578,0.154580156077724,-0.0812829999999999,-0.0371683499999999,1.667564,0.0984474759494217,-0.0843005};
+float test_yh[NUMBER_OF_INPUT_WORDS] = {0.80648649,6.051341,0.775455402437302,0.887219,-1.29485327,0.435201999999999,0.0161601488424213,-1.268824,1.54016022,6.23376,3.42049445693267,2.347105,0.253747089999999,2.619448,0.392514920603395,0.3103635,0.79293752,3.580717,1.10438528793104,1.0957175,-0.114754109999999,3.212523,0.495553034292987,-0.1771765,0.00628052,1.170696,0.0360650673722925,0.0455325,0.01457531,1.93902,0.0605114186516302,-0.005211,0.044809,0.704394999999999,0.01908923936301,0.027646};
+
 
 /*****************************************************************************
 * Main function
@@ -93,22 +94,7 @@ int main()
 
 	/************************** Checking correctness of results *****************************/
 
-	success = 1;
 
-	/* Compare the data send with the data received */
-//	printf(" Comparing data ...\r\n");
-//	for(word_cnt=0; word_cnt < NUMBER_OF_TEST_VECTORS*NUMBER_OF_OUTPUT_WORDS; word_cnt++){
-//		printf("%d\n", result_memory[word_cnt]);\
-//		printf("%d\n", test_result_expected_memory[word_cnt]);
-//		success = success & (result_memory[word_cnt] == test_result_expected_memory[word_cnt]);
-//	}
-//
-//	if (success != 1){
-//		printf("Test Failed\r\n");
-//		return 1;
-//	}
-//
-//	printf("Test Success\r\n");
 	for (int i =0 ; i< NUMBER_OF_OUTPUT_WORDS; i++){
 		printf("%f\n", result_memory[i]);
 	}

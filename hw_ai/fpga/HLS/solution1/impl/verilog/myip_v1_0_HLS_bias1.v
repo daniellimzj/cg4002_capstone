@@ -3,19 +3,19 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // ==============================================================
 `timescale 1 ns / 1 ps
-(* rom_style = "distributed" *) module myip_v1_0_HLS_bias1_rom (
+module myip_v1_0_HLS_bias1_rom (
 addr0, ce0, q0, clk);
 
 parameter DWIDTH = 32;
-parameter AWIDTH = 3;
-parameter MEM_SIZE = 5;
+parameter AWIDTH = 6;
+parameter MEM_SIZE = 50;
 
 input[AWIDTH-1:0] addr0;
 input ce0;
 output reg[DWIDTH-1:0] q0;
 input clk;
 
-(* ram_style = "distributed" *)reg [DWIDTH-1:0] ram[0:MEM_SIZE-1];
+reg [DWIDTH-1:0] ram[0:MEM_SIZE-1];
 
 initial begin
     $readmemh("./myip_v1_0_HLS_bias1_rom.dat", ram);
@@ -44,8 +44,8 @@ module myip_v1_0_HLS_bias1(
     q0);
 
 parameter DataWidth = 32'd32;
-parameter AddressRange = 32'd5;
-parameter AddressWidth = 32'd3;
+parameter AddressRange = 32'd50;
+parameter AddressWidth = 32'd6;
 input reset;
 input clk;
 input[AddressWidth - 1:0] address0;

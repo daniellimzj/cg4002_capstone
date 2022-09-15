@@ -51,19 +51,22 @@ set NewPortList {[
  	{ "name": "M_AXIS_TLAST", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "M_AXIS_V_last", "role": "default" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "21", "22", "23", "24", "25", "26", "27", "28"],
 		"CDFG" : "myip_v1_0_HLS",
 		"Protocol" : "ap_ctrl_none",
 		"ControlExist" : "0", "ap_start" : "0", "ap_ready" : "0", "ap_done" : "0", "ap_continue" : "0", "ap_idle" : "0",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "2047", "EstimateLatencyMax" : "2047",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "42801", "EstimateLatencyMax" : "47701",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
 		"HasSubDataflow" : "0",
 		"InDataflowNetwork" : "0",
 		"HasNonBlockingOperation" : "0",
+		"WaitState" : [
+			{"State" : "ap_ST_fsm_state21", "FSM" : "ap_CS_fsm", "SubInstance" : "grp_generic_tanh_double_s_fu_447"},
+			{"State" : "ap_ST_fsm_state41", "FSM" : "ap_CS_fsm", "SubInstance" : "grp_generic_tanh_double_s_fu_447"}],
 		"Port" : [
 			{"Name" : "S_AXIS_V_data", "Type" : "Axis", "Direction" : "I",
 				"BlockSignal" : [
@@ -75,40 +78,120 @@ set RtlHierarchyInfo {[
 			{"Name" : "M_AXIS_V_last", "Type" : "Axis", "Direction" : "O"},
 			{"Name" : "weights1", "Type" : "Memory", "Direction" : "I"},
 			{"Name" : "bias1", "Type" : "Memory", "Direction" : "I"},
+			{"Name" : "table_exp_Z1_array_s", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "11", "SubInstance" : "grp_generic_tanh_double_s_fu_447", "Port" : "table_exp_Z1_array_s"}]},
+			{"Name" : "table_f_Z3_array_V", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "11", "SubInstance" : "grp_generic_tanh_double_s_fu_447", "Port" : "table_f_Z3_array_V"}]},
+			{"Name" : "table_f_Z2_array_V", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "11", "SubInstance" : "grp_generic_tanh_double_s_fu_447", "Port" : "table_f_Z2_array_V"}]},
 			{"Name" : "weights2", "Type" : "Memory", "Direction" : "I"},
-			{"Name" : "bias2", "Type" : "Memory", "Direction" : "I"}]},
+			{"Name" : "bias2", "Type" : "Memory", "Direction" : "I"},
+			{"Name" : "weights3", "Type" : "Memory", "Direction" : "I"},
+			{"Name" : "bias3", "Type" : "Memory", "Direction" : "I"}]},
 	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.weights1_U", "Parent" : "0"},
 	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.bias1_U", "Parent" : "0"},
 	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.weights2_U", "Parent" : "0"},
 	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.bias2_U", "Parent" : "0"},
-	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.v_U", "Parent" : "0"},
-	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.v2_U", "Parent" : "0"},
-	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.input_U", "Parent" : "0"},
-	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_faddEe_U1", "Parent" : "0"},
-	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fmueOg_U2", "Parent" : "0"},
-	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fcmfYi_U3", "Parent" : "0"},
-	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_S_AXIS_V_data_U", "Parent" : "0"},
-	{"ID" : "12", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_w1_S_AXIS_V_last_U", "Parent" : "0"},
-	{"ID" : "13", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_M_AXIS_V_data_U", "Parent" : "0"},
-	{"ID" : "14", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_w1_M_AXIS_V_last_U", "Parent" : "0"}]}
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.weights3_U", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.bias3_U", "Parent" : "0"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.v_U", "Parent" : "0"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.v2_U", "Parent" : "0"},
+	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.v3_U", "Parent" : "0"},
+	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.input_U", "Parent" : "0"},
+	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447", "Parent" : "0", "Child" : ["12", "17", "18", "19", "20"],
+		"CDFG" : "generic_tanh_double_s",
+		"Protocol" : "ap_ctrl_hs",
+		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
+		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
+		"II" : "0",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "1", "EstimateLatencyMax" : "50",
+		"Combinational" : "0",
+		"Datapath" : "0",
+		"ClockEnable" : "0",
+		"HasSubDataflow" : "0",
+		"InDataflowNetwork" : "0",
+		"HasNonBlockingOperation" : "0",
+		"Port" : [
+			{"Name" : "t_in", "Type" : "None", "Direction" : "I"},
+			{"Name" : "table_exp_Z1_array_s", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "12", "SubInstance" : "grp_exp_generic_double_s_fu_87", "Port" : "table_exp_Z1_array_s"}]},
+			{"Name" : "table_f_Z3_array_V", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "12", "SubInstance" : "grp_exp_generic_double_s_fu_87", "Port" : "table_f_Z3_array_V"}]},
+			{"Name" : "table_f_Z2_array_V", "Type" : "Memory", "Direction" : "I",
+				"SubConnect" : [
+					{"ID" : "12", "SubInstance" : "grp_exp_generic_double_s_fu_87", "Port" : "table_f_Z2_array_V"}]}]},
+	{"ID" : "12", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.grp_exp_generic_double_s_fu_87", "Parent" : "11", "Child" : ["13", "14", "15", "16"],
+		"CDFG" : "exp_generic_double_s",
+		"Protocol" : "ap_ctrl_hs",
+		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
+		"Pipeline" : "Aligned", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
+		"II" : "1",
+		"VariableLatency" : "0", "ExactLatency" : "6", "EstimateLatencyMin" : "6", "EstimateLatencyMax" : "6",
+		"Combinational" : "0",
+		"Datapath" : "0",
+		"ClockEnable" : "0",
+		"HasSubDataflow" : "0",
+		"InDataflowNetwork" : "0",
+		"HasNonBlockingOperation" : "0",
+		"Port" : [
+			{"Name" : "x", "Type" : "None", "Direction" : "I"},
+			{"Name" : "table_exp_Z1_array_s", "Type" : "Memory", "Direction" : "I"},
+			{"Name" : "table_f_Z3_array_V", "Type" : "Memory", "Direction" : "I"},
+			{"Name" : "table_f_Z2_array_V", "Type" : "Memory", "Direction" : "I"}]},
+	{"ID" : "13", "Level" : "3", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.grp_exp_generic_double_s_fu_87.table_exp_Z1_array_s_U", "Parent" : "12"},
+	{"ID" : "14", "Level" : "3", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.grp_exp_generic_double_s_fu_87.table_f_Z3_array_V_U", "Parent" : "12"},
+	{"ID" : "15", "Level" : "3", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.grp_exp_generic_double_s_fu_87.table_f_Z2_array_V_U", "Parent" : "12"},
+	{"ID" : "16", "Level" : "3", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.grp_exp_generic_double_s_fu_87.myip_v1_0_HLS_maceOg_U1", "Parent" : "12"},
+	{"ID" : "17", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.myip_v1_0_HLS_dadfYi_U7", "Parent" : "11"},
+	{"ID" : "18", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.myip_v1_0_HLS_dmug8j_U8", "Parent" : "11"},
+	{"ID" : "19", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.myip_v1_0_HLS_ddihbi_U9", "Parent" : "11"},
+	{"ID" : "20", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_generic_tanh_double_s_fu_447.myip_v1_0_HLS_dcmibs_U10", "Parent" : "11"},
+	{"ID" : "21", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fadmb6_U16", "Parent" : "0"},
+	{"ID" : "22", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fmuncg_U17", "Parent" : "0"},
+	{"ID" : "23", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fptocq_U18", "Parent" : "0"},
+	{"ID" : "24", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.myip_v1_0_HLS_fpepcA_U19", "Parent" : "0"},
+	{"ID" : "25", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_S_AXIS_V_data_U", "Parent" : "0"},
+	{"ID" : "26", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_w1_S_AXIS_V_last_U", "Parent" : "0"},
+	{"ID" : "27", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_M_AXIS_V_data_U", "Parent" : "0"},
+	{"ID" : "28", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.regslice_both_w1_M_AXIS_V_last_U", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
 	myip_v1_0_HLS {
 		S_AXIS_V_data {Type I LastRead 1 FirstWrite -1}
 		S_AXIS_V_last {Type I LastRead 1 FirstWrite -1}
-		M_AXIS_V_data {Type O LastRead -1 FirstWrite 5}
-		M_AXIS_V_last {Type O LastRead -1 FirstWrite 5}
+		M_AXIS_V_data {Type O LastRead -1 FirstWrite 6}
+		M_AXIS_V_last {Type O LastRead -1 FirstWrite 6}
 		weights1 {Type I LastRead -1 FirstWrite -1}
 		bias1 {Type I LastRead -1 FirstWrite -1}
+		table_exp_Z1_array_s {Type I LastRead -1 FirstWrite -1}
+		table_f_Z3_array_V {Type I LastRead -1 FirstWrite -1}
+		table_f_Z2_array_V {Type I LastRead -1 FirstWrite -1}
 		weights2 {Type I LastRead -1 FirstWrite -1}
-		bias2 {Type I LastRead -1 FirstWrite -1}}}
+		bias2 {Type I LastRead -1 FirstWrite -1}
+		weights3 {Type I LastRead -1 FirstWrite -1}
+		bias3 {Type I LastRead -1 FirstWrite -1}}
+	generic_tanh_double_s {
+		t_in {Type I LastRead 0 FirstWrite -1}
+		table_exp_Z1_array_s {Type I LastRead -1 FirstWrite -1}
+		table_f_Z3_array_V {Type I LastRead -1 FirstWrite -1}
+		table_f_Z2_array_V {Type I LastRead -1 FirstWrite -1}}
+	exp_generic_double_s {
+		x {Type I LastRead 0 FirstWrite -1}
+		table_exp_Z1_array_s {Type I LastRead -1 FirstWrite -1}
+		table_f_Z3_array_V {Type I LastRead -1 FirstWrite -1}
+		table_f_Z2_array_V {Type I LastRead -1 FirstWrite -1}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "2047", "Max" : "2047"}
-	, {"Name" : "Interval", "Min" : "2048", "Max" : "2048"}
+	{"Name" : "Latency", "Min" : "42801", "Max" : "47701"}
+	, {"Name" : "Interval", "Min" : "42802", "Max" : "47702"}
 ]}
 
 set PipelineEnableSignalInfo {[

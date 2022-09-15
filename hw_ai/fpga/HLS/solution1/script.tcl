@@ -5,9 +5,9 @@
 ############################################################
 open_project cg4002
 set_top myip_v1_0_HLS
-add_files cg4002/weight.h
-add_files cg4002/myip_v1_0_HLS.cpp
 add_files cg4002/bias.h
+add_files cg4002/myip_v1_0_HLS.cpp
+add_files cg4002/weight.h
 add_files -tb cg4002/test_myip_v1_0_HLS.cpp -cflags "-Wno-unknown-pragmas" -csimflags "-Wno-unknown-pragmas"
 open_solution "solution1"
 set_part {xczu3eg-sbva484-1-i}
