@@ -17,6 +17,8 @@
 #define ROTATE_Y 4
 #define ROTATE_Z 5
 
+
+// compare is written as a helper function to use C's standard qsort function
 int compare (const void * a, const void * b)
 {
     float fa = *(const float*) a;
@@ -24,6 +26,8 @@ int compare (const void * a, const void * b)
     return (fa > fb) - (fa < fb);
 }
 
+// getStats uses the values in arr to calculate the 4 things we need; mean, median, range, variance.
+// It then stores these values into results.
 float* getStats(float* arr, float* results) {
     
     float sum = 0, maxReading = -10000000, minReading = 10000000;
@@ -59,6 +63,7 @@ float* getStats(float* arr, float* results) {
     return results;
 }
 
+// printStats takes in a 1D array of the stats for one particular reading (e.g. accel_x) and prints them out
 void printStats(float* stats) {
     printf("Mean is %.2f\n", stats[MEAN]);
     printf("Median is %.2f\n", stats[MEDIAN]);

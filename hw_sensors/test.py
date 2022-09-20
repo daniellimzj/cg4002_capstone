@@ -1,6 +1,7 @@
 import statistics
 import random
 
+# This is just a test file to perform sanity checks against the written C code
 for i in range(6):
 
     arr = [(i + 1) * (j + 1) for j in range(10)]
