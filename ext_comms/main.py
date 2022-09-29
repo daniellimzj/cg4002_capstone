@@ -8,6 +8,7 @@ import multiprocessing as mp
 import paho.mqtt.client as mqtt
 
 import MQTT
+import BeetleMain as beetles
 from EvalClient import EvalClient
 from GameEngine import GameEngine
 
@@ -105,19 +106,25 @@ if __name__ == '__main__':
             sys.exit()
 
     actionQueue = mp.Queue()
+
     isInSameArea = mp.Value('i', lock=True)
     isInSameArea.value = 1
+
+    beetleData = mp.Array(beetles.BeetleStruct, beetles.NUM_BEETLES, lock=True)
+    beetleQueue = mp.Queue(beetles.NUM_BEETLES)
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
     moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue,))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
+    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleData, beetleQueue))
 
     try:
         engineProcess.start()
         moveProcess.start()
-        areaClientProcess.start()
+        areaClientProcess.start()   
+        
 
         engineProcess.join()
         moveProcess.join()
