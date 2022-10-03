@@ -1,3 +1,4 @@
 vivado*
 *.xml
+*.meta
 .DS_Store
