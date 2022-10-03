@@ -9,10 +9,22 @@ public class Score : MonoBehaviour
 
     public int playerScore, opponentScore;
 
-    void Start()
+    public void UpdateScore(int d1, int d2)
     {
-        playerScore = 0;
-        opponentScore = 0;
+        playerScore = d1;
+        opponentScore = d2;
+        SetScoreText();
+    }
+
+    public void UpdatePlayerScore(int d1)
+    {
+        playerScore = d1;
+        SetScoreText();
+    }
+
+    public void UpdateOpponentScore(int d2)
+    {
+        playerScore = d2;
         SetScoreText();
     }
 
