@@ -8,6 +8,13 @@ NUM_BEETLES = 6
 PACKET_LEN = 17
 BEETLE_PORT = 6721
 
+P1_VEST = 0
+P1_GUN = 1
+P1_WRIST = 2
+P2_VEST = 3
+P2_GUN = 4
+P2_WRIST = 5
+
 PACKET_FORMAT_STR = "<cffff"
 
 class BeetleStruct(ctypes.Structure):
@@ -18,7 +25,7 @@ def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverSocket.bind(("", serverPort))
     serverSocket.listen()
-    print('Server is ready to receive message at port', serverPort)
+    print('Beetle server is ready to receive message at port', serverPort)
 
     indivs = [mp.Process() for _ in range(NUM_BEETLES)]
 
@@ -48,7 +55,7 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
             
                 print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].median, beetleArr[id].variance, beetleArr[id].range)
             
-            beetleQueue.put(id, block=False)
+            beetleQueue.put(id, block=True)
 
 
     finally:
