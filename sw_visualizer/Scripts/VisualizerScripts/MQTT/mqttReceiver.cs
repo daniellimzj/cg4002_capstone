@@ -137,7 +137,7 @@ public class mqttReceiver : M2MqttUnityClient
         Debug.Log("from topic: " + m_msg);
 
         ////////////////////////////////////////////////////////////
-        //mqttProcessorObj.ProcessReceivedMsg(msg);
+        mqttProcessorObj.ProcessReceivedMsg(msg);
         mqttText.text = msg;
 
         StoreMessage(msg);

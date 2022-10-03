@@ -45,27 +45,25 @@ public class Player : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public void SetHealth(int hp)
     {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(hp);
     }
 
-    public void UseShield()
+    public void SetShield(int num)
     {
-        currentShield--;
-        shield.SetShieldCount(currentShield);
+        shield.SetShieldCount(num);
     }
 
-    public void UseGrenade()
+    public void SetGrenade(int num)
     {
-        currentGrenade--;
-        grenade.SetGrenadeCount(currentGrenade);
+        grenade.SetGrenadeCount(num);
     }
 
-    public void UseBullet()
+    public void SetBullet(int num)
     {
-        currentBullet--;
-        bullet.SetBulletCount(currentBullet);
+        bullet.SetBulletCount(num);
     }
 }
+
+//func create

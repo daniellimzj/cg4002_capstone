@@ -11,22 +11,22 @@ public class TestButton : MonoBehaviour
 
     public void Test_TakeDamageButton()
     {
-        player.TakeDamage(10);
+        player.SetHealth(10);
     }
 
     public void Test_UseShield()
     {
-        player.UseShield();
+        player.SetShield(100);
     }
 
     public void Test_UseGrenade()
     {
-        player.UseGrenade();
+        player.SetGrenade(100);
     }
 
     public void Test_UseBullet()
     {
-        player.UseBullet();
+        player.SetBullet(100);
     }
 
     public void Test_ShowShield()

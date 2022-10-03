@@ -7,7 +7,7 @@ from bluepy.btle import Peripheral, DefaultDelegate
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
 
-TIME_DATA_RATE_COUNT = 70 #s
+TIME_DATA_RATE_COUNT = 60 #s
 
 btleAddrs = [
     "D0:39:72:BF:CA:CF",
@@ -17,8 +17,8 @@ btleAddrs = [
 
 btleHandshakes = [False] * 3
 
-# AckPacket = struct.pack('<bffff??b', ord("A"), float(0), float(0), float(0), float(0), False, False, ord("A"))
-
+class ChecksumError(Exception):
+    pass
 
 class Comms(DefaultDelegate):
     def __init__(self, serialChar, index):
@@ -26,6 +26,8 @@ class Comms(DefaultDelegate):
         self.serialChar = serialChar
         self.index = index
         self.buffer = b''
+        self.fragmented = 0
+        self.dropped = 0
 
     def sendAckPacket(self):
         # print("Sending ack!")
@@ -55,8 +57,8 @@ class Comms(DefaultDelegate):
             'Has Shot Gun': packet[5],
             'Is Shot': packet[6]
         }
-        print("Beetle {0} data:".format(self.index))
-        print((','.join([str(value) for value in data.values()])))
+        # print("Beetle {0} data:".format(self.index))
+        # print((','.join([str(value) for value in data.values()])))
         # print(data)
         self.sendAckPacket()
 
@@ -71,7 +73,7 @@ class Comms(DefaultDelegate):
         for byte in packetBytes:
             if count == 19:  # 19th byte
                 if sum == byte:
-                    print("Beetle {0}: Checksum is true, packet valid!".format(self.index))
+                    # print("Beetle {0}: Checksum is true, packet valid!".format(self.index))
                     return True
                 else:
                     break
@@ -86,12 +88,33 @@ class Comms(DefaultDelegate):
         print("  ^FRAGMENTED PACKET DETECTED^")
         print("================================")
         self.buffer = self.buffer + data
+        self.fragmented += 1
+        print("Buffer:", self.buffer)
+        print("Data:", data)
+        print("Beetle {0} Fragmented: {1}".format(self.index, self.fragmented))
         if len(self.buffer) == 20:  # Need to handle if fragmented weirdly?
             print("================================")
             print("   FRAGMENTED DATA PREVENTED")
             print("================================")
             self.handleNotification(None, self.buffer)
             self.buffer = b''
+
+    def handleChecksumError(self, data):
+        print("================================")
+        print("Handling checksum error")
+        print("================================")
+        currBuffer = len(self.buffer)
+        # print("received:", data, len(data))
+        # print("old data:", self.buffer, currBuffer)
+        currData = data[:(20-currBuffer)]
+        self.buffer = self.buffer + currData
+        print("Fixed data:", self.buffer)
+        self.handleNotification(None, self.buffer)
+        # print("new called data:")
+        # print(self.buffer, len(self.buffer))
+        self.buffer = data[(20-currBuffer):]
+        print("Leftover data:", self.buffer)
+        # print(self.buffer, len(self.buffer))
 
     def handleNotification(self, charHandle, data):
         try:
@@ -107,8 +130,8 @@ class Comms(DefaultDelegate):
                 '?'   # Got Shot
                 'b'   # Checksum
             )
-            print()
-            print("Beetle {0}: {1} {2}".format(self.index, data, type(data)))
+            # print()
+            # print("Beetle {0}: {1} {2}".format(self.index, data, type(data)))
             packet = struct.unpack_from(packetFormat, data, 0)
             # print(packet)
             # for i in packet:
@@ -117,7 +140,7 @@ class Comms(DefaultDelegate):
             if len(packet) == 8:
                 # print("hi")
                 if not self.verifyChecksum(data):
-                    raise Exception("Incorrect checksum")
+                    raise ChecksumError("Incorrect checksum")
                 # packet = struct.unpack(packetFormat, data)
 
             packetType = packet[0]
@@ -140,9 +163,16 @@ class Comms(DefaultDelegate):
             #     self.handleNotification(None, self.buffer)
             #     self.buffer = b''
 
-        except Exception as e:
-            print(e, type(e))
+        except ChecksumError:
+            self.handleChecksumError(data)
 
+        except Exception as e:
+            self.dropped += 1
+            print(e)
+            print("Dropped:", data)
+            print("Beetle {0} dropped: {1}".format(self.index, self.dropped))
+            # print("\rBeetle {0} total calls: {1}".format(self.index, self.dropped), end="\r")
+            # print(e)
 
 def initHandshake(beetle, serialChar, index):
     while not btleHandshakes[index]:
@@ -155,6 +185,7 @@ def initHandshake(beetle, serialChar, index):
 
 def watchForDisconnect(beetle, index):
     packetCount = 0
+    interval = 10
     startTime = time.time()
     while True:
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
@@ -162,9 +193,12 @@ def watchForDisconnect(beetle, index):
             # disconnected = True
             break
         packetCount += 1
-        if time.time() - startTime >= TIME_DATA_RATE_COUNT:
-            dataRate = (packetCount * 20) / TIME_DATA_RATE_COUNT
-            print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, TIME_DATA_RATE_COUNT, dataRate))
+        currTime = time.time()
+        if currTime - startTime >= interval:
+            dataRate = (packetCount * 20) / interval
+            print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, interval, dataRate))
+            interval += 10
+        if currTime  - startTime >= TIME_DATA_RATE_COUNT:  
             return False
 
     print("No data for 2 seconds, attempting to reconnect...")

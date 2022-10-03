@@ -1,0 +1,63 @@
+import ctypes
+import multiprocessing as mp
+import struct
+
+from socket import *
+
+NUM_BEETLES = 6
+PACKET_LEN = 17
+BEETLE_PORT = 6721
+
+P1_VEST = 0
+P1_GUN = 1
+P1_WRIST = 2
+P2_VEST = 3
+P2_GUN = 4
+P2_WRIST = 5
+
+PACKET_FORMAT_STR = "<cffff"
+
+class BeetleStruct(ctypes.Structure):
+    _fields_ = [('packetType', ctypes.c_char), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
+
+def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
+    serverPort = BEETLE_PORT
+    serverSocket = socket(AF_INET, SOCK_STREAM)
+    serverSocket.bind(("", serverPort))
+    serverSocket.listen()
+    print('Beetle server is ready to receive message at port', serverPort)
+
+    indivs = [mp.Process() for _ in range(NUM_BEETLES)]
+
+    for i in range(NUM_BEETLES):
+        connectionSocket, clientAddr = serverSocket.accept()
+        indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleArr, beetleQueue, i, connectionSocket))
+        indivs[i].start()
+
+    for i in range(NUM_BEETLES):
+        indivs[i].join()
+
+def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSocket: socket):
+    try:
+        while True:
+            packet = b''
+            while len(packet) < PACKET_LEN:
+                packet += connSocket.recv(1)
+
+            packetType, mean, median, variance, range = struct.unpack(PACKET_FORMAT_STR, packet)
+
+            with beetleArr.get_lock():
+                beetleArr[id].packetType = packetType
+                beetleArr[id].mean = mean
+                beetleArr[id].median = median
+                beetleArr[id].variance = variance
+                beetleArr[id].range = range
+            
+                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].median, beetleArr[id].variance, beetleArr[id].range)
+            
+            beetleQueue.put(id, block=True)
+
+
+    finally:
+        connSocket.close()
+
