@@ -111,7 +111,7 @@ if __name__ == '__main__':
     isInSameArea.value = 1
 
     beetleData = mp.Array(beetles.BeetleStruct, beetles.NUM_BEETLES, lock=True)
-    beetleQueue = mp.Queue(beetles.NUM_BEETLES)
+    beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
@@ -124,17 +124,20 @@ if __name__ == '__main__':
         engineProcess.start()
         moveProcess.start()
         areaClientProcess.start()   
+        beetleMainProcess.start()
         
 
         engineProcess.join()
         moveProcess.join()
         areaClientProcess.join()
+        beetleMainProcess.join()
 
     finally:
         actionQueue.close()
         engineProcess.terminate()
         moveProcess.terminate()
         areaClientProcess.terminate()
+        beetleMainProcess.terminate()
         print("closing main")
 
 

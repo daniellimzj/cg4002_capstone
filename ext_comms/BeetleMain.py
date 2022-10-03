@@ -11,7 +11,7 @@ BEETLE_PORT = 6721
 PACKET_FORMAT_STR = "<cffff"
 
 class BeetleStruct(ctypes.Structure):
-    _fields_ = [('packetType', ctypes.c_byte), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
+    _fields_ = [('packetType', ctypes.c_char), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
 
 def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
     serverPort = BEETLE_PORT
@@ -34,11 +34,9 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
     try:
         while True:
             packet = b''
-            print(packet)
             while len(packet) < PACKET_LEN:
                 packet += connSocket.recv(1)
 
-            print(packet)
             packetType, mean, median, variance, range = struct.unpack(PACKET_FORMAT_STR, packet)
 
             with beetleArr.get_lock():
@@ -48,9 +46,9 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
                 beetleArr[id].variance = variance
                 beetleArr[id].range = range
             
-                print(beetleArr[id])
+                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].median, beetleArr[id].variance, beetleArr[id].range)
             
-            beetleQueue.put(id, block=True)
+            beetleQueue.put(id, block=False)
 
 
     finally:
