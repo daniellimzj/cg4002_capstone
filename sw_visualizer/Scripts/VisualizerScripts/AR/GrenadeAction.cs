@@ -45,7 +45,9 @@ public class GrenadeAction : MonoBehaviour
 
     void Explode()
     {
-        explosionGO.SetActive(true);
-
+        if (!explosionGO.activeSelf)
+        {
+            explosionGO.SetActive(true);
+        }
     }
 }

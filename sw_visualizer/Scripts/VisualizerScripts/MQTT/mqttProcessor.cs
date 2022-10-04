@@ -12,8 +12,7 @@ public class mqttProcessor : MonoBehaviour
     public AR_Manager ar_manager;
 
     string test_msg = @"[{""p1"": {""hp"": 30, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 1, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}, ""p2"": {""hp"": 60, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 0, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}}]";
-    string test_msg = @"[{{""p1"",""hp"": 30, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 1, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}, ""p2"": {""hp"": 60, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 0, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}}]";
-
+    
     public Text mqttText;
 
     // Start is called before the first frame update
@@ -38,7 +37,7 @@ public class mqttProcessor : MonoBehaviour
         foreach (Newtonsoft.Json.Linq.JObject root in msgs)
         {
 
-            updatePlayer(Newtonsoft.Json.Linq.JObject)
+            //updatePlayer(Newtonsoft.Json.Linq.JObject)
             foreach (KeyValuePair<String, Newtonsoft.Json.Linq.JToken> app in root)
             {
                 //updatePlayer()
@@ -66,6 +65,7 @@ public class mqttProcessor : MonoBehaviour
                     ui_manager.Update_PlayerShield(Int32.Parse(num_shield));
                     ui_manager.Update_PlayerScore(Int32.Parse(num_deaths));
 
+                    
                     //AR
                     if (string.Equals(action, "shield"))
                     {
@@ -75,6 +75,7 @@ public class mqttProcessor : MonoBehaviour
                     {
                         ar_manager.Opponent_GrenadeAction();
                     }
+                    ar_manager.Player_ShieldHp(Int32.Parse(shield_health));
                 }
                 else
                 {
@@ -85,6 +86,7 @@ public class mqttProcessor : MonoBehaviour
                     ui_manager.Update_OpponentShield(Int32.Parse(num_shield));
                     ui_manager.Update_OpponentScore(Int32.Parse(num_deaths));
 
+
                     //AR
                     if (string.Equals(action, "shield"))
                     {
@@ -94,7 +96,7 @@ public class mqttProcessor : MonoBehaviour
                     {
                         ar_manager.Player_GrenadeAction();
                     }
-                    
+                    ar_manager.Opponent_ShieldHp(Int32.Parse(shield_health));
                 }
 
 

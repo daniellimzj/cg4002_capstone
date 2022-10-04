@@ -21,10 +21,22 @@ public class AR_Manager : MonoBehaviour
 
     }
 
+    public void Player_ShieldHp(int hp)
+    {
+        playerAR.SetShieldHpAR(hp);
+    }
+
     public void Opponent_ShieldAction()
     {
         opponentAR.showShieldAR();
     }
+
+    public void Opponent_ShieldHp(int hp)
+    {
+        opponentAR.SetShieldHpAR(hp);
+    }
+
+
 
     public void Player_GrenadeAction()
     {

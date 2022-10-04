@@ -40,9 +40,9 @@ public class AREffect : MonoBehaviour
         
     }
 
-    public void SetShieldHpAR()
+    public void SetShieldHpAR(int hp)
     {
-        currentHp -= 10;
+        currentHp = hp;
         shieldAction.SetShieldActionText(currentHp);
 
         if (currentHp <= 0)
