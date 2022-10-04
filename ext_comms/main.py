@@ -23,7 +23,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
 
     try:
         while True:
-            inputs = tuple(actionQueue.get(block = True, timeout=100))
+            inputs = tuple(actionQueue.get(block = True, timeout=1000))
             p1_action, p2_action = inputs
 
             is_in_same_area = True
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
-    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue,))
+    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
     beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleData, beetleQueue))
 
