@@ -7,7 +7,6 @@ from BeetleMain import BEETLE_PORT
 
 if __name__ == "__main__":
 
-
     serverName = "localhost"
     serverPort = BEETLE_PORT
     clientSocket = socket(AF_INET, SOCK_STREAM)
