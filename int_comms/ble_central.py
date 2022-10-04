@@ -4,6 +4,13 @@ import time
 
 from bluepy.btle import Peripheral, DefaultDelegate
 
+import json
+from socket import *
+
+import sshtunnel
+# from ext_comms.BeetleMain import BEETLE_PORT
+BEETLE_PORT = 6721
+
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
 
@@ -24,10 +31,11 @@ class ChecksumError(Exception):
     pass
 
 class Comms(DefaultDelegate):
-    def __init__(self, serialChar, index):
+    def __init__(self, serialChar, index, clientSocket):
         DefaultDelegate.__init__(self)
         self.serialChar = serialChar
         self.index = index
+        self.clientSocket = clientSocket
         self.buffer = b''
         self.fragmented = 0
         self.dropped = 0
@@ -41,7 +49,7 @@ class Comms(DefaultDelegate):
         self.sendAckPacket()  # TODO: Change to 20bytes
         btleHandshakes[self.index] = True
 
-    def handleDataPacket(self, packet):
+    def handleDataPacket(self, data, packet):
         # Packet Indexing:
         # 0 - Packet Type
         # 1 - Mean
@@ -52,7 +60,7 @@ class Comms(DefaultDelegate):
         # 6 - Gets Shot
 
         # self.sendAckPacket()
-        data = {
+        datas = {
             'BeetleID': self.index,
             'Mean': packet[1],
             'Range': packet[2],
@@ -62,10 +70,12 @@ class Comms(DefaultDelegate):
             'Is Shot': packet[6]
         }
         # print("Beetle {0} data:".format(self.index))
-        result = (','.join([str(value) for value in data.values()]))
+        result = (','.join([str(value) for value in datas.values()]))
         if result != self.prev:
             print(result)
             self.prev = result
+            self.clientSocket.send(data)
+            print("Sent!")
         # print(data)
         self.sendAckPacket()
 
@@ -157,7 +167,7 @@ class Comms(DefaultDelegate):
                 self.handleAckPacket()
             elif packetType == ord('D'):
                 # print("handling data")
-                self.handleDataPacket(packet)
+                self.handleDataPacket(data, packet)
 
         except struct.error:
             self.handleFragmentation(data)
@@ -219,31 +229,45 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
     beetle = Peripheral()
     notStop = True
 
-    while notStop:
-        try:
-            print("Searching for Beetle", str(index))
-            beetle.connect(addr)
-            print("Connecting to Beetle {0}...".format(index))
+    with sshtunnel.open_tunnel(
+        'stu.comp.nus.edu.sg',
+        ssh_username="danielim",
+        ssh_password="Cg4002!",
+        remote_bind_address=('192.168.95.234', BEETLE_PORT),
+    ) as tunnel:
 
-            serialSvc = beetle.getServiceByUUID(
-                "0000dfb0-0000-1000-8000-00805f9b34fb")
-            serialChar = serialSvc.getCharacteristics(
-                "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
-            delegate = Comms(serialChar, index)
-            beetle.withDelegate(delegate)
+        serverName = 'localhost'
+        serverPort = int(tunnel.local_bind_port)
+        clientSocket = socket(AF_INET, SOCK_STREAM)
+        clientSocket.connect((serverName, serverPort))
+        print("connected to:", serverName, serverPort)
 
-            if not btleHandshakes[index]:
-                initHandshake(beetle, serialChar, index)
-                print("Beetle " + str(index) +": Handshake Successful!")
-                print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
-            if btleHandshakes[index]:
-                notStop = watchForDisconnect(beetle, index)
+        while notStop:
+            try:
+                print("Searching for Beetle", str(index))
+                beetle.connect(addr)
+                print("Connecting to Beetle {0}...".format(index))
 
-        except KeyboardInterrupt:
-            beetle.disconnect()
-        except Exception as e:
-            print(e)
+                serialSvc = beetle.getServiceByUUID(
+                    "0000dfb0-0000-1000-8000-00805f9b34fb")
+                serialChar = serialSvc.getCharacteristics(
+                    "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
+                delegate = Comms(serialChar, index, clientSocket)
+                beetle.withDelegate(delegate)
+
+                if not btleHandshakes[index]:
+                    initHandshake(beetle, serialChar, index)
+                    print("Beetle " + str(index) +": Handshake Successful!")
+                    print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
+
+                if btleHandshakes[index]:
+                    notStop = watchForDisconnect(beetle, index)
+
+            except KeyboardInterrupt:
+                beetle.disconnect()
+            except Exception as e:
+                print(e)
 
 
 if __name__ == "__main__":
