@@ -10,8 +10,11 @@ TIMEOUT_HANDSHAKE = 50/100 #s
 TIME_DATA_RATE_COUNT = 60 #s
 
 btleAddrs = [
-    "D0:39:72:BF:CA:CF",
-    "D0:39:72:BF:CA:FA",
+    "D0:39:72:BF:CA:CF", # btleArm0
+    "D0:39:72:BF:C8:A6", # btleVest0
+    "D0:39:72:BF:CA:FC", # btleGun0
+    "D0:39:72:BF:CA:A6", # btleArm1
+    "D0:39:72:BF:CA:FA", 
     "D0:39:72:BF:CA:81"
 ]
 
@@ -28,6 +31,7 @@ class Comms(DefaultDelegate):
         self.buffer = b''
         self.fragmented = 0
         self.dropped = 0
+        self.prev = ""
 
     def sendAckPacket(self):
         # print("Sending ack!")
@@ -41,9 +45,9 @@ class Comms(DefaultDelegate):
         # Packet Indexing:
         # 0 - Packet Type
         # 1 - Mean
-        # 2 - Median
-        # 3 - Standard Deviation
-        # 4 - Range
+        # 2 - Range
+        # 3 - Variance
+        # 4 - Median
         # 5 - Shoots Gun
         # 6 - Gets Shot
 
@@ -51,14 +55,17 @@ class Comms(DefaultDelegate):
         data = {
             'BeetleID': self.index,
             'Mean': packet[1],
-            'Median': packet[2],
-            'Standard Deviation': packet[3],
-            'Range': packet[4],
+            'Range': packet[2],
+            'Variance': packet[3],
+            'Median': packet[4],
             'Has Shot Gun': packet[5],
             'Is Shot': packet[6]
         }
         # print("Beetle {0} data:".format(self.index))
-        # print((','.join([str(value) for value in data.values()])))
+        result = (','.join([str(value) for value in data.values()]))
+        if result != self.prev:
+            print(result)
+            self.prev = result
         # print(data)
         self.sendAckPacket()
 
@@ -124,8 +131,8 @@ class Comms(DefaultDelegate):
                 '<b'  # Packet Type
                 'f'   # Mean
                 'f'   # Median
-                'f'   # Standard Deviation
                 'f'   # Range
+                'f'   # Variance
                 '?'   # Gun is Shot
                 '?'   # Got Shot
                 'b'   # Checksum
@@ -240,21 +247,21 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
 
 
 if __name__ == "__main__":
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[0], 0))
-    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
-    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
+    # beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
+    # beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
 
     try:
         beetle0Process.start()
-        beetle1Process.start()
-        beetle2Process.start()
+        # beetle1Process.start()
+        # beetle2Process.start()
 
         beetle0Process.join()
-        beetle1Process.join()
-        beetle2Process.join()
+        # beetle1Process.join()
+        # beetle2Process.join()
     finally:
         beetle0Process.terminate()
-        beetle1Process.terminate()
-        beetle2Process.terminate()
+        # beetle1Process.terminate()
+        # beetle2Process.terminate()
 
         print("Closing main")
