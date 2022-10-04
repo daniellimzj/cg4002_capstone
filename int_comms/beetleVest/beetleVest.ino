@@ -137,11 +137,9 @@ public:
 
   void run() override
   {
-//    nextState = &Data_State;
     while (true) {
       delay(TIMEOUT_ACK);
       if (Serial.read() == 'A') {
-//        nextState = &Data_State;
           nextID = DATA_STATE_ID;
         break;
       }
@@ -158,7 +156,6 @@ class SleepState : public State
     void run() override
     {
       if (Serial.read() == 'H') {
-//        nextState = &Handshake_State;
           nextID = HANDSHAKE_STATE_ID;
       } else if (handshakeDone && isDetected) {
         nextID = DATA_STATE_ID;
@@ -173,7 +170,6 @@ public:
 
   void init() override
   {
-//    nextState = &Sleep_State;
     nextID = SLEEP_STATE_ID;
   }
 } Start_State;

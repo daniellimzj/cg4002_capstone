@@ -13,25 +13,14 @@
 void initReceiver() {
   Serial.begin(115200);
   IrReceiver.begin(IR_RECEIVE_PIN/*, ENABLE_LED_FEEDBACK*/);
-//  Serial.print("Ready to receive IR signals of protocols: ");
-//  printActiveIRProtocols(&Serial);
-//  Serial.print("at pin ");
-//  Serial.println(IR_RECEIVE_PIN);
   pinMode(INDICATOR_LED_PIN, OUTPUT);
   digitalWrite(INDICATOR_LED_PIN, LOW);
 }
 
 void senseReceiver(boolean isDetected) {
     if (IrReceiver.decode()) {
-//        IrReceiver.printIRResultShort(&Serial); // Print a short summary of received data
-//        if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
-//            Serial.println("Received noise or an unknown (or not yet enabled) protocol");
-//            // We have an unknown protocol here, print more info
-//            IrReceiver.printIRResultRawFormatted(&Serial, true);
-//        }
 
         if (IrReceiver.decodedIRData.address == RECEIVE_ADDRESS && IrReceiver.decodedIRData.command == RECEIVE_COMMAND) {
-//          Serial.println("Command received");
           isDetected = true;
 
           //flash the LED & sound the buzzer
@@ -46,9 +35,7 @@ void senseReceiver(boolean isDetected) {
           delay(100);
           digitalWrite(INDICATOR_LED_PIN, LOW);
           noTone(BUZZER_PIN);
-//          delay(100);
         }
-//        Serial.println();
 
         IrReceiver.resume(); // Enable receiving of the next value
     }
