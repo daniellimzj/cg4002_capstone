@@ -5,6 +5,7 @@ using M2MqttUnity;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Diagnostics;
+using System;
 
 public class mqttPublisher : M2MqttUnityClient
 {
@@ -28,9 +29,16 @@ public class mqttPublisher : M2MqttUnityClient
 
     public void TESTSEND_no()
     {
-        UnityEngine.Debug.Log("inside test send no");
-        string messagePublish = "0";
-        client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        try
+        {
+            UnityEngine.Debug.Log("inside test send no");
+            string messagePublish = "0";
+            client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        }
+        catch (NullReferenceException e)
+        {
+
+        }
     }
 
 

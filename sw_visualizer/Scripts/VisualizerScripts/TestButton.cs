@@ -36,7 +36,7 @@ public class TestButton : MonoBehaviour
 
     public void Test_RemoveShield()
     {
-        arEffect.SetShieldHpAR();
+        arEffect.SetShieldHpAR(10);
 
     }
 

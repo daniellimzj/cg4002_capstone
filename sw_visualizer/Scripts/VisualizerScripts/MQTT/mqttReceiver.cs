@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -137,7 +138,21 @@ public class mqttReceiver : M2MqttUnityClient
         Debug.Log("from topic: " + m_msg);
 
         ////////////////////////////////////////////////////////////
-        mqttProcessorObj.ProcessReceivedMsg(msg);
+        try
+        {
+            mqttProcessorObj.ProcessReceivedMsg(msg);
+        }
+        catch (InvalidCastException)
+        {
+            Debug.Log("Input is not Json String");
+        }
+        catch (Newtonsoft.Json.JsonReaderException e)
+        {
+            Debug.Log("Input is not Json String");
+        }
+
+
+
         mqttText.text = msg;
 
         StoreMessage(msg);

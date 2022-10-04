@@ -5,7 +5,7 @@ import struct
 from socket import *
 
 NUM_BEETLES = 6
-PACKET_LEN = 17
+PACKET_LEN = 20
 BEETLE_PORT = 6721
 
 P1_VEST = 0
@@ -15,10 +15,17 @@ P2_VEST = 3
 P2_GUN = 4
 P2_WRIST = 5
 
-PACKET_FORMAT_STR = "<cffff"
+PACKET_FORMAT_STR = "<cffff??b"
 
 class BeetleStruct(ctypes.Structure):
-    _fields_ = [('packetType', ctypes.c_char), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
+    _fields_ = [('packetType', ctypes.c_char), \
+                ('mean', ctypes.c_double), \
+                ('range', ctypes.c_double), \
+                ('variance', ctypes.c_double), \
+                ('median', ctypes.c_double), \
+                ('didShoot', ctypes.c_bool), \
+                ('isShot', ctypes.c_bool), \
+                ('checksum', ctypes.c_byte)]
 
 def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
     serverPort = BEETLE_PORT
@@ -44,16 +51,20 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
             while len(packet) < PACKET_LEN:
                 packet += connSocket.recv(1)
 
-            packetType, mean, median, variance, range = struct.unpack(PACKET_FORMAT_STR, packet)
+            packetType, mean, range, variance, median, didShoot, isShot, checksum = struct.unpack(PACKET_FORMAT_STR, packet)
 
             with beetleArr.get_lock():
                 beetleArr[id].packetType = packetType
                 beetleArr[id].mean = mean
-                beetleArr[id].median = median
-                beetleArr[id].variance = variance
                 beetleArr[id].range = range
+                beetleArr[id].variance = variance
+                beetleArr[id].median = median
+                beetleArr[id].didShoot = didShoot
+                beetleArr[id].isShot = isShot
+                beetleArr[id].checksum = checksum
+                
             
-                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].median, beetleArr[id].variance, beetleArr[id].range)
+                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].range, beetleArr[id].variance, beetleArr[id].median, beetleArr[id].didShoot, beetleArr[id].isShot, beetleArr[id].checksum)
             
             beetleQueue.put(id, block=True)
 
