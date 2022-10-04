@@ -1,4 +1,4 @@
-#include "infraredReceiver.h"
+#include "infraredEmmiter.h"
 
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
@@ -23,7 +23,7 @@ struct AckPacket
 
 struct DataPacket
 { 
-  byte packetType = 'V';
+  byte packetType = 'G';
   float mean; // 4 bytes
   float range;
   float variance;
@@ -60,19 +60,19 @@ void sendDummyData()
   Serial.write((byte *)&dummyPacket, sizeof(dummyPacket));
 }
 
-void sendVestData()
+void sendGunData()
 {
-  DataPacket vestPacket;
+  DataPacket gunPacket;
 
-  vestPacket.mean = 0;
-  vestPacket.range = 0;
-  vestPacket.variance = 0;
-  vestPacket.median = 0;
-  vestPacket.isGunShot = false;
-  vestPacket.isHit = true;
-  vestPacket.checkSum = calculateChecksum((uint8_t *)&vestPacket);
+  gunPacket.mean = 0;
+  gunPacket.range = 0;
+  gunPacket.variance = 0;
+  gunPacket.median = 0;
+  gunPacket.isGunShot = true;
+  gunPacket.isHit = false;
+  gunPacket.checkSum = calculateChecksum((uint8_t *)&gunPacket);
 
-  Serial.write((byte *)&vestPacket, sizeof(vestPacket));
+  Serial.write((byte *)&gunPacket, sizeof(gunPacket));
 }
 
 void sendAck()
@@ -104,7 +104,7 @@ public:
 
   void init() override
   {
-    sendVestData();
+    sendGunData();
   }
 
   void run() override
@@ -120,7 +120,7 @@ public:
         nextID = SLEEP_STATE_ID;
         break;
       }
-      sendVestData();
+      sendGunData();
     }
   }
 } Data_State;
@@ -184,12 +184,12 @@ void setup()
   Serial.begin(115200);
   currState = &Start_State;
   nextID = SLEEP_STATE_ID;
-  initReceiver();
+  initEmmiter();
 }
 
 void loop()
 {
-  senseReceiver(isDetected);
+  senseEmmiter(isDetected);
   
   switch (nextID) {
     case START_STATE_ID:
