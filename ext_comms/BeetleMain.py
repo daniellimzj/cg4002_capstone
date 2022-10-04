@@ -54,6 +54,8 @@ def startBeetleMainProcess(beetleQueue: mp.Array):
         indivs[i].join()
 
 def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
+
+    print("starting beetle process", id)
     try:
         while True:
             packet = b''
