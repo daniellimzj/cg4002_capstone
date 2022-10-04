@@ -1,16 +1,18 @@
 import json
-from multiprocessing.sharedctypes import SynchronizedBase
-import os
-from socket import *
-import sys
 import multiprocessing as mp
+import os
+import sys
+import time
+from multiprocessing.sharedctypes import SynchronizedBase
+from socket import *
 
 import paho.mqtt.client as mqtt
 
-import MQTT
 import BeetleMain as beetles
+import MQTT
 from EvalClient import EvalClient
 from GameEngine import GameEngine
+from Player import Actions
 
 
 def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isInSameArea: SynchronizedBase):
@@ -24,7 +26,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
     try:
         while True:
             inputs = tuple(actionQueue.get(block = True, timeout=1000))
-            p1_action, p2_action = inputs
+            p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
 
             is_in_same_area = True
 
@@ -52,17 +54,45 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
 
 def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
-    received = set()
+    received = {}
+
+    p1Move = Actions.no
+    p2Move = Actions.no
+    didP1GetShot = False
+    didP2GetShot = False
 
     while True:
-        beetleID = beetleQueue.get(block = True)
-        received.add(beetleID)
+        try:
+            (beetleID, packet) = beetleQueue.get(block = True, timeout = 0.5)
+            received[beetleID] = packet
 
-        if hasMoveHappened(received):
-            p1Move, p2Move = "shoot", "shoot"
-            actionQueue.put((p1Move, p2Move), block=True)
+            if beetleID == beetles.P1_WRIST:
+                p1Move  = getMoveFromAI(beetleID)
 
-def hasMoveHappened(received):
+            elif beetleID == beetles.P2_WRIST:
+                p2Move = getMoveFromAI(beetleID)
+
+            elif beetleID == beetles.P1_GUN:
+                p1Move = Actions.shoot
+
+            elif beetleID == beetles.P2_GUN:
+                p2Move = Actions.shoot
+
+            elif beetleID == beetles.P1_VEST:
+                didP1GetShot = True
+            
+            elif beetleID == beetles.P2_VEST:
+                didP2GetShot = True            
+
+        finally:
+            if p1Move != Actions.no or p2Move != Actions.no:
+                actionQueue.put((p1Move, p2Move, didP1GetShot, didP2GetShot), block=True)
+                p1Move = Actions.no
+                p2Move = Actions.no
+                didP1GetShot = False
+                didP2GetShot = False
+
+def getMoveFromAI(id):
     pass
 
 def startAreaClient(isInSameArea):
@@ -108,7 +138,6 @@ if __name__ == '__main__':
     isInSameArea = mp.Value('i', lock=True)
     isInSameArea.value = 1
 
-    beetleData = mp.Array(beetles.BeetleStruct, beetles.NUM_BEETLES, lock=True)
     beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
@@ -116,7 +145,7 @@ if __name__ == '__main__':
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
     moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
-    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleData, beetleQueue))
+    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleQueue,))
 
     try:
         engineProcess.start()

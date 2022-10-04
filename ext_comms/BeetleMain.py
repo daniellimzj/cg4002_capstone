@@ -15,6 +15,15 @@ P2_VEST = 3
 P2_GUN = 4
 P2_WRIST = 5
 
+PACKET_TYPE = 0
+MEAN = 1
+RANGE = 2
+MEDIAN = 3
+VARIANCE = 4
+DID_SHOOT = 5
+IS_SHOT = 6
+CHECKSUM = 7
+
 PACKET_FORMAT_STR = "<cffff??b"
 
 class BeetleStruct(ctypes.Structure):
@@ -27,7 +36,7 @@ class BeetleStruct(ctypes.Structure):
                 ('isShot', ctypes.c_bool), \
                 ('checksum', ctypes.c_byte)]
 
-def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
+def startBeetleMainProcess(beetleQueue: mp.Array):
     serverPort = BEETLE_PORT
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverSocket.bind(("", serverPort))
@@ -38,36 +47,23 @@ def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
 
     for i in range(NUM_BEETLES):
         connectionSocket, clientAddr = serverSocket.accept()
-        indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleArr, beetleQueue, i, connectionSocket))
+        indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleQueue, i, connectionSocket))
         indivs[i].start()
 
     for i in range(NUM_BEETLES):
         indivs[i].join()
 
-def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSocket: socket):
+def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
     try:
         while True:
             packet = b''
             while len(packet) < PACKET_LEN:
                 packet += connSocket.recv(1)
 
-            packetType, mean, range, variance, median, didShoot, isShot, checksum = struct.unpack(PACKET_FORMAT_STR, packet)
-
-            with beetleArr.get_lock():
-                beetleArr[id].packetType = packetType
-                beetleArr[id].mean = mean
-                beetleArr[id].range = range
-                beetleArr[id].variance = variance
-                beetleArr[id].median = median
-                beetleArr[id].didShoot = didShoot
-                beetleArr[id].isShot = isShot
-                beetleArr[id].checksum = checksum
-                
+            packet = struct.unpack(PACKET_FORMAT_STR, packet)
+            print(id, packet[PACKET_TYPE], packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN], packet[DID_SHOOT], packet[IS_SHOT], packet[CHECKSUM])
             
-                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].range, beetleArr[id].variance, beetleArr[id].median, beetleArr[id].didShoot, beetleArr[id].isShot, beetleArr[id].checksum)
-            
-            beetleQueue.put(id, block=True)
-
+            beetleQueue.put((id, *packet), block=True)
 
     finally:
         connSocket.close()
