@@ -2,6 +2,7 @@ import json
 from socket import *
 
 import sshtunnel
+from BeetleMain import BEETLE_PORT
 
 if __name__ == "__main__":
 
@@ -12,8 +13,7 @@ if __name__ == "__main__":
         'stu.comp.nus.edu.sg',
         ssh_username="danielim",
         ssh_password=sunfirePassword,
-        remote_bind_address=('192.168.95.234', 9696),
-        local_bind_address=('localhost', 9696)
+        remote_bind_address=('192.168.95.234', BEETLE_PORT),
     ) as tunnel:
 
             serverName = 'localhost'
