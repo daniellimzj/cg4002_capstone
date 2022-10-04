@@ -50,22 +50,20 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
         gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
-def startMoveProcess(actionQueue: mp.Queue):
+def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
-    serverPort = 9696
-    serverSocket = socket(AF_INET, SOCK_STREAM)
-    serverSocket.bind(('', serverPort))
-    serverSocket.listen()
-    print('Server is ready to receive message at port', serverPort)
-    connectionSocket, clientAddr = serverSocket.accept()
+    received = set()
 
     while True:
-        message = connectionSocket.recv(2048)
-        todo = message.decode().split(' ')
-        p1_action = todo[0]
-        p2_action = todo[1]
-        actionQueue.put((p1_action, p2_action), block=True)
+        beetleID = beetleQueue.get(block = True)
+        received.add(beetleID)
 
+        if hasMoveHappened(received):
+            p1Move, p2Move = "shoot", "shoot"
+            actionQueue.put((p1Move, p2Move), block=True)
+
+def hasMoveHappened(received):
+    pass
 
 def startAreaClient(isInSameArea):
 
@@ -111,7 +109,7 @@ if __name__ == '__main__':
     isInSameArea.value = 1
 
     beetleData = mp.Array(beetles.BeetleStruct, beetles.NUM_BEETLES, lock=True)
-    beetleQueue = mp.Queue(beetles.NUM_BEETLES)
+    beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
 
     evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
@@ -124,17 +122,20 @@ if __name__ == '__main__':
         engineProcess.start()
         moveProcess.start()
         areaClientProcess.start()   
+        beetleMainProcess.start()
         
 
         engineProcess.join()
         moveProcess.join()
         areaClientProcess.join()
+        beetleMainProcess.join()
 
     finally:
         actionQueue.close()
         engineProcess.terminate()
         moveProcess.terminate()
         areaClientProcess.terminate()
+        beetleMainProcess.terminate()
         print("closing main")
 
 

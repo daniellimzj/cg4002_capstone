@@ -4,7 +4,7 @@
 #define INDICATOR_LED_PIN 4
 #define DECODE_NEC
 #define IR_USE_AVR_TIMER1 //to avoid conflict with buzzer using timer 2
-#include <IRremote.hpp>
+#include <IRremote.hpp> //https://github.com/Arduino-IRremote/Arduino-IRremote
 
 //values expected from sender
 #define RECEIVE_ADDRESS 0xA906 

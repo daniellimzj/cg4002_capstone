@@ -8,17 +8,24 @@ NUM_BEETLES = 6
 PACKET_LEN = 17
 BEETLE_PORT = 6721
 
+P1_VEST = 0
+P1_GUN = 1
+P1_WRIST = 2
+P2_VEST = 3
+P2_GUN = 4
+P2_WRIST = 5
+
 PACKET_FORMAT_STR = "<cffff"
 
 class BeetleStruct(ctypes.Structure):
-    _fields_ = [('packetType', ctypes.c_byte), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
+    _fields_ = [('packetType', ctypes.c_char), ('mean', ctypes.c_double), ('median', ctypes.c_double), ('range', ctypes.c_double), ('variance', ctypes.c_double)]
 
 def startBeetleMainProcess(beetleArr: mp.Array, beetleQueue: mp.Array):
     serverPort = BEETLE_PORT
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverSocket.bind(("", serverPort))
     serverSocket.listen()
-    print('Server is ready to receive message at port', serverPort)
+    print('Beetle server is ready to receive message at port', serverPort)
 
     indivs = [mp.Process() for _ in range(NUM_BEETLES)]
 
@@ -34,11 +41,9 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
     try:
         while True:
             packet = b''
-            print(packet)
             while len(packet) < PACKET_LEN:
                 packet += connSocket.recv(1)
 
-            print(packet)
             packetType, mean, median, variance, range = struct.unpack(PACKET_FORMAT_STR, packet)
 
             with beetleArr.get_lock():
@@ -48,7 +53,7 @@ def startBeetleIndiv(beetleArr: mp.Array, beetleQueue: mp.Queue, id: int, connSo
                 beetleArr[id].variance = variance
                 beetleArr[id].range = range
             
-                print(beetleArr[id])
+                print(id, beetleArr[id].packetType, beetleArr[id].mean, beetleArr[id].median, beetleArr[id].variance, beetleArr[id].range)
             
             beetleQueue.put(id, block=True)
 
