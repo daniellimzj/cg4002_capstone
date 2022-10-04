@@ -32,9 +32,9 @@
 MPU6050 myIMU;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ;
-int8_t filteredAccX, filteredAccY, filteredAccZ, filteredGyroX, filteredGyroY, filteredGyroZ;
+int16_t filteredAccX, filteredAccY, filteredAccZ, filteredGyroX, filteredGyroY, filteredGyroZ;
 
-int8_t readings[NUM_FEATURES][NUM_READINGS];
+int16_t readings[NUM_FEATURES][NUM_READINGS];
 float stats[NUM_FEATURES][NUM_STATS];
 
 unsigned long i = 0;
@@ -50,10 +50,10 @@ ExponentialFilter<long> gyroZFilter(FILTER_WEIGHT, 0);
 
 // getStats uses the values in arr to calculate the 4 things we need; mean, median, range, variance.
 // It then stores these values into results.
-void getStats(int8_t* arr, float* results) {
+void getStats(int16_t* arr, float* results) {
 
-  int8_t maxR = -128;
-  int8_t minR = 127;
+  int16_t maxR = -32768;
+  int16_t minR = 32767;
 
 
   for (int i = 0; i < NUM_READINGS; i++) {
@@ -76,18 +76,18 @@ void getStats(int8_t* arr, float* results) {
 
   results[RANGE] = (float)maxR - (float)minR;
 
-  results[MEDIAN] = (float)QuickMedian<int8_t>::GetMedian(arr, sizeof(arr) / sizeof(int8_t));
+  results[MEDIAN] = (float)QuickMedian<int16_t>::GetMedian(arr, sizeof(arr) / sizeof(int16_t));
 
 }
 
 void printStats(float* stats) {
   Serial.print(stats[MEAN]);
   Serial.print(", ");
-  Serial.print(stats[MEDIAN]);
-  Serial.print(", ");
   Serial.print(stats[RANGE]);
   Serial.print(", ");
   Serial.print(stats[VARIANCE]);
+  Serial.print(", ");
+  Serial.print(stats[MEDIAN]);
   Serial.println("");
 }
 
@@ -131,17 +131,17 @@ void loop() {
 
     /* filtered values, reduce range to fit into int8_t*/
     accXFilter.Filter(accX);
-    filteredAccX = (int8_t)(accXFilter.Current() / 256);
+    filteredAccX = (int16_t)(accXFilter.Current());
     accYFilter.Filter(accY);
-    filteredAccY = (int8_t)(accYFilter.Current() / 256);
+    filteredAccY = (int16_t)(accYFilter.Current());
     accZFilter.Filter(accZ);
-    filteredAccZ = (int8_t)(accZFilter.Current() / 256);
+    filteredAccZ = (int16_t)(accZFilter.Current());
     gyroXFilter.Filter(gyroX);
-    filteredGyroX = (int8_t)(gyroXFilter.Current() / 256);
+    filteredGyroX = (int16_t)(gyroXFilter.Current());
     gyroYFilter.Filter(gyroY);
-    filteredGyroY = (int8_t)(gyroYFilter.Current() / 256);
+    filteredGyroY = (int16_t)(gyroYFilter.Current());
     gyroZFilter.Filter(gyroZ);
-    filteredGyroZ = (int8_t)(gyroZFilter.Current() / 256);
+    filteredGyroZ = (int16_t)(gyroZFilter.Current());
 
     /* filtered values */
     //  accXFilter.Filter(accX);
@@ -165,7 +165,6 @@ void loop() {
     readings[ROTATE_Z][i] = filteredGyroZ;
 
     if (i == NUM_READINGS - 1) {
-      unsigned long curr = millis();
       getStats(readings[ACCEL_X], stats[ACCEL_X]);
       getStats(readings[ACCEL_Y], stats[ACCEL_Y]);
       getStats(readings[ACCEL_Z], stats[ACCEL_Z]);
@@ -181,7 +180,6 @@ void loop() {
       printStats(stats[ROTATE_Y]);
       printStats(stats[ROTATE_Z]);
 
-      Serial.println(millis() - curr);
       i = 0;
     } else {
       i++;

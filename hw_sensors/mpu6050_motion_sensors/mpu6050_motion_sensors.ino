@@ -1,9 +1,12 @@
+// Megunolink library used to filter values
+// https://github.com/Megunolink/MLP
+// https://www.megunolink.com/documentation/arduino-library/
 #include <MegunoLink.h>
 #include "Filter.h"
 //#include <CommandHandler.h>
 //#include <ArduinoTimer.h>
 
-#include <I2Cdev.h>
+#include <I2Cdev.h> //https://github.com/jrowberg/i2cdevlib
 #include <helper_3dmath.h>
 #include <MPU6050.h>
 //#include <MPU6050_6Axis_MotionApps20.h>
