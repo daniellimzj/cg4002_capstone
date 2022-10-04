@@ -60,6 +60,21 @@ void sendDummyData()
   Serial.write((byte *)&dummyPacket, sizeof(dummyPacket));
 }
 
+void sendVestData()
+{
+  DataPacket vestPacket;
+
+  vestPacket.mean = 0;
+  vestPacket.median = 0;
+  vestPacket.stdDev = 0;
+  vestPacket.range = 0;
+  vestPacket.isGunShot = false;
+  vestPacket.isHit = true;
+  vestPacket.checkSum = calculateChecksum((uint8_t *)&vestPacket);
+
+  Serial.write((byte *)&vestPacket, sizeof(vestPacket));
+}
+
 void sendAck()
 {
   Serial.write((byte *)&ackPacket, sizeof(ackPacket));
