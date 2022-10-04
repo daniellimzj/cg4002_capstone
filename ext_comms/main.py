@@ -91,7 +91,10 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
                 didP1GetShot = True
             
             elif beetleID == beetles.P2_VEST:
-                didP2GetShot = True            
+                didP2GetShot = True       
+
+        except:
+            continue
 
         finally:
             if p1Move != Actions.no or p2Move != Actions.no:
