@@ -21,12 +21,12 @@ class GameEngine:
     def get_JSON_string(self):
         return json.dumps({'p1': self.p1.get_dict(), 'p2': self.p2.get_dict()})
 
-    def do_actions(self, p1_action = Actions.no, p2_action = Actions.no, is_in_same_area = False):
+    def do_actions(self, p1_action = Actions.no, p2_action = Actions.no, can_p1_see_p2 = False, can_p2_see_p1=False):
         is_p1_action_valid = self.p1.is_action_valid(p1_action)
         is_p2_action_valid = self.p2.is_action_valid(p2_action)
 
-        self.p1.update(is_in_same_area, p1_action, p2_action, is_p2_action_valid)
-        self.p2.update(is_in_same_area, p2_action, p1_action, is_p1_action_valid)
+        self.p1.update(can_p2_see_p1, p1_action, p2_action, is_p2_action_valid)
+        self.p2.update(can_p1_see_p2, p2_action, p1_action, is_p1_action_valid)
 
     def check_and_update_player_states(self, correct_resp: dict) -> bool:
         is_p1_state_correct = self.p1.check_and_update_correct_state(correct_resp['p1'])

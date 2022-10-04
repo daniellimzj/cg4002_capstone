@@ -28,13 +28,22 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
             inputs = tuple(actionQueue.get(block = True, timeout=1000))
             p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
 
-            is_in_same_area = True
+            can_p1_see_p2 = True
+            can_p2_see_p1 = True
 
-            with isInSameArea.get_lock():
-                is_in_same_area = bool(isInSameArea.value)
+            if p1_action == Actions.shoot:
+                can_p1_see_p2 = is_p2_shot
 
-            print("engine is carrying out action with bool", is_in_same_area)
-            engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
+            if p2_action == Actions.shoot:
+                can_p2_see_p1 = is_p1_shot
+            
+            if p1_action != Actions.shoot and p2_action != Actions.shoot:
+                with isInSameArea.get_lock():
+                    can_p1_see_p2 = bool(isInSameArea.value)
+                    can_p2_see_p1 = bool(isInSameArea.value)
+
+            print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
+            engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
             currState = engine.get_JSON_string()
             print("Now sending to eval server...")
