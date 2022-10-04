@@ -56,9 +56,10 @@ if __name__ == '__main__':
             todo = input("Next move: ").split(' ')
             p1_action = todo[0]
             p2_action = todo[1]
-            is_in_same_area = True
+            can_p1_see_p2 = todo[2] == "true"
+            can_p2_see_p1 = todo[3] == "true"
 
-            engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
+            engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
             currState = engine.get_JSON_string()
 
             mqttClient.publish(MQTT.Topics.gameState, currState)
