@@ -1,5 +1,4 @@
-#include <Arduino.h>
-#include <IRremote.hpp>
+#include "receiver.h"
 
 // Communications Definitions
 #define START_STATE_ID 1
@@ -10,16 +9,6 @@
 #define TIMEOUT_ACK 50  
 #define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
-
-// Hardware Definitions
-#define IR_RECEIVE_PIN 2
-#define BUZZER_PIN 3
-#define INDICATOR_LED_PIN 4
-#define DECODE_NEC
-#define IR_USE_AVR_TIMER1 //to avoid conflict with buzzer using timer 2
-
-#define RECEIVE_ADDRESS 0xA906 
-#define RECEIVE_COMMAND 0x0E 
 
 volatile int nextID = SLEEP_STATE_ID;
 volatile boolean handshakeDone = false;
@@ -115,38 +104,34 @@ class DataState : public State
 public:
   DataState() : State(DATA_STATE_ID) {}
 
-  void init() override
-  {
-//      if (isDetected) {
-//        sendVestData();
-//      }
-//      if (counter >= 39) {
-//        sendAck();
-//        counter = 0;
-//      }
-  }
+//  void init() override
+//  {
+////      if (isDetected) {
+////        sendVestData();
+////      }
+////      if (counter >= 39) {
+////        sendAck();
+////        counter = 0;
+////      }
+//  }
 
   void run() override
   {
-//    while (true) {
       delay(TIMEOUT_DATA);
       if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
-//        break;
       } else if (Serial.read() == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
-//        break;
       }
       if (isDetected) {
         sendVestData();
       }
-      if (counter >= 39) {
+      if (counter >= 30) {
         sendAck();
         counter = 0;
       }
-//    }
   }
 } Data_State;
 
@@ -200,41 +185,6 @@ public:
   }
 } Start_State;
 
-// Hardware Codes
-void initReceiver() {
-  IrReceiver.begin(IR_RECEIVE_PIN/*, ENABLE_LED_FEEDBACK*/);
-  pinMode(INDICATOR_LED_PIN, OUTPUT);
-  digitalWrite(INDICATOR_LED_PIN, LOW);
-}
-
-
-void senseReceiver() {
-    if (IrReceiver.decode()) {
-
-        if (IrReceiver.decodedIRData.address == RECEIVE_ADDRESS && IrReceiver.decodedIRData.command == RECEIVE_COMMAND) {
-          isDetected = true;
-          //flash the LED & sound the buzzer
-          digitalWrite(INDICATOR_LED_PIN, HIGH);
-          tone(BUZZER_PIN, 4000);
-          delay(100);
-          digitalWrite(INDICATOR_LED_PIN, LOW);
-          noTone(BUZZER_PIN);
-          delay(100);
-          digitalWrite(INDICATOR_LED_PIN, HIGH);
-          tone(BUZZER_PIN, 4000);
-          delay(100);
-          digitalWrite(INDICATOR_LED_PIN, LOW);
-          noTone(BUZZER_PIN);
-        }
-
-        IrReceiver.resume(); // Enable receiving of the next value
-        IrReceiver.resume();
-        IrReceiver.resume();
-        IrReceiver.resume();
-        IrReceiver.resume();
-    }
-}
-
 // Main Program Loop
 void setup()
 {
@@ -247,8 +197,7 @@ void setup()
 void loop()
 {
   counter += 1;
-//  Serial.println(counter);
-  senseReceiver();
+  isDetected = senseReceiver();
   
   switch (nextID) {
     case START_STATE_ID:
