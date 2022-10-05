@@ -1,17 +1,30 @@
-#include "infraredReceiver.h"
+#include <Arduino.h>
+#include <IRremote.hpp>
 
+// Communications Definitions
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 55 
+#define TIMEOUT_ACK 50  
+#define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
+
+// Hardware Definitions
+#define IR_RECEIVE_PIN 2
+#define BUZZER_PIN 3
+#define INDICATOR_LED_PIN 4
+#define DECODE_NEC
+#define IR_USE_AVR_TIMER1 //to avoid conflict with buzzer using timer 2
+
+#define RECEIVE_ADDRESS 0xA906 
+#define RECEIVE_COMMAND 0x0E 
 
 volatile int nextID = SLEEP_STATE_ID;
 volatile boolean handshakeDone = false;
 volatile boolean isDetected = false;
+volatile long counter = 0;
 
 // Packet Definitions (20 bytes each)
 struct AckPacket
@@ -69,7 +82,7 @@ void sendVestData()
   vestPacket.variance = 0;
   vestPacket.median = 0;
   vestPacket.isGunShot = false;
-  vestPacket.isHit = true;
+  vestPacket.isHit = isDetected;
   vestPacket.checkSum = calculateChecksum((uint8_t *)&vestPacket);
 
   Serial.write((byte *)&vestPacket, sizeof(vestPacket));
@@ -104,24 +117,36 @@ public:
 
   void init() override
   {
-    sendVestData();
+//      if (isDetected) {
+//        sendVestData();
+//      }
+//      if (counter >= 39) {
+//        sendAck();
+//        counter = 0;
+//      }
   }
 
   void run() override
   {
-    while (true) {
+//    while (true) {
       delay(TIMEOUT_DATA);
       if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
-        break;
+//        break;
       } else if (Serial.read() == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
-        break;
+//        break;
       }
-      sendVestData();
-    }
+      if (isDetected) {
+        sendVestData();
+      }
+      if (counter >= 39) {
+        sendAck();
+        counter = 0;
+      }
+//    }
   }
 } Data_State;
 
@@ -140,7 +165,8 @@ public:
     while (true) {
       delay(TIMEOUT_ACK);
       if (Serial.read() == 'A') {
-          nextID = DATA_STATE_ID;
+        handshakeDone = true;
+        nextID = DATA_STATE_ID;
         break;
       }
       sendAck();
@@ -157,7 +183,7 @@ class SleepState : public State
     {
       if (Serial.read() == 'H') {
           nextID = HANDSHAKE_STATE_ID;
-      } else if (handshakeDone && isDetected) {
+      } else if (handshakeDone) {
         nextID = DATA_STATE_ID;
       }
     }
@@ -174,6 +200,41 @@ public:
   }
 } Start_State;
 
+// Hardware Codes
+void initReceiver() {
+  IrReceiver.begin(IR_RECEIVE_PIN/*, ENABLE_LED_FEEDBACK*/);
+  pinMode(INDICATOR_LED_PIN, OUTPUT);
+  digitalWrite(INDICATOR_LED_PIN, LOW);
+}
+
+
+void senseReceiver() {
+    if (IrReceiver.decode()) {
+
+        if (IrReceiver.decodedIRData.address == RECEIVE_ADDRESS && IrReceiver.decodedIRData.command == RECEIVE_COMMAND) {
+          isDetected = true;
+          //flash the LED & sound the buzzer
+          digitalWrite(INDICATOR_LED_PIN, HIGH);
+          tone(BUZZER_PIN, 4000);
+          delay(100);
+          digitalWrite(INDICATOR_LED_PIN, LOW);
+          noTone(BUZZER_PIN);
+          delay(100);
+          digitalWrite(INDICATOR_LED_PIN, HIGH);
+          tone(BUZZER_PIN, 4000);
+          delay(100);
+          digitalWrite(INDICATOR_LED_PIN, LOW);
+          noTone(BUZZER_PIN);
+        }
+
+        IrReceiver.resume(); // Enable receiving of the next value
+        IrReceiver.resume();
+        IrReceiver.resume();
+        IrReceiver.resume();
+        IrReceiver.resume();
+    }
+}
+
 // Main Program Loop
 void setup()
 {
@@ -185,7 +246,9 @@ void setup()
 
 void loop()
 {
-  senseReceiver(isDetected);
+  counter += 1;
+//  Serial.println(counter);
+  senseReceiver();
   
   switch (nextID) {
     case START_STATE_ID:
