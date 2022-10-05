@@ -5,13 +5,14 @@
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 55 
+#define TIMEOUT_ACK 50 
+#define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
 
 volatile int nextID = SLEEP_STATE_ID;
 volatile boolean handshakeDone = false;
 volatile boolean isDetected = false;
+volatile long counter = 0;
 
 // Packet Definitions (20 bytes each)
 struct AckPacket
@@ -68,7 +69,7 @@ void sendGunData()
   gunPacket.range = 0;
   gunPacket.variance = 0;
   gunPacket.median = 0;
-  gunPacket.isGunShot = true;
+  gunPacket.isGunShot = isDetected;
   gunPacket.isHit = false;
   gunPacket.checkSum = calculateChecksum((uint8_t *)&gunPacket);
 
@@ -102,26 +103,23 @@ class DataState : public State
 public:
   DataState() : State(DATA_STATE_ID) {}
 
-  void init() override
-  {
-    sendGunData();
-  }
-
   void run() override
   {
-    while (true) {
       delay(TIMEOUT_DATA);
       if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
-        break;
       } else if (Serial.read() == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
-        break;
       }
-      sendGunData();
-    }
+      if (isDetected) {
+        sendGunData();
+      }
+      if (counter >= 30) {
+        sendAck();
+        counter = 0;
+      }
   }
 } Data_State;
 
@@ -140,6 +138,7 @@ public:
     while (true) {
       delay(TIMEOUT_ACK);
       if (Serial.read() == 'A') {
+        handshakeDone = true;
           nextID = DATA_STATE_ID;
         break;
       }
@@ -157,7 +156,7 @@ class SleepState : public State
     {
       if (Serial.read() == 'H') {
           nextID = HANDSHAKE_STATE_ID;
-      } else if (handshakeDone && isDetected) {
+      } else if (handshakeDone) {
         nextID = DATA_STATE_ID;
       }
     }
@@ -185,7 +184,8 @@ void setup()
 
 void loop()
 {
-  senseEmmiter(isDetected);
+  counter += 1;
+  isDetected = senseEmmiter();
   
   switch (nextID) {
     case START_STATE_ID:

@@ -19,8 +19,9 @@ void initEmmiter() {
   IrSender.begin(); // Start with IR_SEND_PIN as send pin and if NO_LED_FEEDBACK_CODE is NOT defined, enable feedback LED at default feedback LED pin
 }
 
-void senseEmmiter(boolean isDetected) {
+boolean senseEmmiter() {
   // If button pressed, send the code
+  boolean isDetected = false;
   myButton.read();
   if (myButton.wasPressed()) {
     IrSender.sendNEC(SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
@@ -31,4 +32,5 @@ void senseEmmiter(boolean isDetected) {
     delay(100);
     digitalWrite(LED_PIN, LOW);
   }
+  return isDetected;
 }
