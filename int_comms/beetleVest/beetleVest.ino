@@ -1,6 +1,5 @@
 #include "receiver.h"
 
-// Communications Definitions
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
@@ -103,17 +102,6 @@ class DataState : public State
 {
 public:
   DataState() : State(DATA_STATE_ID) {}
-
-//  void init() override
-//  {
-////      if (isDetected) {
-////        sendVestData();
-////      }
-////      if (counter >= 39) {
-////        sendAck();
-////        counter = 0;
-////      }
-//  }
 
   void run() override
   {
