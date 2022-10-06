@@ -1,14 +1,18 @@
+#include "receiver.h"
+
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 55 
+#define TIMEOUT_ACK 50  
+#define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
 
-volatile int currentID = 1;
-volatile int nextID = 2;
+volatile int nextID = SLEEP_STATE_ID;
+volatile boolean handshakeDone = false;
+volatile boolean isDetected = false;
+volatile long counter = 0;
 
 // Packet Definitions (20 bytes each)
 struct AckPacket
@@ -20,11 +24,11 @@ struct AckPacket
 
 struct DataPacket
 { 
-  byte packetType = 'D';
+  byte packetType = 'V';
   float mean; // 4 bytes
-  float median;
-  float stdDev; //standard deviation
   float range;
+  float variance;
+  float median;
   boolean isGunShot;
   boolean isHit;
   byte checkSum;
@@ -45,14 +49,11 @@ uint8_t calculateChecksum(uint8_t *packet)
 void sendDummyData()
 {
   DataPacket dummyPacket;
-//  dummyPacket.mean = 10;
-//  dummyPacket.median = 20;
-//  dummyPacket.stdDev = 30;
-//  dummyPacket.range = 40;
+  
   dummyPacket.mean = random(1, 500) / 100.0;
   dummyPacket.median = random(1, 500) / 100.0;
-  dummyPacket.stdDev = random(1, 500) / 100.0;
   dummyPacket.range = random(1, 500) / 100.0;
+  dummyPacket.variance = random(1, 500) / 100.0;
   dummyPacket.isGunShot = false;
   dummyPacket.isHit = false;
   dummyPacket.checkSum = calculateChecksum((uint8_t *)&dummyPacket);
@@ -65,11 +66,11 @@ void sendVestData()
   DataPacket vestPacket;
 
   vestPacket.mean = 0;
-  vestPacket.median = 0;
-  vestPacket.stdDev = 0;
   vestPacket.range = 0;
+  vestPacket.variance = 0;
+  vestPacket.median = 0;
   vestPacket.isGunShot = false;
-  vestPacket.isHit = true;
+  vestPacket.isHit = isDetected;
   vestPacket.checkSum = calculateChecksum((uint8_t *)&vestPacket);
 
   Serial.write((byte *)&vestPacket, sizeof(vestPacket));
@@ -102,25 +103,23 @@ class DataState : public State
 public:
   DataState() : State(DATA_STATE_ID) {}
 
-  void init() override
-  {
-    sendDummyData();
-  }
-
   void run() override
   {
-    while (true) {
       delay(TIMEOUT_DATA);
-      if (Serial.read() == 'A') {
-//        Serial.println("got ack in data state");
-        break;
-      } else if (Serial.read() == 'H') {
-//        nextState = &Handshake_State;
-          nextID = HANDSHAKE_STATE_ID;
-        break;
+      if (Serial.read() == 'H') {
+        nextID = HANDSHAKE_STATE_ID;
+        handshakeDone = false;
+      } else if (Serial.read() == 'A') {
+        isDetected = false;
+        nextID = SLEEP_STATE_ID;
       }
-      sendDummyData();
-    }
+      if (isDetected) {
+        sendVestData();
+      }
+      if (counter >= 30) {
+        sendAck();
+        counter = 0;
+      }
   }
 } Data_State;
 
@@ -136,12 +135,11 @@ public:
 
   void run() override
   {
-//    nextState = &Data_State;
     while (true) {
       delay(TIMEOUT_ACK);
       if (Serial.read() == 'A') {
-//        nextState = &Data_State;
-          nextID = DATA_STATE_ID;
+        handshakeDone = true;
+        nextID = DATA_STATE_ID;
         break;
       }
       sendAck();
@@ -157,8 +155,9 @@ class SleepState : public State
     void run() override
     {
       if (Serial.read() == 'H') {
-//        nextState = &Handshake_State;
           nextID = HANDSHAKE_STATE_ID;
+      } else if (handshakeDone) {
+        nextID = DATA_STATE_ID;
       }
     }
 } Sleep_State;
@@ -170,7 +169,6 @@ public:
 
   void init() override
   {
-//    nextState = &Sleep_State;
     nextID = SLEEP_STATE_ID;
   }
 } Start_State;
@@ -181,10 +179,14 @@ void setup()
   Serial.begin(115200);
   currState = &Start_State;
   nextID = SLEEP_STATE_ID;
+  initReceiver();
 }
 
 void loop()
 {
+  counter += 1;
+  isDetected = senseReceiver();
+  
   switch (nextID) {
     case START_STATE_ID:
       nextState = &Start_State;
