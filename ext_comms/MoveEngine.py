@@ -21,7 +21,7 @@ def getMoves(beetleQueue: mp.Queue):
     beetleID = packet[beetles.PACKET_TYPE]
 
     if beetleID == beetles.P1_WRIST:
-        p1Move  = getMoveFromAI(packet)
+        p1Move = getMoveFromAI(packet)
 
     elif beetleID == beetles.P2_WRIST:
         p2Move = getMoveFromAI(packet)
@@ -33,7 +33,7 @@ def getMoves(beetleQueue: mp.Queue):
         p2Move = Actions.shoot
 
     elif beetleID == beetles.P1_VEST:
-                didP1GetShot = True
+        didP1GetShot = True
             
     elif beetleID == beetles.P2_VEST:
         didP2GetShot = True 
@@ -41,6 +41,7 @@ def getMoves(beetleQueue: mp.Queue):
     for _ in range(5):
         try:
             packet = beetleQueue.get(block = True, timeout=0.1)
+            beetleID = packet[beetles.PACKET_TYPE]
 
             if beetleID == beetles.P1_WRIST:
                 p1Move  = getMoveFromAI(packet)
