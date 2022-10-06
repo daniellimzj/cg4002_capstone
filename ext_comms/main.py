@@ -11,16 +11,6 @@ if __name__ == '__main__':
     
     _num_param = 3
 
-    if len(sys.argv) < _num_param or (len(sys.argv) != 2 and sys.argv[1] != "-n"):
-            print('To run with eval server:')
-            print('python3 ' + os.path.basename(__file__) + '[Eval Host] [EvalPort]')
-            print('Eval Host: IP Address of eval server')
-            print('Eval Port: Port number of eval server')
-            print("")
-            print("To run without eval server:")
-            print('python3 ' + os.path.basename(__file__) + '-n')
-            sys.exit()
-
     actionQueue = mp.Queue()
 
     isInSameArea = mp.Value('i', lock=True)
