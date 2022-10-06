@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
+    public static string playerid;
 
-    public void LoadARScene()
+    public void LoadARScenePlayer1()
     {
+        playerid = "p1";
+        SceneManager.LoadScene("ARScene");
+    }
+
+    public void LoadARScenePlayer2()
+    {
+        playerid = "p2";
         SceneManager.LoadScene("ARScene");
     }
 
