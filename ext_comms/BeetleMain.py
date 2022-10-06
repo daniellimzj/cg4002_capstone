@@ -8,12 +8,14 @@ NUM_BEETLES = 6
 PACKET_LEN = 20
 BEETLE_PORT = 6721
 
-P1_VEST = 0
-P1_GUN = 1
-P1_WRIST = 2
-P2_VEST = 3
-P2_GUN = 4
-P2_WRIST = 5
+P1_VEST = b'V'
+P1_GUN = b'G'
+P1_WRIST = b'D'
+P2_VEST = b'W'
+P2_GUN = b'J'
+P2_WRIST = b'E'
+
+PACKET_TYPE_TO_INDEX = {b'V': 0, b'G': 1, b'D': 2, b'W': 3, b'J': 4, b'E': 5}
 
 PACKET_TYPE = 0
 MEAN = 1
@@ -63,9 +65,9 @@ def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
                 packet += connSocket.recv(1)
 
             packet = struct.unpack(PACKET_FORMAT_STR, packet)
-            print(id, packet[PACKET_TYPE], packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN], packet[DID_SHOOT], packet[IS_SHOT], packet[CHECKSUM])
+            print(packet[PACKET_TYPE], packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN], packet[DID_SHOOT], packet[IS_SHOT], packet[CHECKSUM])
             
-            beetleQueue.put((id, *packet), block=True)
+            beetleQueue.put(packet, block=True)
 
     finally:
         connSocket.close()
