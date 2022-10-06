@@ -10,9 +10,13 @@
 #define SEND_COMMAND 0x0E
 #define SEND_NUMBER_OF_REPEATS 0
 
-#include <IRremote.hpp>
+#include <IRremote.hpp> // https://github.com/Arduino-IRremote/Arduino-IRremote
+
+#define MAX_BULLETS 6
 
 Button myButton(PUSHBUTTON_PIN); //create button object
+
+uint8_t numberOfBullets = MAX_BULLETS;
 
 void initEmmiter() {
   myButton.begin(); // initialize the button object
@@ -20,17 +24,32 @@ void initEmmiter() {
 }
 
 boolean senseEmmiter() {
-  // If button pressed, send the code
   boolean isDetected = false;
   myButton.read();
   if (myButton.wasPressed()) {
-    IrSender.sendNEC(SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
-    isDetected = true;
-
-    // light LED
-    digitalWrite(LED_PIN, HIGH);
-    delay(100);
-    digitalWrite(LED_PIN, LOW);
+    // Only send IR signal if player has bullets
+    if (numberOfBullets > 0) {
+      IrSender.sendNEC(SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
+      isDetected = true;
+      numberOfBullets--;
+      // light LED
+      digitalWrite(LED_PIN, HIGH);
+      delay(100);
+      digitalWrite(LED_PIN, LOW);
+    } else {
+      // flash LED
+      digitalWrite(LED_PIN, HIGH);
+      delay(100);
+      digitalWrite(LED_PIN, LOW);
+      delay(100);
+      digitalWrite(LED_PIN, HIGH);
+      delay(100);
+      digitalWrite(LED_PIN, LOW);
+    }
   }
   return isDetected;
+}
+
+void reloadGun() {
+  numberOfBullets = MAX_BULLETS;
 }
