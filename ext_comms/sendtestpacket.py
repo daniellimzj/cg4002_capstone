@@ -7,7 +7,6 @@ from BeetleMain import BEETLE_PORT
 
 if __name__ == "__main__":
 
-
     serverName = "localhost"
     serverPort = BEETLE_PORT
     clientSocket = socket(AF_INET, SOCK_STREAM)
@@ -16,5 +15,5 @@ if __name__ == "__main__":
 
     while True:
         temp = input()
-        packet = struct.pack("<cffff??b", b'd', 0.0, 0.1, 0.2, 0.3, True, False, 3)
+        packet = struct.pack("<cffff??b", b'G', 0.0, 0.1, 0.2, 0.3, True, False, 3)
         clientSocket.send(packet)

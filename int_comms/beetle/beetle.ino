@@ -3,8 +3,8 @@
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 150  // testing
-#define TIMEOUT_DATA 100 // testing
+#define TIMEOUT_ACK 25  
+#define TIMEOUT_DATA 55 
 #define PACKET_SIZE 20
 
 volatile int currentID = 1;
