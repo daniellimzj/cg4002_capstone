@@ -1,13 +1,88 @@
-from asyncio import current_task
 import json
+import multiprocessing as mp
 import os
 import sys
+from multiprocessing.sharedctypes import SynchronizedBase
 
 import paho.mqtt.client as mqtt
 
 import MQTT
 from EvalClient import EvalClient
 from Player import Actions, Player
+
+def startAreaClient(isInSameArea: SynchronizedBase):
+
+    def on_connect(client: mqtt.Client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
+
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        client.subscribe(MQTT.Topics.inSameArea)
+
+    def on_message(client, userdata, msg):
+        nonlocal isInSameArea
+        # print(msg.topic + " " + str(msg.payload))
+        received = int(msg.payload)
+        with isInSameArea.get_lock():
+            isInSameArea.value = received
+
+    try:
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+        client.loop_forever()
+
+    finally:
+        print("disconnecting area client...")
+        client.disconnect()
+
+
+def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isInSameArea: SynchronizedBase):
+
+    evalClient = EvalClient(evalHost, evalPort)
+    engine = GameEngine()
+    
+    gameStateClient = mqtt.Client()
+    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+
+    try:
+        while True:
+            inputs = tuple(actionQueue.get(block = True))
+            p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
+
+            can_p1_see_p2 = True
+            can_p2_see_p1 = True
+
+            if p1_action == Actions.shoot:
+                can_p1_see_p2 = is_p2_shot
+
+            if p2_action == Actions.shoot:
+                can_p2_see_p1 = is_p1_shot
+            
+            if p1_action != Actions.shoot and p2_action != Actions.shoot:
+                with isInSameArea.get_lock():
+                    can_p1_see_p2 = bool(isInSameArea.value)
+                    can_p2_see_p1 = bool(isInSameArea.value)
+
+            print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
+            engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
+
+            currState = engine.get_JSON_string()
+            print("Now sending to eval server...")
+            evalClient.send_data(currState)
+            gameStateClient.publish(MQTT.Topics.gameState, currState)
+
+            resp = evalClient.recv_data()
+            respObj = json.loads(resp)
+            if not engine.check_and_update_player_states(respObj):
+                gameStateClient.publish(MQTT.Topics.gameState, resp)
+
+    finally:
+        evalClient.close()
+        print("successfully closed eval client!")
+        gameStateClient.disconnect()
+        print("successfully closed MQTT client!")
 
 
 class GameEngine:
