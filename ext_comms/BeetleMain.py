@@ -10,12 +10,25 @@ BEETLE_PORT = 6721
 
 P1_VEST = b'V'
 P1_GUN = b'G'
-P1_WRIST = b'D'
 P2_VEST = b'W'
 P2_GUN = b'J'
-P2_WRIST = b'E'
 
-PACKET_TYPE_TO_INDEX = {b'V': 0, b'G': 1, b'D': 2, b'W': 3, b'J': 4, b'E': 5}
+P1_ACCEL_X = b'a'
+P1_ACCEL_Y = b'b'
+P1_ACCEL_Z = b'c'
+P1_ROTATE_X = b'd'
+P1_ROTATE_Y = b'e'
+P1_ROTATE_Z = b'f'
+
+P2_ACCEL_X = b'u'
+P2_ACCEL_Y = b'v'
+P2_ACCEL_Z = b'w'
+P2_ROTATE_X = b'x'
+P2_ROTATE_Y = b'y'
+P2_ROTATE_Z = b'z'
+
+P1_WRIST = set([P1_ACCEL_X, P1_ACCEL_Y, P1_ACCEL_Z, P1_ROTATE_X, P1_ROTATE_Y, P1_ROTATE_Z])
+P2_WRIST = set([P2_ACCEL_X, P2_ACCEL_Y, P2_ACCEL_Z, P2_ROTATE_X, P2_ROTATE_Y, P2_ROTATE_Z])
 
 PACKET_TYPE = 0
 MEAN = 1
@@ -27,6 +40,26 @@ IS_SHOT = 6
 CHECKSUM = 7
 
 PACKET_FORMAT_STR = "<cffff??b"
+
+def updateWristArr(wristData, packet):
+
+    if packet[PACKET_TYPE] == P1_ACCEL_X or packet[PACKET_TYPE] == P2_ACCEL_X:
+        wristData[0:4] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+
+    elif packet[PACKET_TYPE] == P1_ACCEL_Y or packet[PACKET_TYPE] == P2_ACCEL_Y:
+        wristData[4:8] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+
+    if packet[PACKET_TYPE] == P1_ACCEL_Z or packet[PACKET_TYPE] == P2_ACCEL_Z:
+        wristData[8:12] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+
+    if packet[PACKET_TYPE] == P1_ROTATE_X or packet[PACKET_TYPE] == P2_ROTATE_X:
+        wristData[12:16] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+
+    if packet[PACKET_TYPE] == P1_ROTATE_Y or packet[PACKET_TYPE] == P2_ROTATE_Y:
+        wristData[16:20] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+
+    if packet[PACKET_TYPE] == P1_ROTATE_Z or packet[PACKET_TYPE] == P2_ROTATE_Z:
+        wristData[20:] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
 
 class BeetleStruct(ctypes.Structure):
     _fields_ = [('packetType', ctypes.c_char), \
