@@ -86,8 +86,10 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
                 gameStateClient.publish(MQTT.Topics.gameState, currState)
 
     finally:
-        evalClient.close()
-        print("successfully closed eval client!")
+        if runWithEval:
+            evalClient.close()
+            print("successfully closed eval client!")
+        
         gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
@@ -126,9 +128,12 @@ if __name__ == '__main__':
             print('Eval Port: Port number of eval server')
             sys.exit()
 
-    runWithEval = True
+    evalClient = None
 
-    evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))
+    runWithEval = False
+
+    if runWithEval:
+        evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))
     engine = GameEngine()
     
     mqttClient = mqtt.Client()
@@ -160,8 +165,9 @@ if __name__ == '__main__':
 
 
     finally:
-        evalClient.close()
-        print("successfully closed eval client!")
+        if runWithEval:
+            evalClient.close()
+            print("successfully closed eval client!")
         mqttClient.disconnect()
         print("successfully closed MQTT client!")
 
