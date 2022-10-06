@@ -9,6 +9,28 @@ from pynq import allocate
 from pynq import Overlay 
 import time as time
 
+class MoveClassifier:
+    def __init__(self):
+        self.overlay = Overlay('design_1.bit')
+        self.dma = self.overlay.axi_dma_0
+        self.dma_send = self.overlay.axi_dma_0.sendchannel
+        self.dma_recv = self.overlay.axi_dma_0.recvchannel
+
+        self.input_buffer = allocate(shape=(24,), dtype = np.float32)
+        self.output_buffer = allocate(shape=(5,), dtype = np.float32)
+
+    def classifyMove(self, data):
+        self.input_buffer[:] = data
+
+        self.dma_send.transfer(self.input_buffer)
+        self.dma_recv.transfer(self.output_buffer)
+
+        self.dma_send.wait()
+        self.dma_recv.wait()
+        idx = self.output_buffer.argmax(axis=0) + 1
+
+        return INDEX_TO_ACTION_MAP[idx]
+
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "idle"}
 
 def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
@@ -92,25 +114,3 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         p2Move = classifier.classifyMove(p2WristData)
 
     return p1Move, p2Move, didP1GetShot, didP2GetShot
-
-class MoveClassifier:
-    def __init__(self):
-        self.overlay = Overlay('design_1.bit')
-        self.dma = self.overlay.axi_dma_0
-        self.dma_send = self.overlay.axi_dma_0.sendchannel
-        self.dma_recv = self.overlay.axi_dma_0.recvchannel
-
-        self.input_buffer = allocate(shape=(24,), dtype = np.float32)
-        self.output_buffer = allocate(shape=(5,), dtype = np.float32)
-
-    def classifyMove(self, data):
-        self.input_buffer[:] = data
-
-        self.dma_send.transfer(self.input_buffer)
-        self.dma_recv.transfer(self.output_buffer)
-
-        self.dma_send.wait()
-        self.dma_recv.wait()
-        idx = self.output_buffer.argmax(axis=0) + 1
-
-        return INDEX_TO_ACTION_MAP[idx]
