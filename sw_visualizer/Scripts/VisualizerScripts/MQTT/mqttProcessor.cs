@@ -12,8 +12,9 @@ public class mqttProcessor : MonoBehaviour
     public AR_Manager ar_manager;
 
     string test_msg = @"[{""p1"": {""hp"": 30, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 1, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}, ""p2"": {""hp"": 60, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 0, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}}]";
-    
+
     public Text mqttText;
+    public string currPlayer;
 
     // Start is called before the first frame update
     //void Start()
@@ -27,11 +28,17 @@ public class mqttProcessor : MonoBehaviour
     //}
 
     // Process the Json message received and update display
+
+    void Start ()
+    {
+        currPlayer = ChangeScene.playerid;
+    }
+
     public void ProcessReceivedMsg(string msg)
     {
         UnityEngine.Debug.Log(msg);
         //todo: handle marshal of correct message from requester
-        var msgs = Newtonsoft.Json.Linq.JArray.Parse("["+msg+"]");
+        var msgs = Newtonsoft.Json.Linq.JArray.Parse("[" + msg + "]");
 
 
         foreach (Newtonsoft.Json.Linq.JObject root in msgs)
@@ -56,7 +63,7 @@ public class mqttProcessor : MonoBehaviour
                 mqttText.text = player + hp + action + bullets + grenades + shield_time + shield_health + num_deaths + num_shield;
                 UnityEngine.Debug.Log(player + hp + action + bullets + grenades + shield_time + shield_health + num_deaths + num_shield);
 
-                if (player == "p1")
+                if (player == currPlayer)
                 {
                     //UI
                     ui_manager.Update_PlayerHp(Int32.Parse(hp));
@@ -65,7 +72,7 @@ public class mqttProcessor : MonoBehaviour
                     ui_manager.Update_PlayerShield(Int32.Parse(num_shield));
                     ui_manager.Update_PlayerScore(Int32.Parse(num_deaths));
 
-                    
+
                     //AR
                     if (string.Equals(action, "shield"))
                     {
