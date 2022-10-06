@@ -4,10 +4,6 @@ from pynq import allocate
 from pynq import Overlay 
 import time as time 
 
-
-COLUMNS = ['Mean-accX', 'Range-accX', 'Var-accX', 'Median-accX', 'Mean-accY', 'Range-accY', 'Var-accY', 'Median-accY', 'Mean-accZ', 'Range-accZ', 'Var-accZ', 'Median-accZ', 'Mean-gyroX', 'Range-gyroX',
-    'Var-gyroX', 'Median-gyroX', 'Mean-gyroY', 'Range-gyroY', 'Var-gyroY', 'Median-gyroY', 'Mean-gyroZ', 'Range-gyroZ', 'Var-gyroZ', 'Median-gyroZ']
-
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "idle"}
 
 start = time.time_ns()
