@@ -6,7 +6,7 @@
 #define DATA_STATE_ID 4
 
 #define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 35
+#define TIMEOUT_DATA 25
 #define PACKET_SIZE 20
 
 volatile int nextID = SLEEP_STATE_ID;
@@ -54,37 +54,6 @@ struct DataPacket
   byte checkSum;
 };
 
-//struct DataPacket
-//{ 
-//  byte packetType = 'D';
-//  float mean0; // 4 bytes
-//  float median0;
-//  float range0;
-//  float variance0;
-//  float mean1; // 4 bytes
-//  float median1;
-//  float range1;
-//  float variance1;
-//  float mean2; // 4 bytes
-//  float median2;
-//  float range2;
-//  float variance2;
-//  float mean3; // 4 bytes
-//  float median3;
-//  float range3;
-//  float variance3;
-//  float mean4; // 4 bytes
-//  float median4;
-//  float range4;
-//  float variance4;
-//  float mean5; // 4 bytes
-//  float median5;
-//  float range5;
-//  float variance5;
-//  boolean isGunShot;
-//  boolean isHit;
-//  byte checkSum;
-//};
 
 // Helper Functions
 uint8_t calculateChecksum(uint8_t *packet)
@@ -132,44 +101,6 @@ void sendArmData(int index)
   Serial.write((byte *)&armPacket, sizeof(armPacket));
 }
 
-//void sendArmData()
-//{
-//  DataPacket armPacket;
-//  
-//  armPacket.mean0 = stats[ACCEL_X][MEAN];
-//  armPacket.median0 = stats[ACCEL_X][MEDIAN];
-//  armPacket.range0 = stats[ACCEL_X][RANGE];
-//  armPacket.variance0 = stats[ACCEL_X][VARIANCE];
-//  armPacket.mean1 = stats[ACCEL_Y][MEAN];
-//  armPacket.median1 = stats[ACCEL_Y][MEDIAN];
-//  armPacket.range1 = stats[ACCEL_Y][RANGE];
-//  armPacket.variance1 = stats[ACCEL_Y][VARIANCE];
-//  armPacket.mean2 = stats[ACCEL_Z][MEAN];
-//  armPacket.median2 = stats[ACCEL_Z][MEDIAN];
-//  armPacket.range2 = stats[ACCEL_Z][RANGE];
-//  armPacket.variance2 = stats[ACCEL_Z][VARIANCE];
-//  armPacket.mean3 = stats[ROTATE_X][MEAN];
-//  armPacket.median3 = stats[ROTATE_X][MEDIAN];
-//  armPacket.range3 = stats[ROTATE_X][RANGE];
-//  armPacket.variance3 = stats[ROTATE_X][VARIANCE];
-//  armPacket.mean4 = stats[ROTATE_Y][MEAN];
-//  armPacket.median4 = stats[ROTATE_Y][MEDIAN];
-//  armPacket.range4 = stats[ROTATE_Y][RANGE];
-//  armPacket.variance4 = stats[ROTATE_Y][VARIANCE];
-//  armPacket.mean5 = stats[ROTATE_Z][MEAN];
-//  armPacket.median5 = stats[ROTATE_Z][MEDIAN];
-//  armPacket.range5 = stats[ROTATE_Z][RANGE];
-//  armPacket.variance5 = stats[ROTATE_Z][VARIANCE];
-//  armPacket.isGunShot = false;
-//  armPacket.isHit = false;
-//  armPacket.checkSum = calculateChecksum((uint8_t *)&armPacket);
-////  Serial.println(armPacket.mean);
-////  Serial.println(armPacket.median);
-////  Serial.println(armPacket.range);
-////  Serial.println(armPacket.variance);
-//
-//  Serial.write((byte *)&armPacket, sizeof(armPacket));
-//}
 
 void sendAck()
 {
