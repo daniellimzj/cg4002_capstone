@@ -10,21 +10,24 @@ import MQTT
 from EvalClient import EvalClient
 from Player import Actions, Player
 
-def startAreaClient(isInSameArea: SynchronizedBase):
+def startPlayerClient(canPlayerSeeOther: SynchronizedBase, id: int):
 
     def on_connect(client: mqtt.Client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
 
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
-        client.subscribe(MQTT.Topics.inSameArea)
+        if id == 1:
+            client.subscribe(MQTT.Topics.canP1SeeP2)
+        elif id == 2:
+            client.subscribe(MQTT.Topics.canP2SeeP1)
 
     def on_message(client, userdata, msg):
-        nonlocal isInSameArea
+        nonlocal canPlayerSeeOther
         # print(msg.topic + " " + str(msg.payload))
         received = int(msg.payload)
-        with isInSameArea.get_lock():
-            isInSameArea.value = received
+        with canPlayerSeeOther.get_lock():
+            canPlayerSeeOther.value = received
 
     try:
         client = mqtt.Client()
@@ -34,11 +37,11 @@ def startAreaClient(isInSameArea: SynchronizedBase):
         client.loop_forever()
 
     finally:
-        print("disconnecting area client...")
+        print("disconnecting player", id, "client...")
         client.disconnect()
 
 
-def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isInSameArea: SynchronizedBase):
+def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP1SeeP2: SynchronizedBase, canP2SeeP1: SynchronizedBase):
 
     runWithEval = evalHost and evalPort
     evalClient = None
@@ -61,13 +64,17 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
 
+            else:
+                with canP1SeeP2.get_lock():
+                    can_p1_see_p2 = bool(canP1SeeP2.value)
+
             if p2_action == Actions.shoot:
                 can_p2_see_p1 = is_p1_shot
+
+            else:
+                with canP2SeeP1.get_lock():
+                    can_p2_see_p1 = bool(canP2SeeP1.value)
             
-            if p1_action != Actions.shoot and p2_action != Actions.shoot:
-                with isInSameArea.get_lock():
-                    can_p1_see_p2 = bool(isInSameArea.value)
-                    can_p2_see_p1 = bool(isInSameArea.value)
 
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)

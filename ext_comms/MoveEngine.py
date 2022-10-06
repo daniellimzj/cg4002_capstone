@@ -79,7 +79,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     elif beetleID == beetles.P2_VEST:
         didP2GetShot = True 
 
-    for _ in range(20):
+    for _ in range(40):
         try:
             packet = beetleQueue.get(block = True, timeout=0.025)
             beetleID = packet[beetles.PACKET_TYPE]

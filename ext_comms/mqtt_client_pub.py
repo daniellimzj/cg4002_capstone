@@ -13,5 +13,6 @@ if __name__ == "__main__":
     client.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     while True:
-        toPub = input("are players in same area?")
-        ret = client.publish(MQTT.Topics.gameState, toPub)
+        toPub = input("Type message to publish: ")
+        ret = client.publish(MQTT.Topics.canP1SeeP2, toPub)
+        ret = client.publish(MQTT.Topics.canP2SeeP1, toPub)
