@@ -71,11 +71,13 @@ class Comms(DefaultDelegate):
         }
         # print("Beetle {0} data:".format(self.index))
         result = (','.join([str(value) for value in datas.values()]))
-        if result != self.prev:
+        if packet[0] != ord('D'):
+            # self.clientSocket.send(data)
+            print(result)
+        elif result != self.prev:
             print(result)
             self.prev = result
             self.clientSocket.send(data)
-            print("Sent!")
         # print(data)
         self.sendAckPacket()
 
@@ -165,7 +167,7 @@ class Comms(DefaultDelegate):
             if packetType == ord('A'):
                 # print("handling ack")
                 self.handleAckPacket()
-            elif packetType == ord('D'):
+            elif packetType == ord('D') or packetType == ord('G') or packetType == ord('V'):
                 # print("handling data")
                 self.handleDataPacket(data, packet)
 
@@ -243,31 +245,32 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
         print("connected to:", serverName, serverPort)
 
 
-        while notStop:
-            try:
-                print("Searching for Beetle", str(index))
-                beetle.connect(addr)
-                print("Connecting to Beetle {0}...".format(index))
+    while notStop:
+        try:
+            print("Searching for Beetle", str(index))
+            beetle.connect(addr)
+            print("Connecting to Beetle {0}...".format(index))
 
-                serialSvc = beetle.getServiceByUUID(
-                    "0000dfb0-0000-1000-8000-00805f9b34fb")
-                serialChar = serialSvc.getCharacteristics(
-                    "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
-                delegate = Comms(serialChar, index, clientSocket)
-                beetle.withDelegate(delegate)
+            serialSvc = beetle.getServiceByUUID(
+                "0000dfb0-0000-1000-8000-00805f9b34fb")
+            serialChar = serialSvc.getCharacteristics(
+                "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
+            # delegate = Comms(serialChar, index)
+            delegate = Comms(serialChar, index, clientSocket)
+            beetle.withDelegate(delegate)
 
-                if not btleHandshakes[index]:
-                    initHandshake(beetle, serialChar, index)
-                    print("Beetle " + str(index) +": Handshake Successful!")
-                    print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
+            if not btleHandshakes[index]:
+                initHandshake(beetle, serialChar, index)
+                print("Beetle " + str(index) +": Handshake Successful!")
+                print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
-                if btleHandshakes[index]:
-                    notStop = watchForDisconnect(beetle, index)
+            if btleHandshakes[index]:
+                notStop = watchForDisconnect(beetle, index)
 
-            except KeyboardInterrupt:
-                beetle.disconnect()
-            except Exception as e:
-                print(e)
+        except KeyboardInterrupt:
+            beetle.disconnect()
+        except Exception as e:
+            print(e)
 
 
 if __name__ == "__main__":
