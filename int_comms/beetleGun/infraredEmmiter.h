@@ -49,3 +49,7 @@ boolean senseEmmiter() {
   }
   return isDetected;
 }
+
+void reloadGun() {
+  numberOfBullets = MAX_BULLETS;
+}
