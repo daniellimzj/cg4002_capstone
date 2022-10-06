@@ -10,11 +10,15 @@ from MoveEngine import startMoveProcess
 if __name__ == '__main__':
     
     _num_param = 3
-    if len(sys.argv) < _num_param:
-            print('Invalid number of arguments')
+
+    if len(sys.argv) < _num_param and len(sys.argv) != 2 and sys.argv[1] != "-n":
+            print('To run with eval server:')
             print('python3 ' + os.path.basename(__file__) + '[Eval Host] [EvalPort]')
             print('Eval Host: IP Address of eval server')
             print('Eval Port: Port number of eval server')
+            print("")
+            print("To run without eval server:")
+            print('python3 ' + os.path.basename(__file__) + '-n')
             sys.exit()
 
     actionQueue = mp.Queue()
@@ -23,14 +27,16 @@ if __name__ == '__main__':
     isInSameArea.value = 1
 
     beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
-    beetleData = mp.Array(beetles.BeetleStruct, 6)
 
-    evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
+    evalHost, evalport = None, None
+
+    if len(sys.argv) == _num_param:
+        evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
-    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue, beetleData))
+    moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue))
     areaClientProcess = mp.Process(target = startAreaClient, args=(isInSameArea,))
-    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleData, beetleQueue))
+    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleQueue,))
 
     try:
         engineProcess.start()

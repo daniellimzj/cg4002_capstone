@@ -40,7 +40,11 @@ def startAreaClient(isInSameArea: SynchronizedBase):
 
 def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isInSameArea: SynchronizedBase):
 
-    evalClient = EvalClient(evalHost, evalPort)
+    runWithEval = evalHost and evalPort
+    evalClient = None
+
+    if runWithEval:
+        evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
     
     gameStateClient = mqtt.Client()
@@ -69,14 +73,17 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, isIn
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
             currState = engine.get_JSON_string()
-            print("Now sending to eval server...")
-            evalClient.send_data(currState)
-            gameStateClient.publish(MQTT.Topics.gameState, currState)
 
-            resp = evalClient.recv_data()
-            respObj = json.loads(resp)
-            if not engine.check_and_update_player_states(respObj):
+            if runWithEval:
+                print("Now sending to eval server...")
+                evalClient.send_data(currState)
+                resp = evalClient.recv_data()
+                respObj = json.loads(resp)
+                engine.check_and_update_player_states(respObj)
                 gameStateClient.publish(MQTT.Topics.gameState, resp)
+
+            else:
+                gameStateClient.publish(MQTT.Topics.gameState, currState)
 
     finally:
         evalClient.close()
@@ -119,6 +126,8 @@ if __name__ == '__main__':
             print('Eval Port: Port number of eval server')
             sys.exit()
 
+    runWithEval = True
+
     evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))
     engine = GameEngine()
     
@@ -135,17 +144,19 @@ if __name__ == '__main__':
             can_p2_see_p1 = todo[3] == "true"
 
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
+
             currState = engine.get_JSON_string()
 
-            mqttClient.publish(MQTT.Topics.gameState, currState)
-            evalClient.send_data(currState)
-
-            resp = evalClient.recv_data()
-            respObj = json.loads(resp)
-
-            if not engine.check_and_update_player_states(respObj):
-                print("Since state was not correct, publishing correct state to MQTT")
+            if runWithEval:
+                print("Now sending to eval server...")
+                evalClient.send_data(currState)
+                resp = evalClient.recv_data()
+                respObj = json.loads(resp)
+                engine.check_and_update_player_states(respObj)
                 mqttClient.publish(MQTT.Topics.gameState, resp)
+
+            else:
+                mqttClient.publish(MQTT.Topics.gameState, currState)
 
 
     finally:
