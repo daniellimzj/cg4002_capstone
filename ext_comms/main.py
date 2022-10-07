@@ -18,7 +18,6 @@ if __name__ == '__main__':
     canP1SeeP2.value = 1
     canP2SeeP1.value = 1
 
-
     beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
 
     evalHost, evalport = None, None
@@ -26,7 +25,7 @@ if __name__ == '__main__':
     if len(sys.argv) == _num_param:
         evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
-    engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, isInSameArea))
+    engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, canP1SeeP2, canP2SeeP1))
     moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue))
 
     p1ClientProcess = mp.Process(target = startPlayerClient, args=(canP1SeeP2, 1))
