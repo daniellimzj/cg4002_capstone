@@ -10,6 +10,7 @@ import MQTT
 from EvalClient import EvalClient
 from Player import Actions, Player
 
+
 def startPlayerClient(canPlayerSeeOther: SynchronizedBase, id: int):
 
     def on_connect(client: mqtt.Client, userdata, flags, rc):

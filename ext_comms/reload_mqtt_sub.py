@@ -1,7 +1,9 @@
-import paho.mqtt.client as mqtt
-import MQTT
 import multiprocessing as mp
-import queue 
+import queue
+
+import paho.mqtt.client as mqtt
+
+import MQTT
 
 
 # Use id 1 for player 1, and 2 for player 2

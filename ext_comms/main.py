@@ -4,7 +4,7 @@ import sys
 from socket import *
 
 import BeetleMain as beetles
-from GameEngine import startPlayerClient, startEngineProcess
+from GameEngine import startEngineProcess, startPlayerClient
 from MoveEngine import startMoveProcess
 
 if __name__ == '__main__':
