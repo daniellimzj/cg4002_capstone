@@ -50,27 +50,27 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
         evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
     
-    gameStateClient = mqtt.Client()
-    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    mqttClient = mqtt.Client()
+    mqttClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     try:
         while True:
             inputs = tuple(actionQueue.get(block = True))
-            p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
 
+            p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
             can_p1_see_p2 = True
             can_p2_see_p1 = True
 
+            prev_p1_bullets, prev_p2_bullets = engine.get_bullet_counts()
+
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
-
             else:
                 with canP1SeeP2.get_lock():
                     can_p1_see_p2 = bool(canP1SeeP2.value)
 
             if p2_action == Actions.shoot:
                 can_p2_see_p1 = is_p1_shot
-
             else:
                 with canP2SeeP1.get_lock():
                     can_p2_see_p1 = bool(canP2SeeP1.value)
@@ -87,17 +87,26 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
-                gameStateClient.publish(MQTT.Topics.gameState, resp)
+                mqttClient.publish(MQTT.Topics.gameState, resp)
 
             else:
-                gameStateClient.publish(MQTT.Topics.gameState, currState)
+                mqttClient.publish(MQTT.Topics.gameState, currState)
+
+            p1_action, p2_action = engine.get_player_actions()
+            new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
+
+            if prev_p1_bullets == 0 and p1_action == Actions.reload and new_p1_bullets == 6:
+                mqttClient.publish(MQTT.Topics.didP1Reload, "1")
+
+            if prev_p2_bullets == 0 and p2_action ==Actions.reload and new_p2_bullets == 6:
+                mqttClient.publish(MQTT.Topics.didP2Reload, "1")
 
     finally:
         if runWithEval:
             evalClient.close()
             print("successfully closed eval client!")
         
-        gameStateClient.disconnect()
+        mqttClient.disconnect()
         print("successfully closed MQTT client!")
 
 
@@ -111,6 +120,12 @@ class GameEngine:
 
     def get_JSON_string(self):
         return json.dumps({'p1': self.p1.get_dict(), 'p2': self.p2.get_dict()})
+
+    def get_bullet_counts(self):
+        return self.p1.get_bullet_count(), self.p2.get_bullet_count()
+
+    def get_player_actions(self):
+        return self.p1.get_action(), self.p2.get_action()
 
     def do_actions(self, p1_action = Actions.no, p2_action = Actions.no, can_p1_see_p2 = False, can_p2_see_p1=False):
         is_p1_action_valid = self.p1.is_action_valid(p1_action)

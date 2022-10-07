@@ -32,8 +32,13 @@ class Player:
         self.num_shield     = self.max_shields
         self.num_deaths     = 0
         
-
         self.shield_start_time = time.time()-30
+
+    def get_bullet_count(self):
+        return self.bullets
+
+    def get_action(self):
+        return self.action
 
     def get_dict (self):
         _player = dict()
