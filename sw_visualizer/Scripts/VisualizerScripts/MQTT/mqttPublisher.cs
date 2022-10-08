@@ -11,7 +11,7 @@ public class mqttPublisher : M2MqttUnityClient
 {
 
     public string nameController = "Controller 1";
-    public string topicPublish = "b11/is_in_same_area"; // topic to publish
+    public static string topicPublish; // topic to publish
 
 
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class mqttPublisher : M2MqttUnityClient
     {
         UnityEngine.Debug.Log("inside test send yes");
         string messagePublish = "1";
-        client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);  
     }
 
     public void TESTSEND_no()

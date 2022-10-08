@@ -35,7 +35,6 @@ public class GrenadeThrow : MonoBehaviour
             grenadeFlying = true;
 
             grenade = Instantiate(grenadePrefab, transform.position + transform.forward * grenadeTransform.position.z, transform.rotation);
-            //UnityEngine.Debug.Log(transform.position);
             UnityEngine.Debug.Log(grenade.transform.position);
 
             Rigidbody rb = grenade.GetComponent<Rigidbody>();
