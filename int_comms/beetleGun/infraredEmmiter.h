@@ -27,10 +27,10 @@ boolean senseEmmiter() {
   boolean isDetected = false;
   myButton.read();
   if (myButton.wasPressed()) {
+    isDetected = true;
     // Only send IR signal if player has bullets
     if (numberOfBullets > 0) {
       IrSender.sendNEC(SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
-      isDetected = true;
       numberOfBullets--;
       // light LED
       digitalWrite(LED_PIN, HIGH);

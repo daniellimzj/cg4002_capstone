@@ -17,10 +17,18 @@ public class mqttProcessor : MonoBehaviour
     public string currPlayer;
 
     // Start is called before the first frame update
-    //void Start()
-    //{
-    //    ProcessReceivedMsg(test_msg);
-    //}
+    void Start()
+    {
+        currPlayer = ChangeScene.playerid;
+        if (currPlayer == "p1")
+        {
+            mqttPublisher.topicPublish = "b11/p1_see_p2";
+        }
+        else
+        {
+            mqttPublisher.topicPublish = "b11/p2_see_p1";
+        }
+    }
 
     //void Update()
     //{ 
@@ -29,10 +37,6 @@ public class mqttProcessor : MonoBehaviour
 
     // Process the Json message received and update display
 
-    void Start ()
-    {
-        currPlayer = ChangeScene.playerid;
-    }
 
     public void ProcessReceivedMsg(string msg)
     {
