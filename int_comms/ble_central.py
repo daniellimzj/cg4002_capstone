@@ -13,6 +13,7 @@ BEETLE_PORT = 6721
 from bluepy.btle import Peripheral, DefaultDelegate
 
 INDEX_GUN = 2
+MAX_BULLETS = 6
 
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
@@ -29,6 +30,7 @@ btleAddrs = [
 ]
 
 btleHandshakes = [False] * 3
+bullets = MAX_BULLETS
 
 class ChecksumError(Exception):
     pass
@@ -74,6 +76,9 @@ class Comms(DefaultDelegate):
         }
         result = (','.join([str(value) for value in datas.values()]))
         # self.clientSocket.send(data)
+        if (packet[0] == ord('G') or packet[0] == ord('J')):
+            global bullets
+            bullets -= 1
         print(result)
         self.sendAckPacket()
 
@@ -263,11 +268,13 @@ def watchForDisconnect(beetle, index, serialChar, mqttQueue):
     # packetCount = 0
     # interval = 10
     # startTime = time.time()
+    global bullets
     while True:
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
             # disconnected = True
             break
-        if (index == INDEX_GUN):
+        print(bullets)
+        if (bullets == 0 and index == INDEX_GUN):
             print("checking queue..")
             try:
                 print("inside try")
@@ -275,10 +282,11 @@ def watchForDisconnect(beetle, index, serialChar, mqttQueue):
                 print("did player reload:", didPlayerReload)
                 if didPlayerReload:
                     serialChar.write(bytes("R", "utf-8"))
+                    bullets = 6
             except queue.Empty:
                 print("empty")
                 continue
-        print("outside")
+        # print("outside")
         # packetCount += 1
         # currTime = time.time()
         # if currTime - startTime >= interval:
