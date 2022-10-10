@@ -49,7 +49,7 @@ if __name__ == "__main__":
             pass
 
             try:
-                didPlayerReload = mqttQueue.get()
+                didPlayerReload = mqttQueue.get(block=False, timeout=None)
                 print("did player reload", didPlayerReload)
                 if didPlayerReload:
                     # Another placeholder
