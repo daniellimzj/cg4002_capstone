@@ -22,6 +22,13 @@ struct AckPacket
   byte checkSum = 'A'; 
 } ackPacket;
 
+struct NotifyPacket
+{
+  byte packetType = 'N';
+  byte padding[18];
+  byte checksum = 'N';
+} notifyPacket;
+
 struct DataPacket
 { 
   byte packetType = 'V';
@@ -81,6 +88,11 @@ void sendAck()
   Serial.write((byte *)&ackPacket, sizeof(ackPacket));
 }
 
+void sendNotify()
+{
+  Serial.write((byte *)&notifyPacket, sizeof(notifyPacket));
+}
+
 // State Definitions
 class State
 {
@@ -117,7 +129,7 @@ public:
         sendVestData();
       }
       if (counter >= 30) {
-        sendAck();
+        sendNotify();
         counter = 0;
       }
   }
