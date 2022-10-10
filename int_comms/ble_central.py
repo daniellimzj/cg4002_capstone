@@ -2,14 +2,17 @@ import struct
 import multiprocessing as mp
 import time
 
+import paho.mqtt.client as mqtt
+import MQTT
+import queue
+
+from socket import *
+import sshtunnel
+BEETLE_PORT = 6721
+
 from bluepy.btle import Peripheral, DefaultDelegate
 
-import json
-from socket import *
-
-import sshtunnel
-# from ext_comms.BeetleMain import BEETLE_PORT
-BEETLE_PORT = 6721
+INDEX_GUN = 2
 
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
@@ -31,15 +34,24 @@ class ChecksumError(Exception):
     pass
 
 class Comms(DefaultDelegate):
-    def __init__(self, serialChar, index, clientSocket):
+    def __init__(self, serialChar, index):
         DefaultDelegate.__init__(self)
         self.serialChar = serialChar
         self.index = index
-        self.clientSocket = clientSocket
         self.buffer = b''
         self.fragmented = 0
         self.dropped = 0
         self.prev = ""
+
+    # def __init__(self, serialChar, index, clientSocket):
+    #     DefaultDelegate.__init__(self)
+    #     self.serialChar = serialChar
+    #     self.index = index
+    #     self.clientSocket = clientSocket
+    #     self.buffer = b''
+    #     self.fragmented = 0
+    #     self.dropped = 0
+    #     self.prev = ""
 
     def sendAckPacket(self):
         # print("Sending ack!")
@@ -49,7 +61,24 @@ class Comms(DefaultDelegate):
         self.sendAckPacket()  # TODO: Change to 20bytes
         btleHandshakes[self.index] = True
 
-    def handleDataPacket(self, data, packet):
+    def handleGunAndVestPacket(self, data, packet):
+        datas = {
+            'BeetleID': self.index,
+            'PacketType': packet[0],
+            'Mean': packet[1],
+            'Range': packet[2],
+            'Variance': packet[3],
+            'Median': packet[4],
+            'Has Shot Gun': packet[5],
+            'Is Shot': packet[6]
+        }
+        result = (','.join([str(value) for value in datas.values()]))
+        # self.clientSocket.send(data)
+        print(result)
+        self.sendAckPacket()
+
+
+    def handleArmPacket(self, data, packet):
         # Packet Indexing:
         # 0 - Packet Type
         # 1 - Mean
@@ -71,13 +100,10 @@ class Comms(DefaultDelegate):
         }
         # print("Beetle {0} data:".format(self.index))
         result = (','.join([str(value) for value in datas.values()]))
-        if packet[0] != ord('D'):
-            # self.clientSocket.send(data)
-            print(result)
-        elif result != self.prev:
+        if result != self.prev:
             print(result)
             self.prev = result
-            self.clientSocket.send(data)
+            # self.clientSocket.send(data)
         # print(data)
         self.sendAckPacket()
 
@@ -137,7 +163,6 @@ class Comms(DefaultDelegate):
 
     def handleNotification(self, charHandle, data):
         try:
-            # print("handling notification now")
             packet = ()
             packetFormat = (
                 '<b'  # Packet Type
@@ -152,35 +177,23 @@ class Comms(DefaultDelegate):
             # print()
             # print("Beetle {0}: {1} {2}".format(self.index, data, type(data)))
             packet = struct.unpack_from(packetFormat, data, 0)
-            # print(packet)
-            # for i in packet:
-            #     print(i, type(i))
-            # print(len(packet))
             if len(packet) == 8:
-                # print("hi")
                 if not self.verifyChecksum(data):
                     raise ChecksumError("Incorrect checksum")
-                # packet = struct.unpack(packetFormat, data)
 
             packetType = packet[0]
-
-            if packetType == ord('A'):
-                # print("handling ack")
+            # P1:a,b,c,d,e,f,V,G        P2:u,v,w,x,y,z,W,J
+            if packetType == ord('a') or packetType == ord('b') or packetType == ord('c') or packetType == ord('d') or packetType == ord('e') or packetType == ord('f'):
+                self.handleArmPacket(data, packet)
+            elif packetType == ord('u') or packetType == ord('v') or packetType == ord('w') or packetType == ord('x') or packetType == ord('y') or packetType == ord('z'):
+                self.handleArmPacket(data, packet)
+            elif packetType == ord('G') or packetType == ord('J') or packetType == ord('V') or packetType == ord('W'):
+                self.handleGunAndVestPacket(data, packet)
+            elif packetType == ord('A'):
                 self.handleAckPacket()
-            elif packetType == ord('D') or packetType == ord('G') or packetType == ord('V'):
-                # print("handling data")
-                self.handleDataPacket(data, packet)
 
         except struct.error:
             self.handleFragmentation(data)
-            # # print("********************************")
-            # # print("STRUCT ERROR")
-            # self.buffer = self.buffer + data
-            # if len(self.buffer) == 20:  # Need to handle if fragmented weirdly?
-            #     # print("FRAGMENTED DATA PREVENTED")
-            #     print(self.buffer)
-            #     self.handleNotification(None, self.buffer)
-            #     self.buffer = b''
 
         except ChecksumError:
             self.handleChecksumError(data)
@@ -190,8 +203,31 @@ class Comms(DefaultDelegate):
             print(e)
             print("Dropped:", data)
             print("Beetle {0} dropped: {1}".format(self.index, self.dropped))
-            # print("\rBeetle {0} total calls: {1}".format(self.index, self.dropped), end="\r")
-            # print(e)
+
+def startMQTTClient(id: int, queue: mp.Queue):
+
+    def on_connect(client: mqtt.Client, userdata, flags, rc):
+        print("Connected with result code " + str(rc))
+
+        if id == 1:
+            client.subscribe(MQTT.Topics.didP1Reload)
+        elif id == 2:
+            client.subscribe(MQTT.Topics.didP2Reload)
+
+    def on_message(client, userdata, msg):
+        print(msg.topic + " " + str(msg.payload))
+        queue.put(bool(int(msg.payload)))
+
+    try:
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+        client.loop_forever()
+
+    finally:
+        print("disconnecting player", id, "client...")
+        client.disconnect()
 
 def initHandshake(beetle, serialChar, index):
     while not btleHandshakes[index]:
@@ -201,24 +237,56 @@ def initHandshake(beetle, serialChar, index):
         if beetle.waitForNotifications(TIMEOUT_HANDSHAKE):
             pass
 
-
 def watchForDisconnect(beetle, index):
-    packetCount = 0
-    interval = 10
-    startTime = time.time()
+    # packetCount = 0
+    # interval = 10
+    # startTime = time.time()
     while True:
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
-            # runs here if disconnected
             # disconnected = True
             break
-        packetCount += 1
-        currTime = time.time()
-        if currTime - startTime >= interval:
-            dataRate = (packetCount * 20) / interval
-            print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, interval, dataRate))
-            interval += 10
-        if currTime  - startTime >= TIME_DATA_RATE_COUNT:  
-            return False
+        # packetCount += 1
+        # currTime = time.time()
+        # if currTime - startTime >= interval:
+            # dataRate = (packetCount * 20) / interval
+            # print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, interval, dataRate))
+            # interval += 10
+        # if currTime  - startTime >= TIME_DATA_RATE_COUNT:  
+            # return False
+
+    print("No data for 2 seconds, attempting to reconnect...")
+    btleHandshakes[index] = False
+    beetle.disconnect()  # Disconnects first and try to reconnect again
+    return True
+
+def watchForDisconnect(beetle, index, serialChar, mqttQueue):
+    # packetCount = 0
+    # interval = 10
+    # startTime = time.time()
+    while True:
+        if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
+            # disconnected = True
+            break
+        if (index == INDEX_GUN):
+            print("checking queue..")
+            try:
+                print("inside try")
+                didPlayerReload = mqttQueue.get()
+                print("did player reload:", didPlayerReload)
+                if didPlayerReload:
+                    serialChar.write(bytes("R", "utf-8"))
+            except queue.Empty:
+                print("empty")
+                continue
+        print("outside")
+        # packetCount += 1
+        # currTime = time.time()
+        # if currTime - startTime >= interval:
+            # dataRate = (packetCount * 20) / interval
+            # print("Beetle {0}: {1} packets over {2}s. Data rate is {3}bytes/s.".format(index, packetCount, interval, dataRate))
+            # interval += 10
+        # if currTime  - startTime >= TIME_DATA_RATE_COUNT:  
+            # return False
 
     print("No data for 2 seconds, attempting to reconnect...")
     btleHandshakes[index] = False
@@ -231,20 +299,29 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
     beetle = Peripheral()
     notStop = True
 
-    with sshtunnel.open_tunnel(
-        'stu.comp.nus.edu.sg',
-        ssh_username="danielim",
-        ssh_password="Cg4002!",
-        remote_bind_address=('192.168.95.234', BEETLE_PORT),
-    ) as tunnel:
+    # Starts MQTT Client for Gun Beetle
+    if (index == INDEX_GUN): 
+        print("in here")
+        mqttQueue = mp.Queue()
+        mqttClientProcess = mp.Process(target = startMQTTClient, args=(1, mqttQueue))
+        mqttClientProcess.start()
+        print("mqtt client started for beetle", index)
+        time.sleep(0.5)
 
-        serverName = 'localhost'
-        serverPort = int(tunnel.local_bind_port)
-        clientSocket = socket(AF_INET, SOCK_STREAM)
-        clientSocket.connect((serverName, serverPort))
-        print("connected to:", serverName, serverPort)
+    # with sshtunnel.open_tunnel(
+    #     'stu.comp.nus.edu.sg',
+    #     ssh_username="danielim",
+    #     ssh_password="Cg4002!",
+    #     remote_bind_address=('192.168.95.234', BEETLE_PORT),
+    # ) as tunnel:
 
+    #     serverName = 'localhost'
+    #     serverPort = int(tunnel.local_bind_port)
+    #     clientSocket = socket(AF_INET, SOCK_STREAM)
+    #     clientSocket.connect((serverName, serverPort))
+    #     print("connected to:", serverName, serverPort)
 
+        # dont forget to indent this
     while notStop:
         try:
             print("Searching for Beetle", str(index))
@@ -255,8 +332,8 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
                 "0000dfb0-0000-1000-8000-00805f9b34fb")
             serialChar = serialSvc.getCharacteristics(
                 "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
-            # delegate = Comms(serialChar, index)
-            delegate = Comms(serialChar, index, clientSocket)
+            delegate = Comms(serialChar, index)
+            # delegate = Comms(serialChar, index, clientSocket)
             beetle.withDelegate(delegate)
 
             if not btleHandshakes[index]:
@@ -265,30 +342,36 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
                 print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
             if btleHandshakes[index]:
-                notStop = watchForDisconnect(beetle, index)
+                if (index == INDEX_GUN):
+                    notStop = watchForDisconnect(beetle, index, serialChar, mqttQueue)
+                else:
+                    notStop = watchForDisconnect(beetle, index)
 
         except KeyboardInterrupt:
+            mqttClientProcess.terminate()
             beetle.disconnect()
         except Exception as e:
             print(e)
+        finally:
+            mqttClientProcess.join()
 
 
 if __name__ == "__main__":
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
+    # beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
     # beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
-    # beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
+    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
 
     try:
-        beetle0Process.start()
+        # beetle0Process.start()
         # beetle1Process.start()
-        # beetle2Process.start()
+        beetle2Process.start()
 
-        beetle0Process.join()
+        # beetle0Process.join()
         # beetle1Process.join()
-        # beetle2Process.join()
+        beetle2Process.join()
     finally:
-        beetle0Process.terminate()
+        # beetle0Process.terminate()
         # beetle1Process.terminate()
-        # beetle2Process.terminate()
+        beetle2Process.terminate()
 
         print("Closing main")
