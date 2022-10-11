@@ -1,16 +1,17 @@
-from Player import Actions
-
 import multiprocessing as mp
 import statistics
-import BeetleMain as beetles
+import time as time
 
 import numpy as np
 import pandas as pd
-from pynq import allocate 
-from pynq import Overlay 
-import time as time
+from pynq import Overlay, allocate
+
+import BeetleMain as beetles
+from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
+
+NS_AFTER_THRESHOLD = 1500000000
 
 def appendReadings(playerReadings, packet):
     playerReadings[0].append(packet[beetles.ACCEL_X])
@@ -19,6 +20,9 @@ def appendReadings(playerReadings, packet):
     playerReadings[3].append(packet[beetles.ROTATE_X])
     playerReadings[4].append(packet[beetles.ROTATE_Y])
     playerReadings[5].append(packet[beetles.ROTATE_Z])
+
+def getMaxAbsSecondDerivative(data):
+    return max(abs((data[i + 2] - data[i + 1]) - (data[i + 1] - data[i])) for i in range(len(data) - 2))
 
 class MoveClassifier:
     def __init__(self):
@@ -45,7 +49,7 @@ class MoveClassifier:
 
     # data here is raw
     def isStartOfMove(self, rawData):
-        return rawData[beetles.ACCEL_Y] > -10000
+        return rawData[beetles.ACCEL_Y] > -12000 or rawData[beetles.ACCEL_Y] < -20000
 
 def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
@@ -78,6 +82,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         beetleID = packet[beetles.PACKET_TYPE]
 
     print("packet has passed the test, id:", beetleID)
+    startTime = time.time_ns()
 
     if beetleID == beetles.P1_WRIST:
         appendReadings(p1Readings, packet)
@@ -99,7 +104,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     elif beetleID == beetles.P2_VEST:
         didP2GetShot = True 
 
-    while len(p1Readings[0]) < 40 and len(p2Readings[0]) < 40:
+    while time.time_ns() - startTime < NS_AFTER_THRESHOLD:
         try:
             packet = beetleQueue.get(block = False, timeout=None)
             beetleID = packet[beetles.PACKET_TYPE]
@@ -129,6 +134,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p1Move != Actions.shoot and gotPacketFromP1Wrist:
         p1WristData = []
+        print("length of readings:", len(p1WristData))
         for i in range(len(p1Readings)):
             p1WristData.append(statistics.mean(p1Readings[i]))
             p1WristData.append(max(p1Readings[i]) - min(p1Readings[i]))
