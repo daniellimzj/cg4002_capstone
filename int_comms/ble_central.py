@@ -264,7 +264,7 @@ def watchForDisconnect(beetle, index):
     beetle.disconnect()  # Disconnects first and try to reconnect again
     return True
 
-def watchForDisconnect(beetle, index, serialChar, mqttQueue):
+def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     # packetCount = 0
     # interval = 10
     # startTime = time.time()
@@ -351,35 +351,37 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
 
             if btleHandshakes[index]:
                 if (index == INDEX_GUN):
-                    notStop = watchForDisconnect(beetle, index, serialChar, mqttQueue)
+                    notStop = watchForDisconnectGun(beetle, index, serialChar, mqttQueue)
                 else:
                     notStop = watchForDisconnect(beetle, index)
 
         except KeyboardInterrupt:
-            mqttClientProcess.terminate()
+            if (index == INDEX_GUN):
+                mqttClientProcess.terminate()
             beetle.disconnect()
         except Exception as e:
             print(e)
         finally:
-            mqttClientProcess.join()
+            if (index == INDEX_GUN):
+                mqttClientProcess.join()
 
 
 if __name__ == "__main__":
-    # beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
-    # beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
+    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
     beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
 
     try:
-        # beetle0Process.start()
-        # beetle1Process.start()
+        beetle0Process.start()
+        beetle1Process.start()
         beetle2Process.start()
 
-        # beetle0Process.join()
-        # beetle1Process.join()
+        beetle0Process.join()
+        beetle1Process.join()
         beetle2Process.join()
     finally:
-        # beetle0Process.terminate()
-        # beetle1Process.terminate()
+        beetle0Process.terminate()
+        beetle1Process.terminate()
         beetle2Process.terminate()
 
         print("Closing main")

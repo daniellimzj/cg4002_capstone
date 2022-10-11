@@ -1,5 +1,7 @@
 #include "sensor.h"
 
+#define PLAYER 1
+
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
@@ -67,25 +69,42 @@ uint8_t calculateChecksum(uint8_t *packet)
 }
 
 byte getType(uint8_t index) {
-  if (index == ACCEL_X) {
-    return 'a';
-  } else if (index == ACCEL_Y) {
-    return 'b';
-  } else if (index == ACCEL_Z) {
-    return 'c';
-  } else if (index == ROTATE_X) {
-    return 'd';
-  } else if (index == ROTATE_Y) {
-    return 'e';
-  } else if (index == ROTATE_Z) {
-    return 'f';
+  if (PLAYER == 1) {  
+    if (index == ACCEL_X) {
+      return 'a';
+    } else if (index == ACCEL_Y) {
+      return 'b';
+    } else if (index == ACCEL_Z) {
+      return 'c';
+    } else if (index == ROTATE_X) {
+      return 'd';
+    } else if (index == ROTATE_Y) {
+      return 'e';
+    } else if (index == ROTATE_Z) {
+      return 'f';
+    }
+  } else if (PLAYER == 2) {
+    if (index == ACCEL_X) {
+      return 'u';
+    } else if (index == ACCEL_Y) {
+      return 'v';
+    } else if (index == ACCEL_Z) {
+      return 'w';
+    } else if (index == ROTATE_X) {
+      return 'x';
+    } else if (index == ROTATE_Y) {
+      return 'y';
+    } else if (index == ROTATE_Z) {
+      return 'z';
+    }
   }
 }
 
-void sendArmData(float *currData)
+void sendArmData(float *currData, uint8_t index)
 {
   DataPacket armPacket;
-  
+
+  armPacket.packetType = getType(index);
   armPacket.mean = currData[MEAN];
   armPacket.range = currData[RANGE];
   armPacket.variance = currData[VARIANCE];
@@ -128,7 +147,7 @@ public:
   void init() override
   {
       if (dataReady) {
-        sendArmData(stats[current]);
+        sendArmData(stats[current], current);
       }
   }
 
@@ -152,7 +171,7 @@ public:
         nextID = SLEEP_STATE_ID;
         break;
       }
-      sendArmData(stats[current]);
+      sendArmData(stats[current], current);
     }
   }
 } Data_State;

@@ -22,6 +22,13 @@ struct AckPacket
   byte checkSum = 'A'; 
 } ackPacket;
 
+struct NotifyPacket
+{
+  byte packetType = 'N';
+  byte padding[18];
+  byte checksum = 'N';
+} notifyPacket;
+
 struct DataPacket
 { 
   byte packetType = 'G';
@@ -81,6 +88,11 @@ void sendAck()
   Serial.write((byte *)&ackPacket, sizeof(ackPacket));
 }
 
+void sendNotify()
+{
+  Serial.write((byte *)&notifyPacket, sizeof(notifyPacket));
+}
+
 // State Definitions
 class State
 {
@@ -106,18 +118,20 @@ public:
   void run() override
   {
       delay(TIMEOUT_DATA);
-      if (Serial.read() == 'H') {
-        nextID = HANDSHAKE_STATE_ID;
-        handshakeDone = false;
+      if (Serial.read() == 'R') {
+        reloadGun();
       } else if (Serial.read() == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
+      } else if (Serial.read() == 'H') {
+        nextID = HANDSHAKE_STATE_ID;
+        handshakeDone = false;
       }
       if (isDetected) {
         sendGunData();
       }
       if (counter >= 30) {
-        sendAck();
+        sendNotify();
         counter = 0;
       }
   }
