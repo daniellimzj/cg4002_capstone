@@ -99,9 +99,11 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
             if prev_p1_bullets == 0 and p1_action == Actions.reload and new_p1_bullets == 6:
+                print("sending p1 reload")
                 mqttClient.publish(MQTT.Topics.didP1Reload, "1")
 
             if prev_p2_bullets == 0 and p2_action ==Actions.reload and new_p2_bullets == 6:
+                print("sending p2 reload")
                 mqttClient.publish(MQTT.Topics.didP2Reload, "1")
 
     finally:
