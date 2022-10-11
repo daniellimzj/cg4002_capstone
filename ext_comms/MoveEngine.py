@@ -67,8 +67,8 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     gotPacketFromP1Wrist = False
     gotPacketFromP2Wrist = False
 
-    p1Readings = [[] * 6]
-    p2Readings = [[] * 6]
+    p1Readings = [[] for _ in range(6)]
+    p2Readings = [[] for _ in range(6)]
 
     packet = beetleQueue.get(block = True)
     beetleID = packet[beetles.PACKET_TYPE]
