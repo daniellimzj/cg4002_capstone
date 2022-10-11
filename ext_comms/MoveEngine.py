@@ -30,7 +30,7 @@ class MoveClassifier:
         self.dma_send.wait()
         self.dma_recv.wait()
         idx = self.output_buffer.argmax(axis=0) + 1
-        print("move engine got index", idx)
+        # print("move engine got index", idx)
         return INDEX_TO_ACTION_MAP[idx]
 
 
