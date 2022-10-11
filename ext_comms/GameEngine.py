@@ -59,6 +59,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             inputs = tuple(actionQueue.get(block = True))
 
             p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
+
             can_p1_see_p2 = True
             can_p2_see_p1 = True
 
@@ -77,6 +78,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                     can_p2_see_p1 = bool(canP2SeeP1.value)
             
 
+            print("received from move engine:", inputs)
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
