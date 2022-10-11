@@ -85,7 +85,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             currState = engine.get_JSON_string()
 
             if runWithEval:
-                print("Now sending to eval server...")
+                # print("Now sending to eval server...")
                 evalClient.send_data(currState)
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)

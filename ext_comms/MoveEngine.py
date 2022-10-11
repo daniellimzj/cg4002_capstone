@@ -9,6 +9,8 @@ from pynq import allocate
 from pynq import Overlay 
 import time as time
 
+INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
+
 class MoveClassifier:
     def __init__(self):
         self.overlay = Overlay('design_1.bit')
@@ -28,10 +30,10 @@ class MoveClassifier:
         self.dma_send.wait()
         self.dma_recv.wait()
         idx = self.output_buffer.argmax(axis=0) + 1
-
+        print("move engine got index", idx)
         return INDEX_TO_ACTION_MAP[idx]
 
-INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "idle"}
+
 
 def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
@@ -108,6 +110,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
             continue
 
     if p1Move != Actions.shoot and p1WristUpdated == beetles.P1_WRIST:
+        print(p1WristData)
         p1Move = classifier.classifyMove(p1WristData)
 
     if p2Move != Actions.shoot and p2WristUpdated == beetles.P2_WRIST:
