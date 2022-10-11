@@ -22,11 +22,11 @@ ACCEL_Z = 3
 ROTATE_X = 4
 ROTATE_Y = 5
 ROTATE_Z = 6
-DID_SHOOT = 7
-IS_SHOT = 8
-CHECKSUM = 9
+DID_SHOOT = 11
+IS_SHOT = 12
+CHECKSUM = 13
 
-PACKET_FORMAT_STR = "<chhhhhh??b"
+PACKET_FORMAT_STR = "<chhhhhhbbbb??b"
 
 class BeetleStruct(ctypes.Structure):
     _fields_ = [('packetType', ctypes.c_char), \
@@ -36,6 +36,10 @@ class BeetleStruct(ctypes.Structure):
                 ('rotateX', ctypes.c_int16), \
                 ('rotateY', ctypes.c_int16), \
                 ('rotateZ', ctypes.c_int16), \
+                ('pad1', ctypes.c_bool), \
+                ('pad2', ctypes.c_bool), \
+                ('pad3', ctypes.c_bool), \
+                ('pad4', ctypes.c_bool), \
                 ('didShoot', ctypes.c_bool), \
                 ('isShot', ctypes.c_bool), \
                 ('checksum', ctypes.c_byte)]
