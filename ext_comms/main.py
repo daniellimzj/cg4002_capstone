@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     beetleQueue = mp.Queue(beetles.NUM_BEETLES * 3)
 
-    evalHost, evalport = None, None
+    evalHost, evalPort = "", 0
 
     if len(sys.argv) == _num_param:
         evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
