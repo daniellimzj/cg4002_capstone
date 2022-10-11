@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
     evalClient = None
 
-    runWithEval = False
+    runWithEval = True
 
     if runWithEval:
         evalClient = EvalClient(sys.argv[-2], int(sys.argv[-1]))

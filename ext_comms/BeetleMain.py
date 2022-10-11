@@ -10,63 +10,32 @@ BEETLE_PORT = 6721
 
 P1_VEST = b'V'
 P1_GUN = b'G'
+P1_WRIST = b'D'
 P2_VEST = b'W'
 P2_GUN = b'J'
-
-P1_ACCEL_X = b'a'
-P1_ACCEL_Y = b'b'
-P1_ACCEL_Z = b'c'
-P1_ROTATE_X = b'd'
-P1_ROTATE_Y = b'e'
-P1_ROTATE_Z = b'f'
-
-P2_ACCEL_X = b'u'
-P2_ACCEL_Y = b'v'
-P2_ACCEL_Z = b'w'
-P2_ROTATE_X = b'x'
-P2_ROTATE_Y = b'y'
-P2_ROTATE_Z = b'z'
-
-P1_WRIST = set([P1_ACCEL_X, P1_ACCEL_Y, P1_ACCEL_Z, P1_ROTATE_X, P1_ROTATE_Y, P1_ROTATE_Z])
-P2_WRIST = set([P2_ACCEL_X, P2_ACCEL_Y, P2_ACCEL_Z, P2_ROTATE_X, P2_ROTATE_Y, P2_ROTATE_Z])
+P2_WRIST = b'E'
 
 PACKET_TYPE = 0
-MEAN = 1
-RANGE = 2
-MEDIAN = 3
-VARIANCE = 4
-DID_SHOOT = 5
-IS_SHOT = 6
-CHECKSUM = 7
+ACCEL_X = 1
+ACCEL_Y = 2
+ACCEL_Z = 3
+ROTATE_X = 4
+ROTATE_Y = 5
+ROTATE_Z = 6
+DID_SHOOT = 7
+IS_SHOT = 8
+CHECKSUM = 9
 
-PACKET_FORMAT_STR = "<cffff??b"
-
-def updateWristArr(wristData, packet):
-
-    if packet[PACKET_TYPE] == P1_ACCEL_X or packet[PACKET_TYPE] == P2_ACCEL_X:
-        wristData[0:4] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
-
-    elif packet[PACKET_TYPE] == P1_ACCEL_Y or packet[PACKET_TYPE] == P2_ACCEL_Y:
-        wristData[4:8] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
-
-    if packet[PACKET_TYPE] == P1_ACCEL_Z or packet[PACKET_TYPE] == P2_ACCEL_Z:
-        wristData[8:12] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
-
-    if packet[PACKET_TYPE] == P1_ROTATE_X or packet[PACKET_TYPE] == P2_ROTATE_X:
-        wristData[12:16] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
-
-    if packet[PACKET_TYPE] == P1_ROTATE_Y or packet[PACKET_TYPE] == P2_ROTATE_Y:
-        wristData[16:20] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
-
-    if packet[PACKET_TYPE] == P1_ROTATE_Z or packet[PACKET_TYPE] == P2_ROTATE_Z:
-        wristData[20:] = packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN]
+PACKET_FORMAT_STR = "<chhhhhh??b"
 
 class BeetleStruct(ctypes.Structure):
     _fields_ = [('packetType', ctypes.c_char), \
-                ('mean', ctypes.c_double), \
-                ('range', ctypes.c_double), \
-                ('variance', ctypes.c_double), \
-                ('median', ctypes.c_double), \
+                ('accelX', ctypes.c_int16), \
+                ('accelY', ctypes.c_int16), \
+                ('accelZ', ctypes.c_int16), \
+                ('rotateX', ctypes.c_int16), \
+                ('rotateY', ctypes.c_int16), \
+                ('rotateZ', ctypes.c_int16), \
                 ('didShoot', ctypes.c_bool), \
                 ('isShot', ctypes.c_bool), \
                 ('checksum', ctypes.c_byte)]
@@ -78,14 +47,14 @@ def startBeetleMainProcess(beetleQueue: mp.Array):
     serverSocket.listen()
     print('Beetle server is ready to receive message at port', serverPort)
 
-    indivs = [mp.Process() for _ in range(NUM_BEETLES)]
+    indivs = [mp.Process() for _ in range(NUM_BEETLES * 5)]
 
-    for i in range(NUM_BEETLES):
+    for i in range(NUM_BEETLES * 5):
         connectionSocket, clientAddr = serverSocket.accept()
         indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleQueue, i, connectionSocket))
         indivs[i].start()
 
-    for i in range(NUM_BEETLES):
+    for i in range(NUM_BEETLES * 5):
         indivs[i].join()
 
 def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
