@@ -48,6 +48,7 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
     evalClient = None
 
     if runWithEval:
+        print("running with  eval server")
         evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
     
