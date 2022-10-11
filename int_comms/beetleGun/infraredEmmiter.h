@@ -22,6 +22,7 @@ void initEmmiter()
 {
   myButton.begin(); // initialize the button object
   IrSender.begin(); // Start with IR_SEND_PIN as send pin and if NO_LED_FEEDBACK_CODE is NOT defined, enable feedback LED at default feedback LED pin
+  pinMode(LED_PIN, OUTPUT);
 }
 
 boolean senseEmmiter()
