@@ -25,13 +25,15 @@ if __name__ == '__main__':
     if len(sys.argv) == _num_param:
         evalHost, evalPort = sys.argv[-2], int(sys.argv[-1])
 
+    beetlePort = int(input("Please input the port for beetle: "))
+
     engineProcess = mp.Process(target = startEngineProcess, args=(evalHost, evalPort, actionQueue, canP1SeeP2, canP2SeeP1))
     moveProcess = mp.Process(target = startMoveProcess, args = (actionQueue, beetleQueue))
 
     p1ClientProcess = mp.Process(target = startPlayerClient, args=(canP1SeeP2, 1))
     p2ClientProcess = mp.Process(target = startPlayerClient, args=(canP2SeeP1, 2))
 
-    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleQueue,))
+    beetleMainProcess = mp.Process(target = beetles.startBeetleMainProcess, args=(beetleQueue, beetlePort))
 
     try:
         engineProcess.start()
