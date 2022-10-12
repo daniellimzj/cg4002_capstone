@@ -14,7 +14,7 @@ from Player import Actions, Player
 def startPlayerClient(canPlayerSeeOther: SynchronizedBase, id: int):
 
     def on_connect(client: mqtt.Client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
+        print("Player client connected with result code "+str(rc))
 
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
@@ -53,10 +53,12 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
     engine = GameEngine()
     
     gameStateClient = mqtt.Client()
-    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    gameStateRes = gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     reloadClient = mqtt.Client()
-    reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    reloadRes = reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    print(gameStateRes)
+    print(reloadRes)
 
     try:
         while True:
