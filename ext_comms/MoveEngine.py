@@ -11,7 +11,7 @@ from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
-NS_AFTER_THRESHOLD = 1500000000
+NS_AFTER_THRESHOLD = 1900000000
 
 def appendReadings(playerReadings, packet):
     playerReadings[0].append(packet[beetles.ACCEL_X])
@@ -118,19 +118,19 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 gotPacketFromP2Wrist = True
 
             elif beetleID == beetles.P1_GUN:
-                print("in one second, got", beetleID)
+                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
                 p1Move = Actions.shoot
 
             elif beetleID == beetles.P2_GUN:
-                print("in one second, got", beetleID)
+                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
                 p2Move = Actions.shoot
 
             elif beetleID == beetles.P1_VEST:
-                print("in one second, got", beetleID)
+                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
                 didP1GetShot = True
             
             elif beetleID == beetles.P2_VEST:
-                print("in one second, got", beetleID)
+                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
                 didP2GetShot = True       
 
         except:
