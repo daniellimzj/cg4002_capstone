@@ -91,9 +91,11 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
+                print("now sending with eval to MQTT")
                 mqttClient.publish(MQTT.Topics.gameState, resp)
 
             else:
+                print("now sending without eval to MQTT")
                 mqttClient.publish(MQTT.Topics.gameState, currState)
 
             p1_action, p2_action = engine.get_player_actions()
