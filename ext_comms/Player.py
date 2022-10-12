@@ -37,8 +37,17 @@ class Player:
     def get_bullet_count(self):
         return self.bullets
 
+    def get_shield_count(self):
+        return self.num_shield
+    
+    def get_grenade_count(self):
+        return self.grenades
+
     def get_action(self):
         return self.action
+
+    def set_action(self, action):
+        self.action = action
 
     def get_dict (self):
         _player = dict()
