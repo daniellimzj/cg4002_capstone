@@ -75,6 +75,8 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             can_p1_see_p2 = True
             can_p2_see_p1 = True
 
+            old_p1_grenades, old_p2_grenades = engine.get_grenade_counts()
+
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
             else:
@@ -87,7 +89,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 with canP2SeeP1.get_lock():
                     can_p2_see_p1 = bool(canP2SeeP1.value)
             
-
             print("received from move engine:", inputs)
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
@@ -101,13 +102,23 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
                 print("now sending with eval to MQTT")
-                gameStateClient.publish(MQTT.Topics.gameState, resp, qos=2)
-
-            else:
-                print("now sending without eval to MQTT")
-                gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
+                currState = resp
 
             p1_action, p2_action = engine.get_player_actions()
+
+            if p1_action == Actions.grenade and old_p1_grenades == 0:
+                print("setting p1 grenade action to none because grenade count was zero")
+                engine.p1.set_action(Actions.no)
+                currState = engine.get_JSON_string()
+
+
+            if p2_action == Actions.grenade and old_p2_grenades == 0:
+                print("setting p2 grenade action to none because grenade count was zero")
+                engine.p2.set_action(Actions.no)
+                currState = engine.get_JSON_string()
+            
+            gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
+
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
             if new_p1_bullets == 6:
@@ -140,6 +151,12 @@ class GameEngine:
 
     def get_bullet_counts(self):
         return self.p1.get_bullet_count(), self.p2.get_bullet_count()
+
+    def get_shield_counts(self):
+        return self.p1.get_shield_count(), self.p2.get_shield_count()
+
+    def get_grenade_counts(self):
+        return self.p1.get_grenade_count(), self.p2.get_grenade_count()
 
     def get_player_actions(self):
         return self.p1.get_action(), self.p2.get_action()
