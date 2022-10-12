@@ -80,6 +80,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     while (beetleID == beetles.P1_WRIST and not classifier.isStartOfMove(packet)) or (beetleID == beetles.P2_WRIST and not classifier.isStartOfMove(packet)):
         packet = beetleQueue.get(block = True)
         beetleID = packet[beetles.PACKET_TYPE]
+        print(beetleID)
 
     print("packet has passed the test, id:", beetleID)
     startTime = time.time_ns()
