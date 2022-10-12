@@ -53,12 +53,18 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
     engine = GameEngine()
     
     gameStateClient = mqtt.Client()
-    gameStateRes = gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    gameStateRes = None
+    while gameStateRes != mqtt.MQTT_ERR_SUCCESS:
+        print("game state client connecting...")
+        gameStateRes = gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    print("game state client connected!")
 
     reloadClient = mqtt.Client()
-    reloadRes = reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
-    print(gameStateRes)
-    print(reloadRes)
+    reloadRes = None
+    while reloadRes != mqtt.MQTT_ERR_SUCCESS:
+        print("reload client connecting...")
+        reloadRes = reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    print("reload client connected!")
 
     try:
         while True:
