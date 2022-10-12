@@ -80,7 +80,6 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     while (beetleID == beetles.P1_WRIST and not classifier.isStartOfMove(packet)) or (beetleID == beetles.P2_WRIST and not classifier.isStartOfMove(packet)):
         packet = beetleQueue.get(block = True)
         beetleID = packet[beetles.PACKET_TYPE]
-        print(beetleID)
 
     print("packet has passed the test, id:", beetleID)
     startTime = time.time_ns()
@@ -119,15 +118,19 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 gotPacketFromP2Wrist = True
 
             elif beetleID == beetles.P1_GUN:
+                print("in one second, got", beetleID)
                 p1Move = Actions.shoot
 
             elif beetleID == beetles.P2_GUN:
+                print("in one second, got", beetleID)
                 p2Move = Actions.shoot
 
             elif beetleID == beetles.P1_VEST:
+                print("in one second, got", beetleID)
                 didP1GetShot = True
             
             elif beetleID == beetles.P2_VEST:
+                print("in one second, got", beetleID)
                 didP2GetShot = True       
 
         except:
@@ -152,4 +155,5 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
             p1WristData.append(statistics.median(p2Readings[i]))
         p2Move = classifier.classifyMove(p2WristData)
 
+    print("getMoves now returning",p1Move, p2Move, didP1GetShot, didP2GetShot)
     return p1Move, p2Move, didP1GetShot, didP2GetShot
