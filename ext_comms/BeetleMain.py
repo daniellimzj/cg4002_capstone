@@ -54,13 +54,16 @@ def startBeetleMainProcess(beetleQueue: mp.Array):
 
     indivs = [mp.Process() for _ in range(NUM_BEETLES * 5)]
 
-    for i in range(NUM_BEETLES * 5):
-        connectionSocket, clientAddr = serverSocket.accept()
-        indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleQueue, i, connectionSocket))
-        indivs[i].start()
+    try:
+        for i in range(NUM_BEETLES * 5):
+            connectionSocket, clientAddr = serverSocket.accept()
+            indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleQueue, i, connectionSocket))
+            indivs[i].start()
 
-    for i in range(NUM_BEETLES * 5):
-        indivs[i].join()
+        for i in range(NUM_BEETLES * 5):
+            indivs[i].join()
+    finally:
+        serverSocket.close()
 
 def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
 
