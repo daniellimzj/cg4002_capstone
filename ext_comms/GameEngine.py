@@ -64,8 +64,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             can_p1_see_p2 = True
             can_p2_see_p1 = True
 
-            prev_p1_bullets, prev_p2_bullets = engine.get_bullet_counts()
-
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
             else:
@@ -82,6 +80,8 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             print("received from move engine:", inputs)
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
+
+            prev_p1_bullets, prev_p2_bullets = engine.get_bullet_counts()
 
             currState = engine.get_JSON_string()
 
