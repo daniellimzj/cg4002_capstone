@@ -8,7 +8,7 @@ import queue
 
 from socket import *
 import sshtunnel
-BEETLE_PORT = 6721
+BEETLE_PORT = 6720
 
 from bluepy.btle import Peripheral, DefaultDelegate
 
@@ -101,7 +101,7 @@ class Comms(DefaultDelegate):
         # print("Beetle {0} data:".format(self.index))
         result = (','.join([str(value) for value in datas.values()]))
         if result != self.prev:
-            print(result)
+            # print(result)
             self.prev = result
             self.clientSocket.send(data)
         # print(data)
@@ -239,9 +239,9 @@ def initHandshake(beetle, serialChar, index):
             pass
 
 def checkReload(serialChar, mqttQueue):
-    print("checking queue..")
+    # print("checking queue..")
     try:
-        print("inside try")
+        # print("inside try")
         didPlayerReload = mqttQueue.get(block=False, timeout=None)
         print("did player reload:", didPlayerReload)
         if didPlayerReload:
@@ -261,7 +261,7 @@ def watchForDisconnect(beetle, index):
 
 def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     while True:
-        print("listening")
+        # print("listening")
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
             # disconnected = True
             print("breaking loop")
@@ -342,20 +342,20 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
 
 if __name__ == "__main__":
     # beetleProcess(btleAddrs[3], 0)
-    # beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
     beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
     beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
 
     try:
-        # beetle0Process.start()
+        beetle0Process.start()
         beetle1Process.start()
         beetle2Process.start()
 
-        # beetle0Process.join()
+        beetle0Process.join()
         beetle1Process.join()
         beetle2Process.join()
     finally:
-        # beetle0Process.terminate()
+        beetle0Process.terminate()
         beetle1Process.terminate()
         beetle2Process.terminate()
 
