@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include <JC_Button.h> // https://github.com/JChristensen/JC_Button
 
+#define PLAYER_NUM 1   // change depending on whether gun is for player 1 or 2
+
 #define PUSHBUTTON_PIN 2
 #define IR_SEND_PIN 3
 #define LED_PIN 4
 
 // values to transmit to receiver
-#define SEND_ADDRESS 0xA906
+#define PLAYER_1_SEND_ADDRESS 0xA906
+#define PLAYER_2_SEND_ADDRESS 0x6509
 #define SEND_COMMAND 0x0E
 #define SEND_NUMBER_OF_REPEATS 0
 
@@ -35,7 +38,12 @@ boolean senseEmmiter()
     // Only send IR signal if player has bullets
     if (numberOfBullets > 0)
     {
-      IrSender.sendNEC(SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
+      if (PLAYER_NUM == 1) {
+      IrSender.sendNEC(PLAYER_1_SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
+      } 
+      else if (PLAYER_NUM == 2) {
+      IrSender.sendNEC(PLAYER_2_SEND_ADDRESS, SEND_COMMAND, SEND_NUMBER_OF_REPEATS);
+      } 
       numberOfBullets--;
       // light LED
       digitalWrite(LED_PIN, HIGH);
