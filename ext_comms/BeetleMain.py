@@ -45,8 +45,8 @@ class BeetleStruct(ctypes.Structure):
                 ('isShot', ctypes.c_bool), \
                 ('checksum', ctypes.c_byte)]
 
-def startBeetleMainProcess(beetleQueue: mp.Array):
-    serverPort = BEETLE_PORT
+def startBeetleMainProcess(beetleQueue: mp.Array, port: int):
+    serverPort = port
     serverSocket = socket(AF_INET, SOCK_STREAM)
     serverSocket.bind(("", serverPort))
     serverSocket.listen()
