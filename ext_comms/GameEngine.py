@@ -52,8 +52,11 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
         evalClient = EvalClient(evalHost, evalPort)
     engine = GameEngine()
     
-    mqttClient = mqtt.Client()
-    mqttClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    gameStateClient = mqtt.Client()
+    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+
+    reloadClient = mqtt.Client()
+    reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     try:
         while True:
@@ -81,8 +84,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
-            prev_p1_bullets, prev_p2_bullets = engine.get_bullet_counts()
-
             currState = engine.get_JSON_string()
 
             if runWithEval:
@@ -92,29 +93,29 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
                 print("now sending with eval to MQTT")
-                mqttClient.publish(MQTT.Topics.gameState, resp, qos=2)
+                gameStateClient.publish(MQTT.Topics.gameState, resp, qos=2)
 
             else:
                 print("now sending without eval to MQTT")
-                mqttClient.publish(MQTT.Topics.gameState, currState, qos=2)
+                gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
 
             p1_action, p2_action = engine.get_player_actions()
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
             if new_p1_bullets == 6:
                 print("sending p1 reload")
-                mqttClient.publish(MQTT.Topics.didP1Reload, "1", qos=2)
+                reloadClient.publish(MQTT.Topics.didP1Reload, "1", qos=2)
 
             if new_p2_bullets == 6:
                 print("sending p2 reload")
-                mqttClient.publish(MQTT.Topics.didP2Reload, "1", qos=2)
+                reloadClient.publish(MQTT.Topics.didP2Reload, "1", qos=2)
 
     finally:
         if runWithEval:
             evalClient.close()
             print("successfully closed eval client!")
         
-        mqttClient.disconnect()
+        gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
 

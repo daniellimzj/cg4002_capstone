@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 
 import MQTT
+i = 0
 
 def on_connect(client: mqtt.Client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -11,7 +12,9 @@ def on_connect(client: mqtt.Client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
+    global i
+    i += 1
+    print(i)
 
 if __name__ == "__main__":
     try:
