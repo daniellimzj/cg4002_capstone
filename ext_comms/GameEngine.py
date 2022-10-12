@@ -92,22 +92,22 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
                 print("now sending with eval to MQTT")
-                mqttClient.publish(MQTT.Topics.gameState, resp)
+                mqttClient.publish(MQTT.Topics.gameState, resp, qos=2)
 
             else:
                 print("now sending without eval to MQTT")
-                mqttClient.publish(MQTT.Topics.gameState, currState)
+                mqttClient.publish(MQTT.Topics.gameState, currState, qos=2)
 
             p1_action, p2_action = engine.get_player_actions()
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
             if prev_p1_bullets == 0 and p1_action == Actions.reload and new_p1_bullets == 6:
                 print("sending p1 reload")
-                mqttClient.publish(MQTT.Topics.didP1Reload, "1")
+                mqttClient.publish(MQTT.Topics.didP1Reload, "1", qos=2)
 
             if prev_p2_bullets == 0 and p2_action ==Actions.reload and new_p2_bullets == 6:
                 print("sending p2 reload")
-                mqttClient.publish(MQTT.Topics.didP2Reload, "1")
+                mqttClient.publish(MQTT.Topics.didP2Reload, "1", qos=2)
 
     finally:
         if runWithEval:
