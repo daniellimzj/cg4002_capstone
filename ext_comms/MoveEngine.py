@@ -139,7 +139,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p1Move != Actions.shoot and gotPacketFromP1Wrist:
         p1WristData = []
-        print("length of readings:", len(p1Readings[0]))
+        print("length of p1 readings:", len(p1Readings[0]))
         for i in range(len(p1Readings)):
             p1WristData.append(statistics.mean(p1Readings[i]))
             p1WristData.append(max(p1Readings[i]) - min(p1Readings[i]))
@@ -150,12 +150,12 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p2Move != Actions.shoot and gotPacketFromP2Wrist:
         p2WristData = []
-        print("length of readings:", len(p2Readings[0]))
+        print("length of p2 readings:", len(p2Readings[0]))
         for i in range(len(p2Readings)):
-            p1WristData.append(statistics.mean(p2Readings[i]))
-            p1WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
-            p1WristData.append(statistics.pvariance(p2Readings[i]))
-            p1WristData.append(statistics.median(p2Readings[i]))
+            p2WristData.append(statistics.mean(p2Readings[i]))
+            p2WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
+            p2WristData.append(statistics.pvariance(p2Readings[i]))
+            p2WristData.append(statistics.median(p2Readings[i]))
         if len(p2WristData):
             p2Move = classifier.classifyMove(p2WristData)
 
