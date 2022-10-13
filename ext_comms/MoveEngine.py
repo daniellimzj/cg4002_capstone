@@ -57,6 +57,7 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
     while True:
         p1Move, p2Move, didP1GetShot, didP2GetShot = getMoves(beetleQueue, classifier)
+        print("move process got:", p1Move, p2Move, didP1GetShot, didP2GetShot)
 
         if p1Move != Actions.no or p2Move != Actions.no:
             actionQueue.put((p1Move, p2Move, didP1GetShot, didP2GetShot), block=True)
@@ -138,7 +139,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p1Move != Actions.shoot and gotPacketFromP1Wrist:
         p1WristData = []
-        print("length of readings:", len(p1Readings))
+        print("length of readings:", len(p1Readings[0]))
         for i in range(len(p1Readings)):
             p1WristData.append(statistics.mean(p1Readings[i]))
             p1WristData.append(max(p1Readings[i]) - min(p1Readings[i]))
@@ -149,7 +150,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p2Move != Actions.shoot and gotPacketFromP2Wrist:
         p2WristData = []
-        print("length of readings:", len(p2Readings))
+        print("length of readings:", len(p2Readings[0]))
         for i in range(len(p2Readings)):
             p1WristData.append(statistics.mean(p2Readings[i]))
             p1WristData.append(max(p2Readings[i]) - min(p2Readings[i]))

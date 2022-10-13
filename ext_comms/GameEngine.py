@@ -92,7 +92,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 with canP2SeeP1.get_lock():
                     can_p2_see_p1 = bool(canP2SeeP1.value)
             
-            print("received from move engine:", inputs)
             print("engine is carrying out action with bools", can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
