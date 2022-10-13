@@ -1,6 +1,8 @@
 import struct
 import multiprocessing as mp
 import time
+import os
+import sys
 
 import paho.mqtt.client as mqtt
 import MQTT
@@ -8,7 +10,6 @@ import queue
 
 from socket import *
 import sshtunnel
-BEETLE_PORT = 6720
 
 from bluepy.btle import Peripheral, DefaultDelegate
 
@@ -273,7 +274,7 @@ def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     beetle.disconnect()  # Disconnects first and try to reconnect again
     return True
 
-def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
+def beetleProcess(addr, index, beetlePort):  # Curr beetle addr, curr beetle index
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
@@ -293,7 +294,7 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
             'stu.comp.nus.edu.sg',
             ssh_username="danielim",
             ssh_password="Cg4002!",
-            remote_bind_address=('192.168.95.234', BEETLE_PORT),
+            remote_bind_address=('192.168.95.234', beetlePort),
         ) as tunnel:
 
             serverName = 'localhost'
@@ -341,10 +342,18 @@ def beetleProcess(addr, index):  # Curr beetle addr, curr beetle index
 
 
 if __name__ == "__main__":
-    # beetleProcess(btleAddrs[3], 0)
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0))
-    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1))
-    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2))
+
+    _num_param = 2
+    if len(sys.argv) < _num_param:
+        print("Invalid number of arguments!")
+        print("python3 " + os.path.basename(__file__) + " [Beetle Port]")
+        print("Beetle Port: Port number of beetle")
+        sys.exit()
+    beetlePort = int(sys.argv[-1])
+    print("Beetle Port:", beetlePort)
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0, beetlePort))
+    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1, beetlePort))
+    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2, beetlePort))
 
     try:
         beetle0Process.start()
