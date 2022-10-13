@@ -85,10 +85,12 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     startTime = time.time_ns()
 
     if beetleID == beetles.P1_WRIST:
+        print("appending p1")
         appendReadings(p1Readings, packet)
         gotPacketFromP1Wrist = True
 
     elif beetleID == beetles.P2_WRIST:
+        print("appending p2")
         appendReadings(p2Readings, packet)
         gotPacketFromP2Wrist = True
 
@@ -110,10 +112,12 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
             beetleID = packet[beetles.PACKET_TYPE]
 
             if beetleID == beetles.P1_WRIST:
+                print("appending p1")
                 appendReadings(p1Readings, packet)
                 gotPacketFromP1Wrist = True
 
             elif beetleID == beetles.P2_WRIST:
+                print("appending p2")
                 appendReadings(p2Readings, packet)
                 gotPacketFromP2Wrist = True
 
