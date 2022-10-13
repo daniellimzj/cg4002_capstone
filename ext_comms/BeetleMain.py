@@ -77,10 +77,10 @@ def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
                 packet += connSocket.recv(1)
 
             packet = struct.unpack(PACKET_FORMAT_STR, packet)
-            # print(packet[PACKET_TYPE], packet[MEAN], packet[RANGE], packet[VARIANCE], packet[MEDIAN], packet[DID_SHOOT], packet[IS_SHOT], packet[CHECKSUM])
             
             beetleQueue.put(packet, block=True)
 
     finally:
+        print("closing beetle process", id)
         connSocket.close()
 
