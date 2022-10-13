@@ -85,12 +85,10 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     startTime = time.time_ns()
 
     if beetleID == beetles.P1_WRIST:
-        print("appending p1")
         appendReadings(p1Readings, packet)
         gotPacketFromP1Wrist = True
 
     elif beetleID == beetles.P2_WRIST:
-        print("appending p2")
         appendReadings(p2Readings, packet)
         gotPacketFromP2Wrist = True
 
@@ -112,12 +110,10 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
             beetleID = packet[beetles.PACKET_TYPE]
 
             if beetleID == beetles.P1_WRIST:
-                print("appending p1")
                 appendReadings(p1Readings, packet)
                 gotPacketFromP1Wrist = True
 
             elif beetleID == beetles.P2_WRIST:
-                print("appending p2")
                 appendReadings(p2Readings, packet)
                 gotPacketFromP2Wrist = True
 
@@ -142,7 +138,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p1Move != Actions.shoot and gotPacketFromP1Wrist:
         p1WristData = []
-        print("length of readings:", len(p1WristData))
+        print("length of readings:", len(p1Readings))
         for i in range(len(p1Readings)):
             p1WristData.append(statistics.mean(p1Readings[i]))
             p1WristData.append(max(p1Readings[i]) - min(p1Readings[i]))
@@ -153,6 +149,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     if p2Move != Actions.shoot and gotPacketFromP2Wrist:
         p2WristData = []
+        print("length of readings:", len(p2Readings))
         for i in range(len(p2Readings)):
             p1WristData.append(statistics.mean(p2Readings[i]))
             p1WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
@@ -161,5 +158,4 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         if len(p2WristData):
             p2Move = classifier.classifyMove(p2WristData)
 
-    print("getMoves now returning",p1Move, p2Move, didP1GetShot, didP2GetShot)
     return p1Move, p2Move, didP1GetShot, didP2GetShot
