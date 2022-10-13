@@ -11,7 +11,7 @@ from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
-NS_AFTER_THRESHOLD = 1900000000
+NS_AFTER_THRESHOLD = 2000000000
 
 def appendReadings(playerReadings, packet):
     playerReadings[0].append(packet[beetles.ACCEL_X])
