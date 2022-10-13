@@ -102,7 +102,7 @@ class Comms(DefaultDelegate):
         # print("Beetle {0} data:".format(self.index))
         result = (','.join([str(value) for value in datas.values()]))
         if result != self.prev:
-            # print(result)
+            # print(result, end="\r")
             self.prev = result
             self.clientSocket.send(data)
         # print(data)
@@ -248,7 +248,8 @@ def checkReload(serialChar, mqttQueue):
         if didPlayerReload:
             serialChar.write(bytes("R", "utf-8"))
     except queue.Empty:
-        print("empty")
+        # print()
+        pass
 
 def watchForDisconnect(beetle, index):
     while True:
@@ -319,8 +320,8 @@ def beetleProcess(addr, index, beetlePort):  # Curr beetle addr, curr beetle ind
 
                     if not btleHandshakes[index]:
                         initHandshake(beetle, serialChar, index)
-                        print("Beetle " + str(index) +": Handshake Successful!")
-                        print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
+                        # print("Beetle " + str(index) +": Handshake Successful!")
+                        # print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
                     if btleHandshakes[index]:
                         if (index == INDEX_GUN):
