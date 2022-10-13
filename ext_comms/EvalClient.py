@@ -10,7 +10,7 @@ class EvalClient:
 
     def __init__(self, serverName: str, serverPort: int):
 
-        print("Connecting to server at ", serverName, ", port number ", serverPort)
+        print("Connecting to server at", serverName, ", port number ", serverPort)
 
         config = json.load(open('config.json'))
         self.secretKey = bytes(config["key"], encoding="utf-8")

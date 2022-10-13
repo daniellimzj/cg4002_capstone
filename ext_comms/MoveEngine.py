@@ -89,18 +89,18 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         appendReadings(p1Readings, packet)
         gotPacketFromP1Wrist = True
 
-    elif beetleID == beetles.P2_WRIST:
-        appendReadings(p2Readings, packet)
-        gotPacketFromP2Wrist = True
+    # elif beetleID == beetles.P2_WRIST:
+    #     appendReadings(p2Readings, packet)
+    #     gotPacketFromP2Wrist = True
 
     elif beetleID == beetles.P1_GUN:
         p1Move = Actions.shoot
 
-    elif beetleID == beetles.P2_GUN:
-        p2Move = Actions.shoot
+    # elif beetleID == beetles.P2_GUN:
+    #     p2Move = Actions.shoot
 
-    elif beetleID == beetles.P1_VEST:
-        didP1GetShot = True
+    # elif beetleID == beetles.P1_VEST:
+    #     didP1GetShot = True
             
     elif beetleID == beetles.P2_VEST:
         didP2GetShot = True 
@@ -114,21 +114,21 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 appendReadings(p1Readings, packet)
                 gotPacketFromP1Wrist = True
 
-            elif beetleID == beetles.P2_WRIST:
-                appendReadings(p2Readings, packet)
-                gotPacketFromP2Wrist = True
+            # elif beetleID == beetles.P2_WRIST:
+            #     appendReadings(p2Readings, packet)
+            #     gotPacketFromP2Wrist = True
 
             elif beetleID == beetles.P1_GUN:
                 print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
                 p1Move = Actions.shoot
 
-            elif beetleID == beetles.P2_GUN:
-                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-                p2Move = Actions.shoot
+            # elif beetleID == beetles.P2_GUN:
+            #     print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
+            #     p2Move = Actions.shoot
 
-            elif beetleID == beetles.P1_VEST:
-                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-                didP1GetShot = True
+            # elif beetleID == beetles.P1_VEST:
+            #     print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
+            #     didP1GetShot = True
             
             elif beetleID == beetles.P2_VEST:
                 print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
@@ -148,15 +148,15 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         if len(p1WristData):
             p1Move = classifier.classifyMove(p1WristData)
 
-    if p2Move != Actions.shoot and gotPacketFromP2Wrist:
-        p2WristData = []
-        print("length of p2 readings:", len(p2Readings[0]))
-        for i in range(len(p2Readings)):
-            p2WristData.append(statistics.mean(p2Readings[i]))
-            p2WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
-            p2WristData.append(statistics.pvariance(p2Readings[i]))
-            p2WristData.append(statistics.median(p2Readings[i]))
-        if len(p2WristData):
-            p2Move = classifier.classifyMove(p2WristData)
+    # if p2Move != Actions.shoot and gotPacketFromP2Wrist:
+    #     p2WristData = []
+    #     print("length of p2 readings:", len(p2Readings[0]))
+    #     for i in range(len(p2Readings)):
+    #         p2WristData.append(statistics.mean(p2Readings[i]))
+    #         p2WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
+    #         p2WristData.append(statistics.pvariance(p2Readings[i]))
+    #         p2WristData.append(statistics.median(p2Readings[i]))
+    #     if len(p2WristData):
+    #         p2Move = classifier.classifyMove(p2WristData)
 
     return p1Move, p2Move, didP1GetShot, didP2GetShot
