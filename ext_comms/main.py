@@ -51,6 +51,7 @@ if __name__ == '__main__':
 
     finally:
         actionQueue.close()
+        beetleQueue.close()
         engineProcess.terminate()
         moveProcess.terminate()
         p1ClientProcess.terminate()
