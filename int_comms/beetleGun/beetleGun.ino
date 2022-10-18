@@ -117,13 +117,20 @@ public:
 
   void run() override
   {
-      delay(TIMEOUT_DATA);
-      if (Serial.read() == 'R') {
+      unsigned long currTime = millis();
+      char serialRead = Serial.read();
+      while (serialRead != 'H' || serialRead != 'A' || serialRead != 'R') {
+        if (millis() - currTime >= TIMEOUT_DATA) {
+          break;
+        }
+        serialRead = Serial.read();
+      }
+      if (serialRead == 'R') {
         reloadGun();
-      } else if (Serial.read() == 'A') {
+      } else if (serialRead == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
-      } else if (Serial.read() == 'H') {
+      } else if (serialRead == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
       }
