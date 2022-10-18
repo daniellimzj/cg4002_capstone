@@ -56,6 +56,7 @@ class Comms(DefaultDelegate):
         self.startTime = time.time()
         self.totalPackets = 0
         self.sentPackets = 0
+        self.loops = 0
 
     def sendAckPacket(self):
         # print("Sending ack!")
@@ -79,6 +80,7 @@ class Comms(DefaultDelegate):
         result = (','.join([str(value) for value in datas.values()]))
         # self.clientSocket.send(data)
         print(result)
+        print("from here")
         self.sendAckPacket()
 
 
@@ -105,15 +107,20 @@ class Comms(DefaultDelegate):
         # print("Beetle {0} data:".format(self.index))
         result = (','.join([str(value) for value in datas.values()]))
         self.totalPackets += 1
+        # print(result)
         if result != self.prev:
             # print(result, end="\r")
             self.prev = result
+            # print("Beetle {0}: {1} {2}".format(self.index, data, type(data)))
             # self.clientSocket.send(data)
             self.sentPackets += 1
             if time.time() - self.startTime >= 1:
                 self.startTime = time.time()
                 print("total:", self.totalPackets)
                 print("sent:", self.sentPackets)
+                self.loops += 1
+                print("Loops:", self.loops)
+                # if (self.sentPackets)
                 self.totalPackets = 0
                 self.sentPackets = 0
         # print(data)
@@ -141,37 +148,38 @@ class Comms(DefaultDelegate):
         return False
 
     def handleFragmentation(self, data):
-        # print("================================")
-        # print("  ^FRAGMENTED PACKET DETECTED^")
-        # print("================================")
+        print("================================")
+        print("  ^FRAGMENTED PACKET DETECTED^")
+        print("================================")
         self.buffer = self.buffer + data
         self.fragmented += 1
-        # print("Buffer:", self.buffer)
-        # print("Data:", data)
+        print("Buffer:", self.buffer)
+        print("Data:", data)
         # print("Beetle {0} Fragmented: {1}".format(self.index, self.fragmented))
         if len(self.buffer) == 20:  # Need to handle if fragmented weirdly?
-            # print("================================")
-            # print("   FRAGMENTED DATA PREVENTED")
-            # print("================================")
+            print("================================")
+            print("   FRAGMENTED DATA PREVENTED")
+            print("================================")
+            print(self.buffer)
             self.handleNotification(None, self.buffer)
             self.buffer = b''
 
     def handleChecksumError(self, data):
-        # print("================================")
-        # print("Handling checksum error")
-        # print("================================")
+        print("================================")
+        print("Handling checksum error")
+        print("================================")
         currBuffer = len(self.buffer)
-        # print("received:", data, len(data))
-        # print("old data:", self.buffer, currBuffer)
+        print("received:", data, len(data))
+        print("old data:", self.buffer, currBuffer)
         currData = data[:(20-currBuffer)]
         self.buffer = self.buffer + currData
-        # print("Fixed data:", self.buffer)
+        print("Fixed data:", self.buffer)
         self.handleNotification(None, self.buffer)
         # print("new called data:")
         # print(self.buffer, len(self.buffer))
         self.buffer = data[(20-currBuffer):]
         # print("Leftover data:", self.buffer)
-        # print(self.buffer, len(self.buffer))
+        print("Leftover data:", self.buffer, len(self.buffer))
 
     def handleNotification(self, charHandle, data):
         try:
@@ -197,7 +205,6 @@ class Comms(DefaultDelegate):
                     raise ChecksumError("Incorrect checksum")
 
             packetType = packet[0]
-            # P1:a,b,c,d,e,f,V,G        P2:u,v,w,x,y,z,W,J
             if packetType == ord('D') or packetType == ord('E'):
                 self.handleArmPacket(data, packet)
             elif packetType == ord('G') or packetType == ord('J') or packetType == ord('V') or packetType == ord('W'):
@@ -209,7 +216,8 @@ class Comms(DefaultDelegate):
             self.handleFragmentation(data)
 
         except ChecksumError:
-            self.handleChecksumError(data)
+            if (len(self.buffer) != 0):
+                self.handleChecksumError(data)
 
         except Exception as e:
             self.dropped += 1

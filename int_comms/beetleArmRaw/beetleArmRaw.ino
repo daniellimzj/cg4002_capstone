@@ -8,22 +8,19 @@
 #define DATA_STATE_ID 4
 
 #define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 20
+#define TIMEOUT_DATA 40
 #define PACKET_SIZE 20
 
 volatile int nextID = SLEEP_STATE_ID;
 
-//volatile int current = ACCEL_X;
 volatile boolean handshakeDone = false;
+volatile boolean dataReady = false;
 
 // SENSOR
 MPU6050 myIMU;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ;
 int16_t filteredAccX, filteredAccY, filteredAccZ, filteredGyroX, filteredGyroY, filteredGyroZ;
-
-int16_t readings[NUM_FEATURES][NUM_READINGS];
-float stats[NUM_FEATURES][NUM_STATS];
 
 unsigned long i = 0;
 unsigned long previousMillis = 0;
@@ -157,20 +154,40 @@ public:
 
   void run() override
   {
-    while (true) {
-      delay(TIMEOUT_DATA);
-      if (Serial.read() == 'H') {
-        nextID = HANDSHAKE_STATE_ID;
-        handshakeDone = false;
-        dataReady = false;
-        break;
-      } else if (Serial.read() == 'A') {
-        dataReady = false;
-        nextID = SLEEP_STATE_ID;
+//    while (true) {
+//      delay(TIMEOUT_DATA);
+//      if (Serial.read() == 'H') {
+//        nextID = HANDSHAKE_STATE_ID;
+//        handshakeDone = false;
+//        dataReady = false;
+//        break;
+//      } else if (Serial.read() == 'A') {
+//        dataReady = false;
+//        nextID = SLEEP_STATE_ID;
+//        break;
+//      }
+//      sendArmData();
+//    }
+//    delay(TIMEOUT_DATA);
+    unsigned long currTime = millis();
+    char serialRead = Serial.read();
+    while (serialRead != 'H' || serialRead != 'A') {
+      if (millis() - currTime >= TIMEOUT_DATA) {
         break;
       }
-      sendArmData();
+      serialRead = Serial.read();
     }
+    if (serialRead == 'H') {
+      nextID = HANDSHAKE_STATE_ID;
+      handshakeDone = false;
+      dataReady = false;
+//      break;
+    } else if (serialRead == 'A') {
+      dataReady = false;
+      nextID = SLEEP_STATE_ID;
+//      break;
+    }
+    sendArmData();
   }
 } Data_State;
 
@@ -278,31 +295,6 @@ void getReading()
     filteredGyroZ = (int16_t)(gyroZFilter.Current());
 
     dataReady = true;
-
-//    readings[ACCEL_X][i] = filteredAccX;
-//    readings[ACCEL_Y][i] = filteredAccY;
-//    readings[ACCEL_Z][i] = filteredAccZ;
-//    readings[ROTATE_X][i] = filteredGyroX;
-//    readings[ROTATE_Y][i] = filteredGyroY;
-//    readings[ROTATE_Z][i] = filteredGyroZ;
-
-//    if (i == NUM_READINGS - 1)
-//    {
-//      getStats(readings[ACCEL_X], stats[ACCEL_X]);
-//      getStats(readings[ACCEL_Y], stats[ACCEL_Y]);
-//      getStats(readings[ACCEL_Z], stats[ACCEL_Z]);
-//      getStats(readings[ROTATE_X], stats[ROTATE_X]);
-//      getStats(readings[ROTATE_Y], stats[ROTATE_Y]);
-//      getStats(readings[ROTATE_Z], stats[ROTATE_Z]);
-//
-//      dataReady = true;
-//
-//      i = 0;
-//    }
-//    else
-//    {
-//      i++;
-//    }
   }
 }
 
