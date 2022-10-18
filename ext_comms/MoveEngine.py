@@ -11,7 +11,7 @@ from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
-NS_AFTER_THRESHOLD = 2000000000
+NS_AFTER_START = 1500000000
 
 def appendReadings(playerReadings, packet):
     playerReadings[0].append(packet[beetles.ACCEL_X])
@@ -20,6 +20,15 @@ def appendReadings(playerReadings, packet):
     playerReadings[3].append(packet[beetles.ROTATE_X])
     playerReadings[4].append(packet[beetles.ROTATE_Y])
     playerReadings[5].append(packet[beetles.ROTATE_Z])
+
+def getProcessedData(readings):
+    processedData = []
+    for i in range(len(readings)):
+        processedData.append(statistics.mean(readings[i]))
+        processedData.append(max(readings[i]) - min(readings[i]))
+        processedData.append(statistics.pvariance(readings[i]))
+        processedData.append(statistics.median(readings[i]))
+    return processedData
 
 def getMaxAbsSecondDerivative(data):
     return max(abs((data[i + 2] - data[i + 1]) - (data[i + 1] - data[i])) for i in range(len(data) - 2))
@@ -48,8 +57,8 @@ class MoveClassifier:
         return INDEX_TO_ACTION_MAP[idx]
 
     # data here is raw
-    def isStartOfMove(self, rawData):
-        return rawData[beetles.ACCEL_Y] > -12000 or rawData[beetles.ACCEL_Y] < -20000
+    def isStartOfMove(self, prevAccelY, currAccelY):
+        return currAccelY - prevAccelY > 1000
 
 def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
@@ -69,94 +78,69 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     didP1GetShot = False
     didP2GetShot = False
 
-    gotPacketFromP1Wrist = False
-    gotPacketFromP2Wrist = False
+    hasP1WristMoved = False
+    p1WristStartTime = None
+    hasP2WristMoved = False
+    p2WristStartTime = None
 
     p1Readings = [[] for _ in range(6)]
     p2Readings = [[] for _ in range(6)]
 
-    packet = beetleQueue.get(block = True)
-    beetleID = packet[beetles.PACKET_TYPE]
+    prevP1AccelY = 0
+    prevP2AccelY = 0
 
-    while (beetleID == beetles.P1_WRIST and not classifier.isStartOfMove(packet)) or (beetleID == beetles.P2_WRIST and not classifier.isStartOfMove(packet)):
+    while (p1Move == Actions.no and p2Move == Actions.no):
+
         packet = beetleQueue.get(block = True)
         beetleID = packet[beetles.PACKET_TYPE]
 
-    print("packet has passed the test, id:", beetleID)
-    startTime = time.time_ns()
+        if beetleID == beetles.P1_GUN:
+            p1Move = Actions.shoot
 
-    if beetleID == beetles.P1_WRIST:
-        appendReadings(p1Readings, packet)
-        gotPacketFromP1Wrist = True
+        elif beetleID == beetles.P1_VEST:
+            didP1GetShot = True
 
-    # elif beetleID == beetles.P2_WRIST:
-    #     appendReadings(p2Readings, packet)
-    #     gotPacketFromP2Wrist = True
-
-    elif beetleID == beetles.P1_GUN:
-        p1Move = Actions.shoot
-
-    # elif beetleID == beetles.P2_GUN:
-    #     p2Move = Actions.shoot
-
-    # elif beetleID == beetles.P1_VEST:
-    #     didP1GetShot = True
-            
-    elif beetleID == beetles.P2_VEST:
-        didP2GetShot = True 
-
-    while time.time_ns() - startTime < NS_AFTER_THRESHOLD:
-        try:
-            packet = beetleQueue.get(block = False, timeout=None)
-            beetleID = packet[beetles.PACKET_TYPE]
-
-            if beetleID == beetles.P1_WRIST:
+        elif beetleID == beetles.P1_WRIST:
+            if hasP1WristMoved:
                 appendReadings(p1Readings, packet)
-                gotPacketFromP1Wrist = True
-
-            # elif beetleID == beetles.P2_WRIST:
-            #     appendReadings(p2Readings, packet)
-            #     gotPacketFromP2Wrist = True
-
-            elif beetleID == beetles.P1_GUN:
-                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-                p1Move = Actions.shoot
-
-            # elif beetleID == beetles.P2_GUN:
-            #     print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-            #     p2Move = Actions.shoot
-
-            # elif beetleID == beetles.P1_VEST:
-            #     print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-            #     didP1GetShot = True
+                if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
+                    print("length of raw p1 readings:", len(p1Readings[0]))
+                    p1WristData = getProcessedData(p1Readings)
+                    print("length of processed p1 readings:", len(p1WristData))
+                    if len(p1WristData):
+                        p1Move = classifier.classifyMove(p1WristData)
             
-            elif beetleID == beetles.P2_VEST:
-                print("in", "{:.3f}".format(NS_AFTER_THRESHOLD / 1000000000),"second, got", beetleID)
-                didP2GetShot = True       
+            else:
+                if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
+                    hasP1WristMoved = True
+                    appendReadings(p1Readings, packet)
+                    p1WristStartTime = time.time_ns()
+                else:
+                    prevP1AccelY = packet[beetles.ACCEL_Y]
 
-        except:
-            continue
+        elif beetleID == beetles.P2_GUN:
+            p2Move = Actions.shoot
 
-    if p1Move != Actions.shoot and gotPacketFromP1Wrist:
-        p1WristData = []
-        print("length of p1 readings:", len(p1Readings[0]))
-        for i in range(len(p1Readings)):
-            p1WristData.append(statistics.mean(p1Readings[i]))
-            p1WristData.append(max(p1Readings[i]) - min(p1Readings[i]))
-            p1WristData.append(statistics.pvariance(p1Readings[i]))
-            p1WristData.append(statistics.median(p1Readings[i]))
-        if len(p1WristData):
-            p1Move = classifier.classifyMove(p1WristData)
+        elif beetleID == beetles.P2_VEST:
+            didP2GetShot = True
 
-    # if p2Move != Actions.shoot and gotPacketFromP2Wrist:
-    #     p2WristData = []
-    #     print("length of p2 readings:", len(p2Readings[0]))
-    #     for i in range(len(p2Readings)):
-    #         p2WristData.append(statistics.mean(p2Readings[i]))
-    #         p2WristData.append(max(p2Readings[i]) - min(p2Readings[i]))
-    #         p2WristData.append(statistics.pvariance(p2Readings[i]))
-    #         p2WristData.append(statistics.median(p2Readings[i]))
-    #     if len(p2WristData):
-    #         p2Move = classifier.classifyMove(p2WristData)
+        elif beetleID == beetles.P2_WRIST:
+            if hasP2WristMoved:
+                appendReadings(p2Readings, packet)
+                if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
+                    print("length of raw p2 readings:", len(p2Readings[0]))
+                    p2WristData = getProcessedData(p2Readings)
+                    print("length of processed p2 readings:", len(p2WristData))
+                    if len(p2WristData):
+                        p2Move = classifier.classifyMove(p2WristData)
+
+            else:
+                if classifier.isStartOfMove(prevP2AccelY, packet[beetles.ACCEL_Y]):
+                    hasP2WristMoved = True
+                    appendReadings(p2Readings, packet)
+                    p2WristStartTime = time.time_ns()
+                else:
+                    prevP2AccelY = packet[beetles.ACCEL_Y]
+
 
     return p1Move, p2Move, didP1GetShot, didP2GetShot
