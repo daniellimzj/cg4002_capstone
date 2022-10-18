@@ -67,10 +67,9 @@ def startBeetleMainProcess(beetleQueue: mp.Array, port: int):
 
 def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
 
-    with open("beetle" + id + ".txt" , "w") as file: 
-
-        print("starting beetle process", id)
-        try:
+    print("starting beetle process", id)
+    try:
+        with open("beetle" + id + ".txt" , "w") as file: 
             while True:
                 packet = b''
                 while len(packet) < PACKET_LEN:
@@ -81,7 +80,7 @@ def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
                 
                 beetleQueue.put(packet, block=True)
 
-        finally:
-            print("closing beetle process", id)
-            connSocket.close()
+    finally:
+        print("closing beetle process", id)
+        connSocket.close()
 
