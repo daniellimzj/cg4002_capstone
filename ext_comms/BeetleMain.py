@@ -23,11 +23,12 @@ ACCEL_Z = 3
 ROTATE_X = 4
 ROTATE_Y = 5
 ROTATE_Z = 6
-DID_SHOOT = 11
-IS_SHOT = 12
-CHECKSUM = 13
+PAD = 7
+DID_SHOOT = 8
+IS_SHOT = 9
+CHECKSUM = 10
 
-PACKET_FORMAT_STR = "<chhhhhhbbbb??b"
+PACKET_FORMAT_STR = "<chhhhhhf??b"
 
 class BeetleStruct(ctypes.Structure):
     _fields_ = [('packetType', ctypes.c_char), \
@@ -37,10 +38,7 @@ class BeetleStruct(ctypes.Structure):
                 ('rotateX', ctypes.c_int16), \
                 ('rotateY', ctypes.c_int16), \
                 ('rotateZ', ctypes.c_int16), \
-                ('pad1', ctypes.c_bool), \
-                ('pad2', ctypes.c_bool), \
-                ('pad3', ctypes.c_bool), \
-                ('pad4', ctypes.c_bool), \
+                ('pad', ctypes.c_float), \
                 ('didShoot', ctypes.c_bool), \
                 ('isShot', ctypes.c_bool), \
                 ('checksum', ctypes.c_byte)]
@@ -69,18 +67,21 @@ def startBeetleMainProcess(beetleQueue: mp.Array, port: int):
 
 def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
 
-    print("starting beetle process", id)
-    try:
-        while True:
-            packet = b''
-            while len(packet) < PACKET_LEN:
-                packet += connSocket.recv(1)
+    with open("beetle" + id + ".txt" , "w") as file: 
 
-            packet = struct.unpack(PACKET_FORMAT_STR, packet)
-            
-            beetleQueue.put(packet, block=True)
+        print("starting beetle process", id)
+        try:
+            while True:
+                packet = b''
+                while len(packet) < PACKET_LEN:
+                    packet += connSocket.recv(1)
 
-    finally:
-        print("closing beetle process", id)
-        connSocket.close()
+                packet = struct.unpack(PACKET_FORMAT_STR, packet)
+                file.write(" ".join(packet))
+                
+                beetleQueue.put(packet, block=True)
+
+        finally:
+            print("closing beetle process", id)
+            connSocket.close()
 
