@@ -79,6 +79,9 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             can_p2_see_p1 = True
 
             old_p1_grenades, old_p2_grenades = engine.get_grenade_counts()
+            old_p1_bullets, old_p2_bullets = engine.get_bullet_counts()
+            old_p1_num_shields, old_p2_num_shields = engine.get_shield_counts()
+            old_p1_shield_time, old_p2_shield_time = engine.get_shield_times()
 
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
@@ -102,20 +105,39 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
-                print("now sending with eval to MQTT")
                 currState = resp
 
             p1_action, p2_action = engine.get_player_actions()
 
             if p1_action == Actions.grenade and old_p1_grenades == 0:
-                print("setting p1 grenade action to none because grenade count was zero")
-                engine.p1.set_action(Actions.no)
+                print("setting p1 grenade action to invalid")
+                engine.p1.set_action(Actions.grenadeInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p1_action == Actions.reload and old_p1_bullets > 0:
+                print("setting p1 reload action to invalid")
+                engine.p1.set_action(Actions.reloadInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p1_action == Actions.shield and (old_p1_num_shields == 0 or old_p1_shield_time > 0):
+                print("setting p1 shield action to invalid")
+                engine.p1.set_action(Actions.shieldInvalid)
                 currState = engine.get_JSON_string()
 
 
             if p2_action == Actions.grenade and old_p2_grenades == 0:
-                print("setting p2 grenade action to none because grenade count was zero")
-                engine.p2.set_action(Actions.no)
+                print("setting p2 grenade action to invalid")
+                engine.p2.set_action(Actions.grenadeInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p2_action == Actions.reload and old_p2_bullets > 0:
+                print("setting p2 reload action to invalid")
+                engine.p2.set_action(Actions.reloadInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p2_action == Actions.shield and (old_p2_num_shields == 0 or old_p2_shield_time > 0):
+                print("setting p2 shield action to invalid")
+                engine.p2.set_action(Actions.shieldInvalid)
                 currState = engine.get_JSON_string()
             
             gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
@@ -158,6 +180,9 @@ class GameEngine:
 
     def get_shield_counts(self):
         return self.p1.get_shield_count(), self.p2.get_shield_count()
+
+    def get_shield_times(self):
+        return self.p1.get_shield_time(), self.p2.get_shield_time()
 
     def get_grenade_counts(self):
         return self.p1.get_grenade_count(), self.p2.get_grenade_count()

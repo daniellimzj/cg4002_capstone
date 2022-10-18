@@ -4,8 +4,11 @@ class Actions:
     no      = 'none'
     shoot   = "shoot"
     shield  = "shield"
+    shieldInvalid = "shield_invalid"
     grenade = "grenade"
+    grenadeInvalid = "grenade_invalid"
     reload  = "reload"
+    reloadInvalid = "reload_invalid"
     logout  = "logout"
     all = [no, shoot, shield, grenade, reload]
 
@@ -39,6 +42,9 @@ class Player:
 
     def get_shield_count(self):
         return self.num_shield
+
+    def get_shield_time(self):
+        return self.shield_time
     
     def get_grenade_count(self):
         return self.grenades
@@ -162,42 +168,42 @@ class Player:
         isCorrect = True
         
         if self.hp != correct_data['hp']:
-            print("current HP of player %d is %d, but should be %d" % (self.id, self.hp, correct_data['hp']))
+            print("HP of player %d is %d, but should be %d" % (self.id, self.hp, correct_data['hp']))
             self.hp = correct_data['hp']
             isCorrect = False
 
         if self.action != correct_data['action']:
-            print(f"current action of player %d is %s, but should be %s" % (self.id, self.action, correct_data['action']))
+            print(f"Action of player %d is %s, but should be %s" % (self.id, self.action, correct_data['action']))
             self.action = correct_data['action']
             isCorrect = False
 
         if self.bullets != correct_data['bullets']:
-            print(f"current bullets of player %d is %d, but should be %d" % (self.id, self.bullets, correct_data['bullets']))
+            print(f"Bullets of player %d is %d, but should be %d" % (self.id, self.bullets, correct_data['bullets']))
             self.bullets = correct_data['bullets']
             isCorrect = False
 
         if self.grenades != correct_data['grenades']:
-            print(f"current grenades of player %d is %d, but should be %d" % (self.id, self.grenades, correct_data['grenades']))
+            print(f"Grenades of player %d is %d, but should be %d" % (self.id, self.grenades, correct_data['grenades']))
             self.grenades = correct_data['grenades']
             isCorrect = False
 
         if self.shield_time != correct_data['shield_time']:
-            print(f"current shield time of player %d is %d, but should be %d" % (self.id, self.shield_time, correct_data['shield_time']))
+            print(f"Shield time of player %d is %d, but should be %d" % (self.id, self.shield_time, correct_data['shield_time']))
             self.shield_time = correct_data['shield_time']
             isCorrect = False
 
         if self.shield_health != correct_data['shield_health']:
-            print(f"current shield health of player %d is %d, but should be %d" % (self.id, self.shield_health, correct_data['shield_health']))
+            print(f"Shield health of player %d is %d, but should be %d" % (self.id, self.shield_health, correct_data['shield_health']))
             self.shield_health = correct_data['shield_health']
             isCorrect = False
 
         if self.num_deaths != correct_data['num_deaths']:
-            print(f"current num deaths of player %d is %d, but should be %d"  % (self.id, self.num_deaths, correct_data['num_deaths']))
+            print(f"Num deaths of player %d is %d, but should be %d"  % (self.id, self.num_deaths, correct_data['num_deaths']))
             self.num_deaths = correct_data['num_deaths']
             isCorrect = False
 
         if self.num_shield != correct_data['num_shield']:
-            print(f"current num shield of player %d is %d, but should be %d"  % (self.id, self.num_shield, correct_data['num_shield']))
+            print(f"Num shield of player %d is %d, but should be %d"  % (self.id, self.num_shield, correct_data['num_shield']))
             self.num_shield = correct_data['num_shield']
             isCorrect = False
 
