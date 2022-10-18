@@ -6,38 +6,14 @@ import paho.mqtt.client as mqtt
 
 import MQTT
 from Player import Actions, Player
-
-
-class GameEngine:
-
-    def __init__(self):
-        self.gameState = {}
-
-        self.p1 = Player(1)
-        self.p2 = Player(2)
-
-    def get_JSON_string(self):
-        return json.dumps({'p1': self.p1.get_dict(), 'p2': self.p2.get_dict()})
-
-    def do_actions(self, p1_action = Actions.no, p2_action = Actions.no, is_in_same_area = False):
-        is_p1_action_valid = self.p1.is_action_valid(p1_action)
-        is_p2_action_valid = self.p2.is_action_valid(p2_action)
-
-        self.p1.update(is_in_same_area, p1_action, p2_action, is_p2_action_valid)
-        self.p2.update(is_in_same_area, p2_action, p1_action, is_p1_action_valid)
-
-    def check_and_update_player_states(self, correct_resp: dict) -> bool:
-        is_p1_state_correct = self.p1.check_and_update_correct_state(correct_resp['p1'])
-        is_p2_state_correct = self.p2.check_and_update_correct_state(correct_resp['p2'])
-
-        return is_p1_state_correct and is_p2_state_correct
+from GameEngine import GameEngine
 
 if __name__ == '__main__':
 
     engine = GameEngine()
     
-    mqttClient = mqtt.Client()
-    mqttClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
+    gameStateClient = mqtt.Client()
+    gameStateClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
 
     try:
 
@@ -47,13 +23,56 @@ if __name__ == '__main__':
             p2_action = todo[1]
             is_in_same_area = True
 
-            engine.do_actions(p1_action = p1_action, p2_action=p2_action, is_in_same_area=is_in_same_area)
+            old_p1_grenades, old_p2_grenades = engine.get_grenade_counts()
+            old_p1_bullets, old_p2_bullets = engine.get_bullet_counts()
+            old_p1_num_shields, old_p2_num_shields = engine.get_shield_counts()
+            old_p1_shield_time, old_p2_shield_time = engine.get_shield_times()
+
+            
+            engine.do_actions(p1_action, p2_action, True, True)
+
             currState = engine.get_JSON_string()
 
-            mqttClient.publish(MQTT.Topics.gameState, currState)
+            p1_action, p2_action = engine.get_player_actions()
+
+            if p1_action == Actions.grenade and old_p1_grenades == 0:
+                print("setting p1 grenade action to invalid")
+                engine.p1.set_action(Actions.grenadeInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p1_action == Actions.reload and old_p1_bullets > 0:
+                print("setting p1 reload action to invalid")
+                engine.p1.set_action(Actions.reloadInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p1_action == Actions.shield and (old_p1_num_shields == 0 or old_p1_shield_time > 0):
+                print("setting p1 shield action to invalid")
+                engine.p1.set_action(Actions.shieldInvalid)
+                currState = engine.get_JSON_string()
+
+
+            if p2_action == Actions.grenade and old_p2_grenades == 0:
+                print("setting p2 grenade action to invalid")
+                engine.p2.set_action(Actions.grenadeInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p2_action == Actions.reload and old_p2_bullets > 0:
+                print("setting p2 reload action to invalid")
+                engine.p2.set_action(Actions.reloadInvalid)
+                currState = engine.get_JSON_string()
+
+            elif p2_action == Actions.shield and (old_p2_num_shields == 0 or old_p2_shield_time > 0):
+                print("setting p2 shield action to invalid")
+                engine.p2.set_action(Actions.shieldInvalid)
+                currState = engine.get_JSON_string()
+            
+
+            print(currState)
+            gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
+
 
     finally:
         print("successfully closed eval client!")
-        mqttClient.disconnect()
+        gameStateClient.disconnect()
         print("successfully closed MQTT client!")
 
