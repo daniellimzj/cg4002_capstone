@@ -35,7 +35,7 @@ def getMaxAbsSecondDerivative(data):
 
 class MoveClassifier:
     def __init__(self):
-        self.overlay = Overlay('design_1.bit')
+        self.overlay = Overlay('design_1_19oct.bit')
         self.dma = self.overlay.axi_dma_0
         self.dma_send = self.overlay.axi_dma_0.sendchannel
         self.dma_recv = self.overlay.axi_dma_0.recvchannel
