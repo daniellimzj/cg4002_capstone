@@ -76,7 +76,7 @@ def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
                     packet += connSocket.recv(1)
 
                 unpacked = struct.unpack(PACKET_FORMAT_STR, packet)
-                file.write(",".join(unpacked))
+                file.write(",".join([str(i) for i in unpacked]))
                 
                 beetleQueue.put(unpacked, block=True)
 
