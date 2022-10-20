@@ -111,6 +111,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     with open("p1_wrist_" + str(p1WristStartTime) + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
                             file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
+                            file.write("\n")
 
                     if len(p1WristData):
                         p1Move = classifier.classifyMove(p1WristData)
