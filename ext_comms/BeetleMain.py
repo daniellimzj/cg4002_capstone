@@ -69,16 +69,16 @@ def startBeetleIndiv(beetleQueue: mp.Queue, id: int, connSocket: socket):
 
     print("starting beetle process", id)
     try:
-        #with open("beetle" + id + ".txt" , "w") as file: 
-        while True:
-            packet = b''
-            while len(packet) < PACKET_LEN:
-                packet += connSocket.recv(1)
+        with open("beetle" + str(id) + ".txt" , "w") as file: 
+            while True:
+                packet = b''
+                while len(packet) < PACKET_LEN:
+                    packet += connSocket.recv(1)
 
-            packet = struct.unpack(PACKET_FORMAT_STR, packet)
-            #file.write(",".join(packet))
-            
-            beetleQueue.put(packet, block=True)
+                packet = struct.unpack(PACKET_FORMAT_STR, packet)
+                file.write(",".join(packet))
+                
+                beetleQueue.put(packet, block=True)
 
     finally:
         print("closing beetle process", id)
