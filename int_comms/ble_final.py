@@ -353,7 +353,7 @@ if __name__ == "__main__":
         sys.exit()
     beetlePort = int(sys.argv[-1])
     print("Beetle Port:", beetlePort)
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[0], 0, beetlePort))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0, beetlePort))
     beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1, beetlePort))
     beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2, beetlePort))
 
