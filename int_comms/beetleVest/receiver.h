@@ -17,6 +17,7 @@
 #define RECEIVE_COMMAND 0x0E 
 
 #define LED_NUM_OF_FLASHES 2
+#define LED_FLASH_INTERVAL 100 //time between LED flashes in milliseconds
 
 unsigned long int prevLedMillis = 0;
 int ledToggle = 0;
@@ -31,7 +32,7 @@ void initReceiver() {
 void flashIndicatorIfDetected() {
   unsigned long int currLedMillis = millis();
 
-  if (currLedMillis - prevLedMillis > 100 && ledNumOfFlashes > 0) {
+  if (currLedMillis - prevLedMillis > LED_FLASH_INTERVAL && ledNumOfFlashes > 0) {
     ledToggle = 1 - ledToggle;
     if (ledToggle == 0) {
       ledNumOfFlashes--;
