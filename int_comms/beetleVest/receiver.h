@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define PLAYER_NUM 1   // change depending on whether vest is for player 1 or 2
+#define PLAYER_NUM 2   // change depending on whether vest is for player 1 or 2
 // 1 means that this beetle will be on the vest of player 1
 
 #define IR_RECEIVE_PIN 2

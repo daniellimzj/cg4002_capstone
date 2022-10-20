@@ -198,7 +198,8 @@ class Comms(DefaultDelegate):
             self.handleFragmentation(data)
 
         except ChecksumError:
-            self.handleChecksumError(data)
+            if (len(self.buffer) != 0):
+                self.handleChecksumError(data)
 
         except Exception as e:
             self.dropped += 1
@@ -320,8 +321,8 @@ def beetleProcess(addr, index, beetlePort):  # Curr beetle addr, curr beetle ind
 
                     if not btleHandshakes[index]:
                         initHandshake(beetle, serialChar, index)
-                        # print("Beetle " + str(index) +": Handshake Successful!")
-                        # print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
+                        print("Beetle " + str(index) +": Handshake Successful!")
+                        print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
                     if btleHandshakes[index]:
                         if (index == INDEX_GUN):
@@ -352,7 +353,7 @@ if __name__ == "__main__":
         sys.exit()
     beetlePort = int(sys.argv[-1])
     print("Beetle Port:", beetlePort)
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0, beetlePort))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[0], 0, beetlePort))
     beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1, beetlePort))
     beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2, beetlePort))
 

@@ -4,7 +4,7 @@
 #define DATA_STATE_ID 4
 
 #define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 55 
+#define TIMEOUT_DATA 40 
 #define PACKET_SIZE 20
 
 volatile int currentID = 1;
@@ -39,6 +39,16 @@ uint8_t calculateChecksum(uint8_t *packet)
     sum ^= packet[i];
   }
   return sum;
+}
+
+uint8_t decodeSerial()
+{
+  AckPacket data = (AckPacket)Serial.read();
+//  Assume correct checksum
+  if (data.packetType == 'H')
+  {
+    return 'H';
+  }
 }
 
 // Packet Sending Functions
@@ -141,7 +151,7 @@ class SleepState : public State
 
     void run() override
     {
-      if (Serial.read() == 'H') {
+      if (decodeSerial() == 'H') {
 //        nextState = &Handshake_State;
           nextID = HANDSHAKE_STATE_ID;
       }

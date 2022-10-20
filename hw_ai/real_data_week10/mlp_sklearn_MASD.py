@@ -13,16 +13,16 @@ np.set_printoptions(threshold=np.inf)
 np.set_printoptions(formatter={'float_kind':'{:.12f}'.format})
 scaler = StandardScaler()
 
-data = pd.read_csv('main.csv')
+data = pd.read_csv('mainMASD.csv')
 # Replace this line with your test csv
 # validate_data = pd.read_csv('test_main.csv')
 
-x = data[['Mean-accX','Range-accX','Var-accX', 'Median-accX',
-          'Mean-accY', 'Range-accY', 'Var-accY', 'Median-accY',
-          'Mean-accZ', 'Range-accZ', 'Var-accZ', 'Median-accZ',
-          'Mean-gyroX', 'Range-gyroX', 'Var-gyroX', 'Median-gyroX',
-          'Mean-gyroY', 'Range-gyroY', 'Var-gyroY', 'Median-gyroY',
-          'Mean-gyroZ', 'Range-gyroZ', 'Var-gyroZ', 'Median-gyroZ',
+x = data[['Mean-accX', 'Range-accX', 'Var-accX', 'Median-accX', 'Masd-accX',
+          'Mean-accY', 'Range-accY', 'Var-accY', 'Median-accY', 'Masd-accY',
+          'Mean-accZ', 'Range-accZ', 'Var-accZ', 'Median-accZ', 'Masd-accZ',
+          'Mean-gyroX', 'Range-gyroX', 'Var-gyroX', 'Median-gyroX', 'Masd-gyroX',
+          'Mean-gyroY', 'Range-gyroY', 'Var-gyroY', 'Median-gyroY', 'Masd-gyroY',
+          'Mean-gyroZ', 'Range-gyroZ', 'Var-gyroZ', 'Median-gyroZ', 'Masd-gyroZ',
           ]]
 y = data[['label']]
 scaler.fit_transform(x)
@@ -55,7 +55,7 @@ coarse_search_space = \
     {'hidden_layer_size': hp.choice('hidden_layer_sizes', [(100,100), (150,150),]),
      'alpha': hp.lognormal('alpha', mu=np.log(1e-4), sigma=1),
      'solver': hp.choice('algorithm', ['sgd', 'adam']),
-     'activation': hp.choice('activation', ['relu']),
+     'activation': hp.choice('activation', ['tanh']),
      'learning_rate_init': hp.loguniform('learning_rate_init', low=np.log(1e-4), high=np.log(1.)),
      }
 

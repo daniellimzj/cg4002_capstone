@@ -66,6 +66,22 @@ uint8_t calculateChecksum(uint8_t *packet)
   return sum;
 }
 
+byte getType(uint8_t index) {
+  if (index == ACCEL_X) {
+    return 'a';
+  } else if (index == ACCEL_Y) {
+    return 'b';
+  } else if (index == ACCEL_Z) {
+    return 'c';
+  } else if (index == ROTATE_X) {
+    return 'd';
+  } else if (index == ROTATE_Y) {
+    return 'e';
+  } else if (index == ROTATE_Z) {
+    return 'f';
+  }
+}
+
 // Packet Sending Functions
 //void sendDummyData()
 //{
@@ -182,6 +198,7 @@ public:
       if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
+        dataReady = false;
         current = ACCEL_X;
         break;
       } else if (Serial.read() == 'A') {

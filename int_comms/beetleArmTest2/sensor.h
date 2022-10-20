@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUM_READINGS 50
+#define NUM_READINGS 25
 #define NUM_STATS 4
 #define NUM_FEATURES 6
 
