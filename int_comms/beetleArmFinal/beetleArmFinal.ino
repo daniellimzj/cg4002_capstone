@@ -7,7 +7,7 @@
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 25  
+#define TIMEOUT_ACK 25
 #define TIMEOUT_DATA 40
 #define PACKET_SIZE 20
 
@@ -38,11 +38,11 @@ struct AckPacket
 {
   byte packetType = 'A';
   byte padding[18];
-  byte checkSum = 'A'; 
+  byte checkSum = 'A';
 } ackPacket;
 
 struct DataPacket
-{ 
+{
   byte packetType = 'D';
   int16_t accX; // 2 bytes
   int16_t accY;
@@ -56,7 +56,6 @@ struct DataPacket
   byte checkSum;
 };
 
-
 // Helper Functions
 uint8_t calculateChecksum(uint8_t *packet)
 { // 1 byte
@@ -68,37 +67,37 @@ uint8_t calculateChecksum(uint8_t *packet)
   return sum;
 }
 
-//byte getType(uint8_t index) {
-//  if (PLAYER == 1) {  
-//    if (index == ACCEL_X) {
-//      return 'a';
-//    } else if (index == ACCEL_Y) {
-//      return 'b';
-//    } else if (index == ACCEL_Z) {
-//      return 'c';
-//    } else if (index == ROTATE_X) {
-//      return 'd';
-//    } else if (index == ROTATE_Y) {
-//      return 'e';
-//    } else if (index == ROTATE_Z) {
-//      return 'f';
-//    }
-//  } else if (PLAYER == 2) {
-//    if (index == ACCEL_X) {
-//      return 'u';
-//    } else if (index == ACCEL_Y) {
-//      return 'v';
-//    } else if (index == ACCEL_Z) {
-//      return 'w';
-//    } else if (index == ROTATE_X) {
-//      return 'x';
-//    } else if (index == ROTATE_Y) {
-//      return 'y';
-//    } else if (index == ROTATE_Z) {
-//      return 'z';
-//    }
-//  }
-//}
+// byte getType(uint8_t index) {
+//   if (PLAYER == 1) {
+//     if (index == ACCEL_X) {
+//       return 'a';
+//     } else if (index == ACCEL_Y) {
+//       return 'b';
+//     } else if (index == ACCEL_Z) {
+//       return 'c';
+//     } else if (index == ROTATE_X) {
+//       return 'd';
+//     } else if (index == ROTATE_Y) {
+//       return 'e';
+//     } else if (index == ROTATE_Z) {
+//       return 'f';
+//     }
+//   } else if (PLAYER == 2) {
+//     if (index == ACCEL_X) {
+//       return 'u';
+//     } else if (index == ACCEL_Y) {
+//       return 'v';
+//     } else if (index == ACCEL_Z) {
+//       return 'w';
+//     } else if (index == ROTATE_X) {
+//       return 'x';
+//     } else if (index == ROTATE_Y) {
+//       return 'y';
+//     } else if (index == ROTATE_Z) {
+//       return 'z';
+//     }
+//   }
+// }
 
 void sendArmData()
 {
@@ -116,7 +115,6 @@ void sendArmData()
 
   Serial.write((byte *)&armPacket, sizeof(armPacket));
 }
-
 
 void sendAck()
 {
@@ -147,45 +145,51 @@ public:
 
   void init() override
   {
-      if (dataReady) {
-        sendArmData();
-      }
+    if (dataReady)
+    {
+      sendArmData();
+    }
   }
 
   void run() override
   {
-//    while (true) {
-//      delay(TIMEOUT_DATA);
-//      if (Serial.read() == 'H') {
-//        nextID = HANDSHAKE_STATE_ID;
-//        handshakeDone = false;
-//        dataReady = false;
-//        break;
-//      } else if (Serial.read() == 'A') {
-//        dataReady = false;
-//        nextID = SLEEP_STATE_ID;
-//        break;
-//      }
-//      sendArmData();
-//    }
-//    delay(TIMEOUT_DATA);
+    //    while (true) {
+    //      delay(TIMEOUT_DATA);
+    //      if (Serial.read() == 'H') {
+    //        nextID = HANDSHAKE_STATE_ID;
+    //        handshakeDone = false;
+    //        dataReady = false;
+    //        break;
+    //      } else if (Serial.read() == 'A') {
+    //        dataReady = false;
+    //        nextID = SLEEP_STATE_ID;
+    //        break;
+    //      }
+    //      sendArmData();
+    //    }
+    //    delay(TIMEOUT_DATA);
     unsigned long currTime = millis();
     char serialRead = Serial.read();
-    while (serialRead != 'H' || serialRead != 'A') {
-      if (millis() - currTime >= TIMEOUT_DATA) {
+    while (serialRead != 'H' || serialRead != 'A')
+    {
+      if (millis() - currTime >= TIMEOUT_DATA)
+      {
         break;
       }
       serialRead = Serial.read();
     }
-    if (serialRead == 'H') {
+    if (serialRead == 'H')
+    {
       nextID = HANDSHAKE_STATE_ID;
       handshakeDone = false;
       dataReady = false;
-//      break;
-    } else if (serialRead == 'A') {
+      //      break;
+    }
+    else if (serialRead == 'A')
+    {
       dataReady = false;
       nextID = SLEEP_STATE_ID;
-//      break;
+      //      break;
     }
     sendArmData();
   }
@@ -203,11 +207,13 @@ public:
 
   void run() override
   {
-    while (true) {
+    while (true)
+    {
       delay(TIMEOUT_ACK);
-      if (Serial.read() == 'A') {
-          nextID = DATA_STATE_ID;
-          handshakeDone = true;
+      if (Serial.read() == 'A')
+      {
+        nextID = DATA_STATE_ID;
+        handshakeDone = true;
         break;
       }
       sendAck();
@@ -217,17 +223,20 @@ public:
 
 class SleepState : public State
 {
-  public:
-    SleepState() : State(SLEEP_STATE_ID) {}
+public:
+  SleepState() : State(SLEEP_STATE_ID) {}
 
-    void run() override
+  void run() override
+  {
+    if (Serial.read() == 'H')
     {
-      if (Serial.read() == 'H') {
-          nextID = HANDSHAKE_STATE_ID;
-      } else if (handshakeDone && dataReady) {
-          nextID = DATA_STATE_ID;  
-      }
+      nextID = HANDSHAKE_STATE_ID;
     }
+    else if (handshakeDone && dataReady)
+    {
+      nextID = DATA_STATE_ID;
+    }
+  }
 } Sleep_State;
 
 class StartState : public State
@@ -310,20 +319,21 @@ void setup()
 void loop()
 {
   getReading();
-  switch (nextID) {
-    case START_STATE_ID:
-      nextState = &Start_State;
-      break;
-    case SLEEP_STATE_ID:
-      nextState = &Sleep_State;
-      break;
-    case HANDSHAKE_STATE_ID:
-      nextState = &Handshake_State;
-      break;
-    case DATA_STATE_ID:
-      nextState = &Data_State;
-      break;
-  } 
+  switch (nextID)
+  {
+  case START_STATE_ID:
+    nextState = &Start_State;
+    break;
+  case SLEEP_STATE_ID:
+    nextState = &Sleep_State;
+    break;
+  case HANDSHAKE_STATE_ID:
+    nextState = &Handshake_State;
+    break;
+  case DATA_STATE_ID:
+    nextState = &Data_State;
+    break;
+  }
   if (currState->getID() != nextState->getID())
   {
     currState = nextState;
