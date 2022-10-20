@@ -118,6 +118,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
             else:
                 if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
                     hasP1WristMoved = True
+                    print("p1 start of move detected")
                     appendReadings(p1Readings, packet)
                     p1WristStartTime = time.time_ns()
                 else:
@@ -146,6 +147,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
             else:
                 if classifier.isStartOfMove(prevP2AccelY, packet[beetles.ACCEL_Y]):
+                    print("p2 start of move detected")
                     hasP2WristMoved = True
                     appendReadings(p2Readings, packet)
                     p2WristStartTime = time.time_ns()
