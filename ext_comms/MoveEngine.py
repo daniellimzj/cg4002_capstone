@@ -106,7 +106,6 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
-                    print("length of processed p1 readings:", len(p1WristData))
 
                     with open("p1_wrist_" + str(p1WristStartTime) + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
@@ -137,7 +136,6 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
-                    print("length of processed p2 readings:", len(p2WristData))
 
                     with open("p2_wrist_" + str(p2WristStartTime) + ".txt", "w") as file:
                         for i in range(len(p2Readings[0])):
