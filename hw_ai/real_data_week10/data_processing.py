@@ -1,7 +1,8 @@
 import os
+import numpy as np
 from statistics import mean, variance, median
 
-folder = "D:\\CG4002\\cg4002_capstone\\hw_ai\\real_data_week10\\data"
+folder = "C:\\Users\\yh\\Documents\\GitHub\\cg4002_capstone\\hw_ai\\real_data_week10\\data"
 actions = ["grenade", "reload", "shield", "end"]
 key = {"grenade": 1, "reload": 2, "shield": 3, "end": 4}
 
@@ -10,9 +11,11 @@ def getStats(parameter):
     avg = mean(parameter)
     med = median(parameter)
     var = variance(parameter)
-    rg = max(parameter) - min(parameter)
-    masd = max(abs((parameter[i+2] - parameter[i+1]) - (parameter[i+1] - parameter[i])) for i in range(len(parameter) - 2))
-    return avg, rg, var, med, masd
+    maximum = max(parameter)
+    minimum = min(parameter)
+    iqrLower = np.percentile(parameter, 25)
+    iqrUpper = np.percentile(parameter, 75)
+    return avg, maximum, minimum, var, med, iqrLower, iqrUpper
 
 
 def main():
@@ -48,12 +51,13 @@ def main():
                     gyroY.append(component[4])
                     gyroZ.append(component[5])
                 elif count != 0:
-                    meanaccX, rgaccX, varaccX, medaccX, masdaccX = getStats(accX)
-                    meanaccY, rgaccY, varaccY, medaccY, masdaccY = getStats(accY)
-                    meanaccZ, rgaccZ, varaccZ, medaccZ, masdaccZ = getStats(accZ)
-                    meangyroX, rggyroX, vargyroX, medgyroX, masdgyroX = getStats(gyroX)
-                    meangyroY, rggyroY, vargyroY, medgyroY, masdgyroY = getStats(gyroY)
-                    meangyroZ, rggyroZ, vargyroZ, medgyroZ, masdgyroZ = getStats(gyroZ)
+                    meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
+                    meanaccY, maxaccY, minaccY, varaccY, medaccY, iqrLoweraccY, iqrUpperaccY = getStats(accY)
+                    meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
+                    meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
+                    meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
+                    meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
+
                     f2.write(str(meanaccX) + "," + str(rgaccX) + "," + str(varaccX) + "," + str(medaccX) + "," + str(masdaccX) + ",")
                     f2.write(str(meanaccY) + "," + str(rgaccY) + "," + str(varaccY) + "," + str(medaccY) + "," + str(masdaccY) + ",")
                     f2.write(str(meanaccZ) + "," + str(rgaccZ) + "," + str(varaccZ) + "," + str(medaccZ) + "," + str(masdaccZ) + ",")
