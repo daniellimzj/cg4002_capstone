@@ -52,7 +52,7 @@ print("baseline accuracy:" + str(accuracy_score(y_test, y_baseline_pred)))
 #
 # # Hyperparameter Optimization
 coarse_search_space = \
-    {'hidden_layer_size': hp.choice('hidden_layer_sizes', [50, (64, 32), (128, 64)]),
+    {'hidden_layer_size': hp.choice('hidden_layer_sizes', range(1, 128)),
      'alpha': hp.lognormal('alpha', mu=np.log(1e-4), sigma=1),
      'solver': hp.choice('algorithm', ['sgd', 'adam']),
      'activation': hp.choice('activation', ['relu']),
