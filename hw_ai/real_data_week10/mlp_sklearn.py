@@ -52,7 +52,7 @@ print("baseline accuracy:" + str(accuracy_score(y_test, y_baseline_pred)))
 #
 # # Hyperparameter Optimization
 coarse_search_space = \
-    {'hidden_layer_size': hp.choice('hidden_layer_sizes', range(1, 128)),
+    {'hidden_layer_size': hp.choice('hidden_layer_sizes', range(1, 256)),
      'alpha': hp.lognormal('alpha', mu=np.log(1e-4), sigma=1),
      'solver': hp.choice('algorithm', ['sgd', 'adam']),
      'activation': hp.choice('activation', ['relu']),
@@ -80,7 +80,7 @@ best = fmin(objective_fn,
             space=coarse_search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=500)
+            max_evals=5000)
 
 best_model = trials.best_trial['result']['model']
 plt.plot(best_model.loss_curve_)
