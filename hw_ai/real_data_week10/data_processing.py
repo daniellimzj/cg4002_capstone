@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from statistics import mean, variance, median
+from statistics import mean, pvariance, median
 
 folder = os.getcwd() + "\\data"
 extracted_folder = folder + "\\extracted"
@@ -13,7 +13,7 @@ extracted_features = ["mean", "max", "min", "var", "median", "25thp", "75thp"]
 def getStats(parameter):
     avg = mean(parameter)
     med = median(parameter)
-    var = variance(parameter)
+    var = pvariance(parameter)
     maximum = max(parameter)
     minimum = min(parameter)
     iqrLower = np.percentile(parameter, 25)
