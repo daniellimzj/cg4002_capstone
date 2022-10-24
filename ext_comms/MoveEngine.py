@@ -27,7 +27,7 @@ def getProcessedData(readings):
         processedData.append(statistics.mean(readings[i]))
         processedData.append(max(readings[i]))
         processedData.append(min(readings[i]))
-        processedData.append(statistics.variance(readings[i]))
+        processedData.append(statistics.pvariance(readings[i]))
         processedData.append(statistics.median(readings[i]))
         processedData.append(np.percentile(readings, 25))
         processedData.append(np.percentile(readings, 75))
