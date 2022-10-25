@@ -25,9 +25,12 @@ def getProcessedData(readings):
     processedData = []
     for i in range(len(readings)):
         processedData.append(statistics.mean(readings[i]))
-        processedData.append(max(readings[i]) - min(readings[i]))
+        processedData.append(max(readings[i]))
+        processedData.append(min(readings[i]))
         processedData.append(statistics.pvariance(readings[i]))
         processedData.append(statistics.median(readings[i]))
+        processedData.append(np.percentile(readings, 25))
+        processedData.append(np.percentile(readings, 75))
     return processedData
 
 def getMaxAbsSecondDerivative(data):
@@ -35,12 +38,12 @@ def getMaxAbsSecondDerivative(data):
 
 class MoveClassifier:
     def __init__(self):
-        self.overlay = Overlay('design_1_19oct.bit')
+        self.overlay = Overlay('design_1_24oct.bit')
         self.dma = self.overlay.axi_dma_0
         self.dma_send = self.overlay.axi_dma_0.sendchannel
         self.dma_recv = self.overlay.axi_dma_0.recvchannel
 
-        self.input_buffer = allocate(shape=(24,), dtype = np.float32)
+        self.input_buffer = allocate(shape=(42,), dtype = np.float32)
         self.output_buffer = allocate(shape=(5,), dtype = np.float32)
 
     # data here is already processed
@@ -106,6 +109,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
+                    print("length of processed p1 readings:", len(p1WristData))
 
                     with open("p1_wrist_" + str(p1WristStartTime) + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
@@ -136,6 +140,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
+                    print("length of processed p2 readings:", len(p2WristData))
 
                     with open("p2_wrist_" + str(p2WristStartTime) + ".txt", "w") as file:
                         for i in range(len(p2Readings[0])):

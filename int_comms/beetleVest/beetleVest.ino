@@ -226,4 +226,6 @@ void loop()
     currState->init();
   }
   currState->run();
+  
+  flashIndicatorIfDetected();
 }

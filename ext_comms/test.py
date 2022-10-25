@@ -1,18 +1,9 @@
-with open("daniel_grenade_2mins.csv", "r") as file:
-    arr = []
+import numpy as np
+import statistics
 
-    for line in file:
-        arr.append(line.strip().split(","))
 
-    print("total readings:", len(arr))
+a = [100, 100, 12, 30, 40, 80, 120, 160, 250, 410, 12, 13]
+a.sort()
+print(a)
 
-    i = 0
-    count = 0
-    while i < len(arr):
-        while i < len(arr) and int(arr[i][1]) < -12000:
-            i += 1
-
-        i += 44
-        count += 1
-
-    print("windows counted:",count)
+print(statistics.quantiles(a), np.percentile(a, 25), np.percentile(a, 75))
