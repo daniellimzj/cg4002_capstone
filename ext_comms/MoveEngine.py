@@ -43,7 +43,7 @@ class MoveClassifier:
         self.dma_send = self.overlay.axi_dma_0.sendchannel
         self.dma_recv = self.overlay.axi_dma_0.recvchannel
 
-        self.input_buffer = allocate(shape=(24,), dtype = np.float32)
+        self.input_buffer = allocate(shape=(42,), dtype = np.float32)
         self.output_buffer = allocate(shape=(5,), dtype = np.float32)
 
     # data here is already processed
