@@ -21,12 +21,12 @@ TIMEOUT_HANDSHAKE = 50/100 #s
 TIME_DATA_RATE_COUNT = 60 #s
 
 btleAddrs = [
-    "D0:39:72:BF:CA:CF", # btleArm0
-    "D0:39:72:BF:C8:A6", # btleVest0
-    "D0:39:72:BF:CA:FC", # btleGun0
-    "D0:39:72:BF:CA:A6", # btleArm1
-    "D0:39:72:BF:CA:FA", 
-    "D0:39:72:BF:CA:81"
+    "D0:39:72:BF:CA:CF", # P1 Arm
+    "D0:39:72:BF:C8:A6", # P1 Vest 
+    "D0:39:72:BF:CA:FC", # P1 Gun 
+    "D0:39:72:BF:CA:A6", # P2 Arm
+    "D0:39:72:BF:CA:81", # P2 Vest 
+    "D0:39:72:BF:CA:FA"  # P2 Gun 
 ]
 
 btleHandshakes = [False] * 3
@@ -353,9 +353,9 @@ if __name__ == "__main__":
         sys.exit()
     beetlePort = int(sys.argv[-1])
     print("Beetle Port:", beetlePort)
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 0, beetlePort))
-    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[1], 1, beetlePort))
-    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[2], 2, beetlePort))
+    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 3, beetlePort))
+    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[4], 4, beetlePort))
+    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[5], 5, beetlePort))
 
     try:
         beetle0Process.start()
