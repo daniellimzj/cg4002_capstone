@@ -144,12 +144,12 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
 
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
-            if new_p1_bullets == 6:
-                print("sending p1 reload")
+            if p1_action == Actions.reload and old_p1_bullets == 0 and new_p1_bullets == 6:
+                print("sending p1 reload to gun")
                 reloadClient.publish(MQTT.Topics.didP1Reload, "1", qos=2)
 
-            if new_p2_bullets == 6:
-                print("sending p2 reload")
+            if p2_action == Actions.reload and old_p2_bullets == 0 and new_p2_bullets == 6:
+                print("sending p2 reload to gun")
                 reloadClient.publish(MQTT.Topics.didP2Reload, "1", qos=2)
 
     finally:
