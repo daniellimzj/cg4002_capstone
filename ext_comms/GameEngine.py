@@ -140,17 +140,17 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 engine.p2.set_action(Actions.shieldInvalid)
                 currState = engine.get_JSON_string()
             
-            gameStateClient.publish(MQTT.Topics.gameState, currState, qos=2)
+            gameStateClient.publish(MQTT.Topics.gameState, currState)
 
             new_p1_bullets, new_p2_bullets = engine.get_bullet_counts()
 
             if p1_action == Actions.reload and old_p1_bullets == 0 and new_p1_bullets == 6:
                 print("sending p1 reload to gun")
-                reloadClient.publish(MQTT.Topics.didP1Reload, "1", qos=2)
+                reloadClient.publish(MQTT.Topics.didP1Reload, "1")
 
             if p2_action == Actions.reload and old_p2_bullets == 0 and new_p2_bullets == 6:
                 print("sending p2 reload to gun")
-                reloadClient.publish(MQTT.Topics.didP2Reload, "1", qos=2)
+                reloadClient.publish(MQTT.Topics.didP2Reload, "1")
 
     finally:
         if runWithEval:
