@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from hyperopt import fmin, tpe, Trials, hp, STATUS_OK
-from hyperopt.early_stop import no_progress_loss
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
@@ -80,7 +79,7 @@ best = fmin(objective_fn,
             space=coarse_search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=5000)
+            max_evals=1000)
 
 best_model = trials.best_trial['result']['model']
 plt.plot(best_model.loss_curve_)
