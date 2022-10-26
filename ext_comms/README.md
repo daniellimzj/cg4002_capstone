@@ -26,18 +26,10 @@ e.g. \
 `ssh -L 9696:192.168.95.234:9696 danielim@stu.comp.nus.edu.sg`
 
 
-## Running the HiveMQ CE Broker Locally:
-To run a local instance of the MQTT broker, can refer to the following documentation:
-https://github.com/hivemq/hivemq-community-edition
-
-Once downloaded, the broker can be run like so:
-```
-cd hivemq-ce-2022.1/
-bin/run.sh
-```
-
 ## Running the Game Engine:
-`python3 GameEngine.py [eval server host] [eval server port]`
+`python3 main.py [eval server host] [eval server port]` \
+If there is a need to run the game engine without the evaluation server, it can be done with:
+`python3 main.py`
 
 ## Other files:
 There are a variety of other files in this subdirectory that make it easy to test standalone parts. For example, `mqtt_client_sub.py` allows one to easily test MQTT functionality, and `echo_server.py` can test if a simple TCP/IP connection is working.
