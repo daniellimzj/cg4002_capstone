@@ -97,7 +97,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     prevP1AccelY = 0
     prevP2AccelY = 0
 
-    while (p1Move == Actions.no and p2Move == Actions.no):
+    while (p1Move == Actions.no or p2Move == Actions.no):
 
         packet = beetleQueue.get(block = True)
         beetleID = packet[beetles.PACKET_TYPE]
