@@ -73,9 +73,9 @@ class Comms(DefaultDelegate):
             'Has Shot Gun': packet[5],
             'Is Shot': packet[6]
         }
-        result = (','.join([str(value) for value in datas.values()]))
+        # result = (','.join([str(value) for value in datas.values()]))
         self.clientSocket.send(data)
-        print(result)
+        # print(result)
         self.sendAckPacket()
 
 
