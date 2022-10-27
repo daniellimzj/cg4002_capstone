@@ -29,7 +29,7 @@ btleAddrs = [
     "D0:39:72:BF:CA:FA"  # P2 Gun 
 ]
 
-btleHandshakes = [False] * 3
+btleHandshakes = [False] * 6
 
 class ChecksumError(Exception):
     pass
@@ -276,7 +276,8 @@ def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     beetle.disconnect()  # Disconnects first and try to reconnect again
     return True
 
-def beetleProcess(addr, index, beetlePort):  # Curr beetle addr, curr beetle index
+def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
+    addr = btleAddrs[index]
     serialSvc = None
     serialChar = None
     beetle = Peripheral()
@@ -353,21 +354,21 @@ if __name__ == "__main__":
         sys.exit()
     beetlePort = int(sys.argv[-1])
     print("Beetle Port:", beetlePort)
-    beetle0Process = mp.Process(target=beetleProcess, args=(btleAddrs[3], 3, beetlePort))
-    beetle1Process = mp.Process(target=beetleProcess, args=(btleAddrs[4], 4, beetlePort))
-    beetle2Process = mp.Process(target=beetleProcess, args=(btleAddrs[5], 5, beetlePort))
+    beetle3Process = mp.Process(target=beetleProcess, args=(3, beetlePort))
+    beetle4Process = mp.Process(target=beetleProcess, args=(4, beetlePort))
+    beetle5Process = mp.Process(target=beetleProcess, args=(5, beetlePort))
 
     try:
-        beetle0Process.start()
-        beetle1Process.start()
-        beetle2Process.start()
+        beetle3Process.start()
+        beetle4Process.start()
+        beetle5Process.start()
 
-        beetle0Process.join()
-        beetle1Process.join()
-        beetle2Process.join()
+        beetle3Process.join()
+        beetle4Process.join()
+        beetle5Process.join()
     finally:
-        beetle0Process.terminate()
-        beetle1Process.terminate()
-        beetle2Process.terminate()
+        beetle3Process.terminate()
+        beetle4Process.terminate()
+        beetle5Process.terminate()
 
         print("Closing main")
