@@ -1,6 +1,6 @@
 #include "sensor.h"
 
-#define PLAYER 1
+#define PLAYER_NUM 2
 
 #define START_STATE_ID 1
 #define SLEEP_STATE_ID 2
@@ -43,7 +43,7 @@ struct AckPacket
 
 struct DataPacket
 {
-  byte packetType = 'D';
+  byte packetType = (PLAYER_NUM == 1) ? 'D' : 'E';
   int16_t accX; // 2 bytes
   int16_t accY;
   int16_t accZ;
@@ -66,38 +66,6 @@ uint8_t calculateChecksum(uint8_t *packet)
   }
   return sum;
 }
-
-// byte getType(uint8_t index) {
-//   if (PLAYER == 1) {
-//     if (index == ACCEL_X) {
-//       return 'a';
-//     } else if (index == ACCEL_Y) {
-//       return 'b';
-//     } else if (index == ACCEL_Z) {
-//       return 'c';
-//     } else if (index == ROTATE_X) {
-//       return 'd';
-//     } else if (index == ROTATE_Y) {
-//       return 'e';
-//     } else if (index == ROTATE_Z) {
-//       return 'f';
-//     }
-//   } else if (PLAYER == 2) {
-//     if (index == ACCEL_X) {
-//       return 'u';
-//     } else if (index == ACCEL_Y) {
-//       return 'v';
-//     } else if (index == ACCEL_Z) {
-//       return 'w';
-//     } else if (index == ROTATE_X) {
-//       return 'x';
-//     } else if (index == ROTATE_Y) {
-//       return 'y';
-//     } else if (index == ROTATE_Z) {
-//       return 'z';
-//     }
-//   }
-// }
 
 void sendArmData()
 {
@@ -209,8 +177,17 @@ public:
   {
     while (true)
     {
-      delay(TIMEOUT_ACK);
-      if (Serial.read() == 'A')
+      unsigned long currTime = millis();
+      char serialRead = Serial.read();
+      while (serialRead != 'A')
+      {
+        if (millis() - currTime >= TIMEOUT_DATA)
+        {
+          break;
+        }
+        serialRead = Serial.read();
+      }
+      if (serialRead == 'A')
       {
         nextID = DATA_STATE_ID;
         handshakeDone = true;

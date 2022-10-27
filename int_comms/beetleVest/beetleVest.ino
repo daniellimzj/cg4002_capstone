@@ -31,7 +31,7 @@ struct NotifyPacket
 
 struct DataPacket
 { 
-  byte packetType = 'V';
+  byte packetType = (PLAYER_NUM == 1) ? 'V' : 'W';
   float mean; // 4 bytes
   float range;
   float variance;
@@ -155,8 +155,15 @@ public:
   void run() override
   {
     while (true) {
-      delay(TIMEOUT_ACK);
-      if (Serial.read() == 'A') {
+      unsigned long currTime = millis();
+      char serialRead = Serial.read();
+      while (serialRead != 'A') {
+        if (millis() - currTime >= TIMEOUT_DATA) {
+          break;
+          serialRead = Serial.read();
+        }
+      }
+      if (serialRead == 'A') {
         handshakeDone = true;
         nextID = DATA_STATE_ID;
         break;
