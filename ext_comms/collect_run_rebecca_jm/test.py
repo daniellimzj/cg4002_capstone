@@ -2,7 +2,7 @@ import os
 
 for i in range(1, 25):
 
-    oldfile = "p1_wrist_" + f'{i:04}' + ".txt"
+    oldfile = "p2_wrist_" + f'{i:04}' + ".txt"
 
     action = ""
 
@@ -18,6 +18,6 @@ for i in range(1, 25):
     else:
         action = "logout"
 
-    newname = "p1_" + action + f'{((i % 6) + 7):04}' + ".txt"
+    newname = "p2_" + action + f'{((i % 6) + 7):04}' + ".txt"
 
     os.rename(oldfile, newname)
