@@ -91,13 +91,16 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
     hasP2WristMoved = False
     p2WristStartTime = None
 
+    hasP1WristProcessed = False
+    hasP2WristProcessed = False
+
     p1Readings = [[] for _ in range(6)]
     p2Readings = [[] for _ in range(6)]
 
     prevP1AccelY = 0
     prevP2AccelY = 0
 
-    while (p1Move == Actions.no and p2Move == Actions.no):
+    while (p1Move == Actions.no or p2Move == Actions.no):
 
         packet = beetleQueue.get(block = True)
         beetleID = packet[beetles.PACKET_TYPE]
@@ -108,7 +111,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P1_VEST:
             didP1GetShot = True
 
-        elif beetleID == beetles.P1_WRIST:
+        elif beetleID == beetles.P1_WRIST and not hasP1WristProcessed:
             if hasP1WristMoved:
                 appendReadings(p1Readings, packet)
                 if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
@@ -124,6 +127,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
                     if len(p1WristData):
                         p1Move = classifier.classifyMove(p1WristData)
+                        hasP1WristProcessed = True
             
             else:
                 if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
@@ -140,7 +144,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P2_VEST:
             didP2GetShot = True
 
-        elif beetleID == beetles.P2_WRIST:
+        elif beetleID == beetles.P2_WRIST and not hasP2WristProcessed:
             if hasP2WristMoved:
                 appendReadings(p2Readings, packet)
                 if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
@@ -155,6 +159,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
                     if len(p2WristData):
                         p2Move = classifier.classifyMove(p2WristData)
+                        hasP2WristProcessed = True
 
             else:
                 if classifier.isStartOfMove(prevP2AccelY, packet[beetles.ACCEL_Y]):

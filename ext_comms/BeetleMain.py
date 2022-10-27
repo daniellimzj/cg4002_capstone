@@ -9,10 +9,10 @@ PACKET_LEN = 20
 BEETLE_PORT = 6721
 
 # Vests are currently swapped for 1 player game
-P1_VEST = b'W'
+P1_VEST = b'V'
 P1_GUN = b'G'
 P1_WRIST = b'D'
-P2_VEST = b'V'
+P2_VEST = b'W'
 P2_GUN = b'J'
 P2_WRIST = b'E'
 
