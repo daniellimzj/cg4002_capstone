@@ -18,6 +18,6 @@ for i in range(1, 25):
     else:
         action = "logout"
 
-    newname = "p2_" + action + f'{i:04}' + ".txt"
+    newname = "p2_" + action + f'{((i // 6) + 1):04}' + ".txt"
 
     os.rename(oldfile, newname)
