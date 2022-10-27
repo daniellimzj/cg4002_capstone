@@ -13,6 +13,9 @@ INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "
 
 NS_AFTER_START = 1500000000
 
+p1NumSamples = 0
+p2NumSamples = 0
+
 def appendReadings(playerReadings, packet):
     playerReadings[0].append(packet[beetles.ACCEL_X])
     playerReadings[1].append(packet[beetles.ACCEL_Y])
@@ -75,6 +78,8 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
             actionQueue.put((p1Move, p2Move, didP1GetShot, didP2GetShot), block=True)
 
 def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
+
+    global p1NumSamples, p2NumSamples
     p1Move = Actions.no
     p2Move = Actions.no
 
@@ -111,7 +116,8 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     p1WristData = getProcessedData(p1Readings)
                     print("length of processed p1 readings:", len(p1WristData))
 
-                    with open("p1_wrist_" + str(p1WristStartTime) + ".txt", "w") as file:
+                    p1NumSamples += 1
+                    with open("p1_wrist_" + f'{p1NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
                             file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
                             file.write("\n")
@@ -142,7 +148,8 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     p2WristData = getProcessedData(p2Readings)
                     print("length of processed p2 readings:", len(p2WristData))
 
-                    with open("p2_wrist_" + str(p2WristStartTime) + ".txt", "w") as file:
+                    p2NumSamples += 1
+                    with open("p2_wrist_" + f'{p2NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p2Readings[0])):
                             file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
 
