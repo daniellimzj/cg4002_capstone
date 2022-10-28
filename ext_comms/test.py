@@ -34,9 +34,7 @@ with open("data_collection_irl_27oct/p1_grenade0003.txt", "r") as file:
 print(len(readings), len(readings[0]))
 
 start = time.time_ns()
-
-processed = getProcessedData(readings)
-print(processed[3])
+print("Asdfasdfasdfasdfasdfasdfasd", start, len(readings))
 print((time.time_ns() - start) / 1000000)
 
 

@@ -36,9 +36,6 @@ def getProcessedData(readings):
         processedData.append(np.percentile(readings, 75))
     return processedData
 
-def getMaxAbsSecondDerivative(data):
-    return max(abs((data[i + 2] - data[i + 1]) - (data[i + 1] - data[i])) for i in range(len(data) - 2))
-
 class MoveClassifier:
     def __init__(self):
         self.overlay = Overlay('design_1_26oct.bit')
@@ -114,20 +111,23 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P1_WRIST and not hasP1WristProcessed:
             if hasP1WristMoved:
                 appendReadings(p1Readings, packet)
-                if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
+                if len(p1Readings[0]) >= 38 or time.time_ns() - p1WristStartTime >= NS_AFTER_START:
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
-                    print("length of processed p1 readings:", len(p1WristData))
 
+                    start = time.time_ns()
                     p1NumSamples += 1
                     with open("p1_wrist_" + f'{p1NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
                             file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
                             file.write("\n")
+                    print("milliseconds taken to write p1 samples to file:", (time.time_ns() - start) / 1000000)
 
                     if len(p1WristData):
+                        start = time.time_ns()
                         p1Move = classifier.classifyMove(p1WristData)
                         hasP1WristProcessed = True
+                        print("milliseconds taken to classify p2 move:", (time.time_ns() - start) / 1000000)
             
             else:
                 if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
@@ -147,20 +147,23 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P2_WRIST and not hasP2WristProcessed:
             if hasP2WristMoved:
                 appendReadings(p2Readings, packet)
-                if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
+                if len(p2Readings[0]) >= 38 or time.time_ns() - p2WristStartTime >= NS_AFTER_START:
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
-                    print("length of processed p2 readings:", len(p2WristData))
 
+                    start = time.time_ns()
                     p2NumSamples += 1
                     with open("p2_wrist_" + f'{p2NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p2Readings[0])):
                             file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
                             file.write("\n")
+                    print("milliseconds taken to write p2 samples to file:", (time.time_ns() - start) / 1000000)
 
                     if len(p2WristData):
+                        start = time.time_ns()
                         p2Move = classifier.classifyMove(p2WristData)
                         hasP2WristProcessed = True
+                        print("milliseconds taken to classify p2 move:", (time.time_ns() - start) / 1000000)
 
             else:
                 if classifier.isStartOfMove(prevP2AccelY, packet[beetles.ACCEL_Y]):
