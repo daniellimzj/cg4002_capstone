@@ -2,9 +2,11 @@ import multiprocessing as mp
 import statistics
 import time as time
 
+import joblib
 import numpy as np
 import pandas as pd
 from pynq import Overlay, allocate
+from sklearn.preprocessing import StandardScaler
 
 import BeetleMain as beetles
 from Player import Actions
@@ -46,9 +48,21 @@ class MoveClassifier:
         self.input_buffer = allocate(shape=(42,), dtype = np.float32)
         self.output_buffer = allocate(shape=(5,), dtype = np.float32)
 
+        self.scaler = joblib.load('scaler.joblib')
+
+        testData = [5387.923076923077,12007,-7691,32407388.737672586,7462,2745.5,9614.0,-9195.692307692309,-4802,-14923,11716324.520710059,-8048,-12456.0,-6344.5,-1085.4102564102564,5792,-13853,46926777.318869166,3200,-7126.5,4584.0,-11869.846153846154,-3129,-23751,37783929.77120315,-9640,-16942.5,-7670.0,-1844.051282051282,4205,-11429,16273600.151216306,-1659,-4385.5,968.5,1678.3589743589744,17484,-19211,144046643.15318868,5518,-10452.0,10139.0]
+
+        testDataScaled = self.scaler.transform(testData)
+
+        print(testDataScaled)
+
+
     # data here is already processed
     def classifyMove(self, data):
-        self.input_buffer[:] = data
+
+        scaled_data = self.scaler.transform(data)
+
+        self.input_buffer[:] = scaled_data
 
         self.dma_send.transfer(self.input_buffer)
         self.dma_recv.transfer(self.output_buffer)
