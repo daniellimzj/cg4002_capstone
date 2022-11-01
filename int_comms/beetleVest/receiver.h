@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define PLAYER_NUM 2   // change depending on whether vest is for player 1 or 2
+#define PLAYER_NUM 1   // change depending on whether vest is for player 1 or 2
 // 1 means that this beetle will be on the vest of player 1
 
 #define IR_RECEIVE_PIN 2
@@ -16,12 +16,7 @@
 #define PLAYER_2_SEND_ADDRESS 0x6509
 #define RECEIVE_COMMAND 0x0E 
 
-#define LED_NUM_OF_FLASHES 2
 #define LED_FLASH_INTERVAL 100 //time between LED flashes in milliseconds
-
-unsigned long int prevLedMillis = 0;
-int ledToggle = 0;
-int ledNumOfFlashes = 0;
 
 void initReceiver() {
   IrReceiver.begin(IR_RECEIVE_PIN/*, ENABLE_LED_FEEDBACK*/);
@@ -29,30 +24,18 @@ void initReceiver() {
   digitalWrite(INDICATOR_LED_PIN, LOW);
 }
 
-void flashIndicatorIfDetected() {
-  unsigned long int currLedMillis = millis();
-
-  if (currLedMillis - prevLedMillis > LED_FLASH_INTERVAL && ledNumOfFlashes > 0) {
-    ledToggle = 1 - ledToggle;
-    if (ledToggle == 0) {
-      ledNumOfFlashes--;
-    }
-    prevLedMillis = currLedMillis;
-  }
-  
-  if (ledToggle == 1) {
+void flashIndicator() {
     digitalWrite(INDICATOR_LED_PIN, HIGH);
     tone(BUZZER_PIN, 4000);
-  }
-  
-  else if (ledToggle == 0) {
+    delay(LED_FLASH_INTERVAL);
     digitalWrite(INDICATOR_LED_PIN, LOW);
     noTone(BUZZER_PIN);
-  }
-  
-  if (ledNumOfFlashes == 0) {
-    ledToggle = 0;
-  }
+    delay(LED_FLASH_INTERVAL);
+    digitalWrite(INDICATOR_LED_PIN, HIGH);
+    tone(BUZZER_PIN, 4000);
+    delay(LED_FLASH_INTERVAL);
+    digitalWrite(INDICATOR_LED_PIN, LOW);
+    noTone(BUZZER_PIN);
 }
 
 boolean senseReceiver() {
@@ -62,7 +45,7 @@ boolean senseReceiver() {
             if ((PLAYER_NUM == 1 && IrReceiver.decodedIRData.address == PLAYER_2_SEND_ADDRESS) || 
             (PLAYER_NUM == 2 && IrReceiver.decodedIRData.address == PLAYER_1_SEND_ADDRESS)) {
               isDetected = true;
-              ledNumOfFlashes = LED_NUM_OF_FLASHES;
+              flashIndicator();
             }
         }
         IrReceiver.resume(); // Enable receiving of the next value
