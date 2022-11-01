@@ -85,7 +85,9 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
     classifier = MoveClassifier()
 
     while True:
+        startTime = time.time_ns()
         p1Move, p2Move, didP1GetShot, didP2GetShot = getMoves(beetleQueue, classifier)
+        print("milliseconds taken for getMoves function:", (time.time_ns() - startTime) / 1000000)
 
         if p1Move != Actions.no or p2Move != Actions.no:
             actionQueue.put((p1Move, p2Move, didP1GetShot, didP2GetShot), block=True)
@@ -191,8 +193,8 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     prevP2AccelY = packet[beetles.ACCEL_Y]
 
     if p1Move == Actions.shoot and p2Move == Actions.shoot:
-        startTime = time.time_ns()
-        while time.time_ns() <= startTime + NS_AFTER_DOUBLESHOOT:
+        waitForVestStartTime = time.time_ns()
+        while time.time_ns() <= waitForVestStartTime + NS_AFTER_DOUBLESHOOT:
             packet = beetleQueue.get(block = True)
             beetleID = packet[beetles.PACKET_TYPE]
 
