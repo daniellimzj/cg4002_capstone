@@ -1,6 +1,7 @@
 import multiprocessing as mp
 import statistics
 import time as time
+import warnings
 
 import joblib
 import numpy as np
@@ -49,6 +50,7 @@ class MoveClassifier:
         self.output_buffer = allocate(shape=(5,), dtype = np.float32)
 
         self.scaler = joblib.load('scaler.joblib')
+        warnings.filterwarnings("ignore")
 
         # testData = [5387.923076923077,12007,-7691,32407388.737672586,7462,2745.5,9614.0,-9195.692307692309,-4802,-14923,11716324.520710059,-8048,-12456.0,-6344.5,-1085.4102564102564,5792,-13853,46926777.318869166,3200,-7126.5,4584.0,-11869.846153846154,-3129,-23751,37783929.77120315,-9640,-16942.5,-7670.0,-1844.051282051282,4205,-11429,16273600.151216306,-1659,-4385.5,968.5,1678.3589743589744,17484,-19211,144046643.15318868,5518,-10452.0,10139.0]
 
@@ -83,7 +85,6 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
 
     while True:
         p1Move, p2Move, didP1GetShot, didP2GetShot = getMoves(beetleQueue, classifier)
-        print("move process got:", p1Move, p2Move, didP1GetShot, didP2GetShot)
 
         if p1Move != Actions.no or p2Move != Actions.no:
             actionQueue.put((p1Move, p2Move, didP1GetShot, didP2GetShot), block=True)
