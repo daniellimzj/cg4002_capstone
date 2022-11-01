@@ -1,4 +1,4 @@
 import os
-for i in range(1,41):
+for i in range(41,43):
 
-    os.rename("p2_wrist_" + f'{i:04}' + ".txt", "p2_logout" + f'{i:04}' + ".txt")
+    os.rename("p1_wrist_" + f'{i:04}' + ".txt", "p1_logout" + f'{i:04}' + ".txt")
