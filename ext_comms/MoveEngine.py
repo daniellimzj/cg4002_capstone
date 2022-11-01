@@ -141,7 +141,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                         start = time.time_ns()
                         p1Move = classifier.classifyMove(p1WristData)
                         hasP1WristProcessed = True
-                        print("milliseconds taken to classify p2 move:", (time.time_ns() - start) / 1000000)
+                        print("milliseconds taken to classify p1 move:", (time.time_ns() - start) / 1000000)
             
             else:
                 if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
