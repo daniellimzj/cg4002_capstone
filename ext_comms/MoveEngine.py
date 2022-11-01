@@ -15,6 +15,7 @@ from Player import Actions
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
 NS_AFTER_START = 1500000000
+NS_AFTER_DOUBLESHOOT = 100000000
 
 p1NumSamples = 0
 p2NumSamples = 0
@@ -189,5 +190,16 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                 else:
                     prevP2AccelY = packet[beetles.ACCEL_Y]
 
+    if p1Move == Actions.shoot and p2Move == Actions.shoot:
+        startTime = time.time_ns()
+        while time.time_ns() <= startTime + NS_AFTER_DOUBLESHOOT:
+            packet = beetleQueue.get(block = True)
+            beetleID = packet[beetles.PACKET_TYPE]
+
+            if beetleID == beetles.P1_VEST:
+                didP1GetShot = True
+
+            elif beetleID == beetles.P2_VEST:
+                didP2GetShot = True
 
     return p1Move, p2Move, didP1GetShot, didP2GetShot
