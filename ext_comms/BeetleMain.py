@@ -30,6 +30,8 @@ CHECKSUM = 10
 
 PACKET_FORMAT_STR = "<chhhhhhf??b"
 
+NUM_RECONNECTS = 10
+
 class BeetleStruct(ctypes.Structure):
     _fields_ = [('packetType', ctypes.c_char), \
                 ('accelX', ctypes.c_int16), \
@@ -50,18 +52,18 @@ def startBeetleMainProcess(beetleQueue: mp.Array, port: int):
     serverSocket.listen()
     print('Beetle server is ready to receive message at port', serverPort)
 
-    indivs = [mp.Process() for _ in range(NUM_BEETLES * 5)]
+    indivs = [mp.Process() for _ in range(NUM_BEETLES * NUM_RECONNECTS)]
 
     try:
-        for i in range(NUM_BEETLES * 5):
+        for i in range(NUM_BEETLES * NUM_RECONNECTS):
             connectionSocket, clientAddr = serverSocket.accept()
             indivs[i] = mp.Process(target = startBeetleIndiv, args = (beetleQueue, i, connectionSocket))
             indivs[i].start()
 
-        for i in range(NUM_BEETLES * 5):
+        for i in range(NUM_BEETLES * NUM_RECONNECTS):
             indivs[i].join()
     finally:
-        for i in range(NUM_BEETLES * 5):
+        for i in range(NUM_BEETLES * NUM_RECONNECTS):
             indivs[i].terminate()
         serverSocket.close()
 
