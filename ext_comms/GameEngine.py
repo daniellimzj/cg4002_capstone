@@ -74,8 +74,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
         while True:
             inputs = tuple(actionQueue.get(block = True))
 
-            startTime = time.time_ns()
-
             p1_action, p2_action, is_p1_shot, is_p2_shot = inputs
 
             can_p1_see_p2 = True
@@ -85,8 +83,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             old_p1_bullets, old_p2_bullets = engine.get_bullet_counts()
             old_p1_num_shields, old_p2_num_shields = engine.get_shield_counts()
             old_p1_shield_time, old_p2_shield_time = engine.get_shield_times()
-
-            print("Game engine milliseconds taken to get old counts:", (time.time_ns() - startTime) / 1000000)
 
             if p1_action == Actions.shoot:
                 can_p1_see_p2 = is_p2_shot
@@ -99,17 +95,11 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             elif p2_action == Actions.grenade:
                 with canP2SeeP1.get_lock():
                     can_p2_see_p1 = bool(canP2SeeP1.value)
-
-            print("Game engine milliseconds taken for players seeing each other:", (time.time_ns() - startTime) / 1000000)
             
-            print("game engine doing ", p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
+            print("game engine doing", p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
             engine.do_actions(p1_action, p2_action, can_p1_see_p2, can_p2_see_p1)
 
-            print("Game engine milliseconds taken to do actions:", (time.time_ns() - startTime) / 1000000)
-
             currState = engine.get_JSON_string()
-
-            print("Game engine milliseconds taken to get JSON string:", (time.time_ns() - startTime) / 1000000)
 
             if runWithEval:
                 # print("Now sending to eval server...")
@@ -117,8 +107,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
-
-            print("Game engine milliseconds taken to send and reeive eval:", (time.time_ns() - startTime) / 1000000)
 
             p1_action, p2_action = engine.get_player_actions()
 
@@ -148,7 +136,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 engine.p2.set_action(Actions.shieldInvalid)
 
             currState = engine.get_JSON_string()
-            print("Game engine milliseconds taken to check action validity:", (time.time_ns() - startTime) / 1000000)
             
             gameStateClient.publish(MQTT.Topics.gameState, currState)
 
@@ -161,8 +148,6 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             if p2_action == Actions.reload and old_p2_bullets == 0 and new_p2_bullets == 6:
                 print("sending p2 reload to gun")
                 reloadClient.publish(MQTT.Topics.didP2Reload, "1")
-
-            print("Game engine milliseconds taken in total:", (time.time_ns() - startTime) / 1000000)
 
     finally:
         if runWithEval:
