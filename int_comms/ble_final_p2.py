@@ -13,7 +13,8 @@ import sshtunnel
 
 from bluepy.btle import Peripheral, DefaultDelegate
 
-INDEX_GUN = 2
+INDEX_GUN_P1 = 2
+INDEX_GUN_P2 = 5
 
 TIMEOUT_NOTIFICATION = 2 #s
 TIMEOUT_HANDSHAKE = 50/100 #s
@@ -248,6 +249,7 @@ def checkReload(serialChar, mqttQueue):
         print("did player reload:", didPlayerReload)
         if didPlayerReload:
             serialChar.write(bytes("R", "utf-8"))
+            print("reloaded")
     except queue.Empty:
         # print()
         pass
@@ -284,7 +286,7 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
     notStop = True
 
     # Starts MQTT Client for Gun Beetle
-    if (index == INDEX_GUN): 
+    if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2): 
         print("in here")
         mqttQueue = mp.Queue()
         mqttClientProcess = mp.Process(target = startMQTTClient, args=(1, mqttQueue))
@@ -294,7 +296,7 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
 
     try:
         with sshtunnel.open_tunnel(
-            'stu.comp.nus.edu.sg',
+            'sunfire.comp.nus.edu.sg',
             ssh_username="danielim",
             ssh_password="Cg4002!",
             remote_bind_address=('192.168.95.234', beetlePort),
@@ -326,7 +328,7 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
                         print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
                     if btleHandshakes[index]:
-                        if (index == INDEX_GUN):
+                        if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
                             notStop = watchForDisconnectGun(beetle, index, serialChar, mqttQueue)
                         else:
                             notStop = watchForDisconnect(beetle, index)
@@ -337,10 +339,10 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
                     # print(e)
                     pass
     except KeyboardInterrupt:
-        if (index == INDEX_GUN):
+        if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
             mqttClientProcess.terminate()
     finally:
-        if (index == INDEX_GUN):
+        if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
             mqttClientProcess.join()    
 
 
