@@ -70,6 +70,9 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
             reloadRes = reloadClient.connect(MQTT.Configs.broker, MQTT.Configs.portNum)
         print("reload client connected!")
         reloadClient.loop_start()
+
+        numWrong = 0
+        numDone = 0
     
         while True:
             inputs = tuple(actionQueue.get(block = True))
@@ -107,6 +110,15 @@ def startEngineProcess(evalHost: str, evalPort: int, actionQueue: mp.Queue, canP
                 resp = evalClient.recv_data()
                 respObj = json.loads(resp)
                 engine.check_and_update_player_states(respObj)
+
+            new_p1_action, new_p2_action = engine.get_player_actions()
+            if p1_action != new_p1_action:
+                numWrong += 1
+            if p2_action != new_p2_action:
+                numWrong += 1
+            numDone += 2
+
+            print("so far got", numWrong, "wrong out of", numDone)
 
             p1_action, p2_action = engine.get_player_actions()
 
