@@ -247,7 +247,7 @@ def checkReload(serialChar, mqttQueue):
         # print("inside try")
         didPlayerReload = mqttQueue.get(block=False, timeout=None)
         print("did player reload:", didPlayerReload)
-        if didPlayerReload:
+        if didPlayerReload == 1:
             serialChar.write(bytes("R", "utf-8"))
             print("reloaded")
     except queue.Empty:
@@ -362,15 +362,15 @@ if __name__ == "__main__":
 
     try:
         beetle3Process.start()
-        # beetle4Process.start()
-        # beetle5Process.start()
+        beetle4Process.start()
+        beetle5Process.start()
 
         beetle3Process.join()
-        # beetle4Process.join()
-        # beetle5Process.join()
+        beetle4Process.join()
+        beetle5Process.join()
     finally:
         beetle3Process.terminate()
-        # beetle4Process.terminate()
-        # beetle5Process.terminate()
+        beetle4Process.terminate()
+        beetle5Process.terminate()
 
         print("Closing main")
