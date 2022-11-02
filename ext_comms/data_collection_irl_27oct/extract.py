@@ -37,15 +37,20 @@ for file in os.listdir(folder):
 
         f = open(folder + "\\" + file, "r")
         lines = f.readlines()
+        count = 0
         for line in lines:
-            result = line.split(",")
-            component = [eval(i) for i in result]
-            accX.append(component[0])
-            accY.append(component[1])
-            accZ.append(component[2])
-            gyroX.append(component[3])
-            gyroY.append(component[4])
-            gyroZ.append(component[5])
+            count += 1
+            if count % 26 > 0:
+                result = line.split(",")
+                component = [eval(i) for i in result]
+                accX.append(component[0])
+                accY.append(component[1])
+                accZ.append(component[2])
+                gyroX.append(component[3])
+                gyroY.append(component[4])
+                gyroZ.append(component[5])
+            elif count % 26 == 0:
+                break
         meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
         meanaccY, maxaccY, minaccY, varaccY, medaccY, iqrLoweraccY, iqrUpperaccY = getStats(accY)
         meanaccZ, maxaccZ, minaccZ, varaccZ, medaccZ, iqrLoweraccZ, iqrUpperaccZ = getStats(accZ)

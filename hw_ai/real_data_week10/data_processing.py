@@ -50,15 +50,16 @@ def main():
             for line in lines:
                 count += 1
                 if count % 38 > 0:
-                    line = line.strip()
-                    result = line.split(",")
-                    component = [eval(i) for i in result]
-                    accX.append(component[0])
-                    accY.append(component[1])
-                    accZ.append(component[2])
-                    gyroX.append(component[3])
-                    gyroY.append(component[4])
-                    gyroZ.append(component[5])
+                    if count % 26 > 0:
+                        line = line.strip()
+                        result = line.split(",")
+                        component = [eval(i) for i in result]
+                        accX.append(component[0])
+                        accY.append(component[1])
+                        accZ.append(component[2])
+                        gyroX.append(component[3])
+                        gyroY.append(component[4])
+                        gyroZ.append(component[5])
                 elif count != 0:
                     meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
                     meanaccY, maxaccY, minaccY, varaccY, medaccY, iqrLoweraccY, iqrUpperaccY = getStats(accY)
