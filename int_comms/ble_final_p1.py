@@ -362,15 +362,15 @@ if __name__ == "__main__":
 
     try:
         beetle0Process.start()
-        beetle1Process.start()
-        beetle2Process.start()
+        # beetle1Process.start()
+        # beetle2Process.start()
 
         beetle0Process.join()
-        beetle1Process.join()
-        beetle2Process.join()
+        # beetle1Process.join()
+        # beetle2Process.join()
     finally:
         beetle0Process.terminate()
-        beetle1Process.terminate()
-        beetle2Process.terminate()
+        # beetle1Process.terminate()
+        # beetle2Process.terminate()
 
         print("Closing main")
