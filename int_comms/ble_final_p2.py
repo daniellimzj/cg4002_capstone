@@ -289,7 +289,7 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
     if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2): 
         print("in here")
         mqttQueue = mp.Queue()
-        mqttClientProcess = mp.Process(target = startMQTTClient, args=(1, mqttQueue))
+        mqttClientProcess = mp.Process(target = startMQTTClient, args=(2, mqttQueue))
         mqttClientProcess.start()
         print("mqtt client started for beetle", index)
         time.sleep(0.5)
@@ -362,15 +362,15 @@ if __name__ == "__main__":
 
     try:
         beetle3Process.start()
-        beetle4Process.start()
-        beetle5Process.start()
+        # beetle4Process.start()
+        # beetle5Process.start()
 
         beetle3Process.join()
-        beetle4Process.join()
-        beetle5Process.join()
+        # beetle4Process.join()
+        # beetle5Process.join()
     finally:
         beetle3Process.terminate()
-        beetle4Process.terminate()
-        beetle5Process.terminate()
+        # beetle4Process.terminate()
+        # beetle5Process.terminate()
 
         print("Closing main")
