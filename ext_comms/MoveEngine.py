@@ -14,7 +14,7 @@ from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
-NS_AFTER_START = 1500000000
+NS_AFTER_START = 1000000000
 NS_AFTER_DOUBLESHOOT = 100000000
 
 p1NumSamples = 0
@@ -78,7 +78,7 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
     classifier = MoveClassifier()
 
     while True:
-        # time.sleep(0.5)
+        time.sleep(0.5)
         startTime = time.time_ns()
         p1Move, p2Move, didP1GetShot, didP2GetShot = getMoves(beetleQueue, classifier)
         print("milliseconds taken for getMoves function:", (time.time_ns() - startTime) / 1000000)
