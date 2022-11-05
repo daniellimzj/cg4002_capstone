@@ -14,8 +14,9 @@ from Player import Actions
 
 INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
 
-NS_AFTER_START = 1000000000
+NS_AFTER_START = 2000000000
 NS_AFTER_DOUBLESHOOT = 100000000
+MIN_READINGS_NEEDED = 25
 
 p1NumSamples = 0
 p2NumSamples = 0
@@ -121,17 +122,17 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P1_WRIST and not hasP1WristProcessed:
             if hasP1WristMoved:
                 appendReadings(p1Readings, packet)
-                if time.time_ns() - p1WristStartTime >= NS_AFTER_START:
+                if len(p1Readings) >= MIN_READINGS_NEEDED or time.time_ns() - p1WristStartTime >= NS_AFTER_START:
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
 
-                    # start = time.time_ns()
-                    # p1NumSamples += 1
-                    # with open("p1_wrist_" + f'{p1NumSamples:04}' + ".txt", "w") as file:
-                    #     for i in range(len(p1Readings[0])):
-                    #         file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
-                    #         file.write("\n")
-                    # print("milliseconds taken to write p1 samples to file:", (time.time_ns() - start) / 1000000)
+                    start = time.time_ns()
+                    p1NumSamples += 1
+                    with open("p1_wrist_" + f'{p1NumSamples:04}' + ".txt", "w") as file:
+                        for i in range(len(p1Readings[0])):
+                            file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
+                            file.write("\n")
+                    print("milliseconds taken to write p1 samples to file:", (time.time_ns() - start) / 1000000)
 
                     if len(p1WristData):
                         # start = time.time_ns()
@@ -157,17 +158,17 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P2_WRIST and not hasP2WristProcessed:
             if hasP2WristMoved:
                 appendReadings(p2Readings, packet)
-                if time.time_ns() - p2WristStartTime >= NS_AFTER_START:
+                if len(p2Readings) >= MIN_READINGS_NEEDED or time.time_ns() - p2WristStartTime >= NS_AFTER_START:
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
 
-                    # start = time.time_ns()
-                    # p2NumSamples += 1
-                    # with open("p2_wrist_" + f'{p2NumSamples:04}' + ".txt", "w") as file:
-                    #     for i in range(len(p2Readings[0])):
-                    #         file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
-                    #         file.write("\n")
-                    # print("milliseconds taken to write p2 samples to file:", (time.time_ns() - start) / 1000000)
+                    start = time.time_ns()
+                    p2NumSamples += 1
+                    with open("p2_wrist_" + f'{p2NumSamples:04}' + ".txt", "w") as file:
+                        for i in range(len(p2Readings[0])):
+                            file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
+                            file.write("\n")
+                    print("milliseconds taken to write p2 samples to file:", (time.time_ns() - start) / 1000000)
 
                     if len(p2WristData):
                         # start = time.time_ns()
