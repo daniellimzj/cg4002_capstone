@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <JC_Button.h> // https://github.com/JChristensen/JC_Button
 
-#define PLAYER_NUM 1   // change depending on whether gun is for player 1 or 2
+#define PLAYER_NUM 2   // change depending on whether gun is for player 1 or 2
 
 #define PUSHBUTTON_PIN 2
 #define IR_SEND_PIN 3

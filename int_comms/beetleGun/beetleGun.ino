@@ -117,20 +117,13 @@ public:
 
   void run() override
   {
-      unsigned long currTime = millis();
-      char serialRead = Serial.read();
-      while (serialRead != 'H' || serialRead != 'A' || serialRead != 'R') {
-        if (millis() - currTime >= TIMEOUT_DATA) {
-          break;
-        }
-        serialRead = Serial.read();
-      }
-      if (serialRead == 'R') {
+      delay(TIMEOUT_DATA);
+      if (Serial.read() == 'R') {
         reloadGun();
-      } else if (serialRead == 'A') {
+      } else if (Serial.read() == 'A') {
         isDetected = false;
         nextID = SLEEP_STATE_ID;
-      } else if (serialRead == 'H') {
+      } else if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
       }
@@ -157,15 +150,8 @@ public:
   void run() override
   {
     while (true) {
-      unsigned long currTime = millis();
-      char serialRead = Serial.read();
-      while (serialRead != 'A') {
-        if (millis() - currTime >= TIMEOUT_DATA) {
-          break;
-        }
-        serialRead = Serial.read();
-      }
-      if (serialRead == 'A') {
+      delay(TIMEOUT_ACK);
+      if (Serial.read() == 'A') {
         handshakeDone = true;
           nextID = DATA_STATE_ID;
         break;
