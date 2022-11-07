@@ -74,9 +74,9 @@ class Comms(DefaultDelegate):
             'Has Shot Gun': packet[5],
             'Is Shot': packet[6]
         }
-        # result = (','.join([str(value) for value in datas.values()]))
-        self.clientSocket.send(data)
-        # print(result)
+        result = (','.join([str(value) for value in datas.values()]))
+        # self.clientSocket.send(data)
+        print(result)
         self.sendAckPacket()
 
 
@@ -248,29 +248,30 @@ def checkReload(serialChar, mqttQueue):
         didPlayerReload = mqttQueue.get(block=False, timeout=None)
         print("did player reload:", didPlayerReload)
         if didPlayerReload == 1:
-            serialChar.write(bytes("X", "utf-8"), True)
+            serialChar.write(bytes("R", "utf-8"))
             print("reloaded")
             print(serialChar.read())
+            # while ()
     except queue.Empty:
         # print()
         pass
 
-def watchForDisconnect(beetle, index, serialChar, mqttQueue):
+def watchForDisconnect(beetle, index):
     while True:
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
             break
-        if index == INDEX_GUN_P1 or index == INDEX_GUN_P2:
-            try:
-                # print("inside try")
-                didPlayerReload = mqttQueue.get(block=False, timeout=None)
-                print("did player reload:", didPlayerReload)
-                if didPlayerReload == 1:
-                    serialChar.write(bytes("R", "utf-8"), True)
-                    print("reloaded")
-                    print(serialChar.read())
-            except queue.Empty:
-                # print()
-                pass
+        # if index == INDEX_GUN_P1 or index == INDEX_GUN_P2:
+        #     try:
+        #         # print("inside try")
+        #         didPlayerReload = mqttQueue.get(block=False, timeout=None)
+        #         print("did player reload:", didPlayerReload)
+        #         if didPlayerReload == 1:
+        #             serialChar.write(bytes("X", "utf-8"), True)
+        #             print("reloaded")
+        #             print(serialChar.read())
+        #     except queue.Empty:
+        #         # print()
+        #         pass
 
     print("No data for 2 seconds, attempting to reconnect...")
     btleHandshakes[index] = False
@@ -302,55 +303,55 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
     if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2): 
         print("in here")
         mqttQueue = mp.Queue()
-        mqttClientProcess = mp.Process(target = startMQTTClient, args=(1, mqttQueue))
+        mqttClientProcess = mp.Process(target = startMQTTClient, args=(2, mqttQueue))
         mqttClientProcess.start()
         print("mqtt client started for beetle", index)
         time.sleep(0.5)
 
     try:
-        with sshtunnel.open_tunnel(
-            'sunfire.comp.nus.edu.sg',
-            ssh_username="danielim",
-            ssh_password="Cg4002!",
-            remote_bind_address=('192.168.95.234', beetlePort),
-        ) as tunnel:
+        # with sshtunnel.open_tunnel(
+        #     'sunfire.comp.nus.edu.sg',
+        #     ssh_username="danielim",
+        #     ssh_password="Cg4002!",
+        #     remote_bind_address=('192.168.95.234', beetlePort),
+        # ) as tunnel:
 
-            serverName = 'localhost'
-            serverPort = int(tunnel.local_bind_port)
-            clientSocket = socket(AF_INET, SOCK_STREAM)
-            clientSocket.connect((serverName, serverPort))
-            print("connected to:", serverName, serverPort)
+        #     serverName = 'localhost'
+        #     serverPort = int(tunnel.local_bind_port)
+        #     clientSocket = socket(AF_INET, SOCK_STREAM)
+        #     clientSocket.connect((serverName, serverPort))
+        #     print("connected to:", serverName, serverPort)
 
-            # dont forget to indent this
-            while notStop:
-                try:
-                    print("Searching for Beetle", str(index))
-                    beetle.connect(addr)
-                    print("Connecting to Beetle {0}...".format(index))
+        # dont forget to indent this
+        while notStop:
+            try:
+                print("Searching for Beetle", str(index))
+                beetle.connect(addr)
+                print("Connecting to Beetle {0}...".format(index))
 
-                    serialSvc = beetle.getServiceByUUID(
-                        "0000dfb0-0000-1000-8000-00805f9b34fb")
-                    serialChar = serialSvc.getCharacteristics(
-                        "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
-                    delegate = Comms(serialChar, index, clientSocket)
-                    beetle.withDelegate(delegate)
+                serialSvc = beetle.getServiceByUUID(
+                    "0000dfb0-0000-1000-8000-00805f9b34fb")
+                serialChar = serialSvc.getCharacteristics(
+                    "0000dfb1-0000-1000-8000-00805f9b34fb")[0]
+                delegate = Comms(serialChar, index, None)
+                beetle.withDelegate(delegate)
 
-                    if not btleHandshakes[index]:
-                        initHandshake(beetle, serialChar, index)
-                        print("Beetle " + str(index) +": Handshake Successful!")
-                        print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
+                if not btleHandshakes[index]:
+                    initHandshake(beetle, serialChar, index)
+                    print("Beetle " + str(index) +": Handshake Successful!")
+                    print("Beetle {0} Handshake Status: {1}".format(index, btleHandshakes[index]))
 
-                    if btleHandshakes[index]:
-                        # if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
-                        #     notStop = watchForDisconnectGun(beetle, index, serialChar, mqttQueue)
-                        # else:
-                        notStop = watchForDisconnect(beetle, index, serialChar, mqttQueue)
+                if btleHandshakes[index]:
+                    if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
+                        notStop = watchForDisconnectGun(beetle, index, serialChar, mqttQueue)
+                    else:
+                        notStop = watchForDisconnect(beetle, index)
 
-                except KeyboardInterrupt:
-                    beetle.disconnect()
-                except Exception as e:
-                    # print(e)
-                    pass
+            except KeyboardInterrupt:
+                beetle.disconnect()
+            except Exception as e:
+                # print(e)
+                pass
     except KeyboardInterrupt:
         if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
             mqttClientProcess.terminate()
@@ -371,7 +372,7 @@ if __name__ == "__main__":
     print("Beetle Port:", beetlePort)
     beetle0Process = mp.Process(target=beetleProcess, args=(0, beetlePort))
     beetle1Process = mp.Process(target=beetleProcess, args=(1, beetlePort))
-    beetle2Process = mp.Process(target=beetleProcess, args=(2, beetlePort))
+    beetle2Process = mp.Process(target=beetleProcess, args=(5, beetlePort))
 
     try:
         # beetle0Process.start()

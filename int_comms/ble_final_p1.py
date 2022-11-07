@@ -248,7 +248,7 @@ def checkReload(serialChar, mqttQueue):
         didPlayerReload = mqttQueue.get(block=False, timeout=None)
         print("did player reload:", didPlayerReload)
         if didPlayerReload == 1:
-            serialChar.write(bytes("R", "utf-8"), True)
+            serialChar.write(bytes("R", "utf-8"))
             print("reloaded")
             print(serialChar.read())
     except queue.Empty:
