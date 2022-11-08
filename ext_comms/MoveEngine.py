@@ -124,7 +124,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P1_WRIST and not hasP1WristProcessed:
             if hasP1WristMoved:
                 appendReadings(p1Readings, packet)
-                if len(p1Readings) >= MIN_READINGS_NEEDED or time.time_ns() - p1WristStartTime >= NS_AFTER_START:
+                if len(p1Readings[0]) >= MIN_READINGS_NEEDED or time.time_ns() - p1WristStartTime >= NS_AFTER_START:
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
 
@@ -160,7 +160,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
         elif beetleID == beetles.P2_WRIST and not hasP2WristProcessed:
             if hasP2WristMoved:
                 appendReadings(p2Readings, packet)
-                if len(p2Readings) >= MIN_READINGS_NEEDED or time.time_ns() - p2WristStartTime >= NS_AFTER_START:
+                if len(p2Readings[0]) >= MIN_READINGS_NEEDED or time.time_ns() - p2WristStartTime >= NS_AFTER_START:
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
 
