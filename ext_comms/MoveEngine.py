@@ -18,6 +18,8 @@ NS_AFTER_START = 2000000000
 NS_AFTER_DOUBLESHOOT = 100000000
 MIN_READINGS_NEEDED = 25
 
+FILE_LABEL = "wrist"
+
 p1NumSamples = 0
 p2NumSamples = 0
 
@@ -128,7 +130,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
                     start = time.time_ns()
                     p1NumSamples += 1
-                    with open("p1_wrist_" + f'{p1NumSamples:04}' + ".txt", "w") as file:
+                    with open("p1_" + FILE_LABEL + f'{p1NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p1Readings[0])):
                             file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
                             file.write("\n")
@@ -164,7 +166,7 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
                     start = time.time_ns()
                     p2NumSamples += 1
-                    with open("p2_wrist_" + f'{p2NumSamples:04}' + ".txt", "w") as file:
+                    with open("p2_" + FILE_LABEL + f'{p2NumSamples:04}' + ".txt", "w") as file:
                         for i in range(len(p2Readings[0])):
                             file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
                             file.write("\n")
