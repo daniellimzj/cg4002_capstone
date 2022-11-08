@@ -1,7 +1,7 @@
 import os
 
-start = 2
-end = 27
+start = 1
+end = 26
 
 action = "reload"
 
