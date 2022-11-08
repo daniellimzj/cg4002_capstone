@@ -1,9 +1,9 @@
 import os
 
-start = 37
-end = 49
+start = 34
+end = 45
 
-action = "logout"
+action = "reload"
 
 for i in range(start,end):
 
