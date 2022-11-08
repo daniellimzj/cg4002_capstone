@@ -81,7 +81,6 @@ def startMoveProcess(actionQueue: mp.Queue, beetleQueue: mp.Queue):
     classifier = MoveClassifier()
 
     while True:
-        time.sleep(0.5)
         p1Move, p2Move, didP1GetShot, didP2GetShot = getMoves(beetleQueue, classifier)
 
         if p1Move != Actions.no or p2Move != Actions.no:
@@ -109,6 +108,12 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
 
     prevP1AccelY = 0
     prevP2AccelY = 0
+
+    start = time.time_ns()
+    print("sleeping...")
+    while time.time_ns() - start < 500000000:
+        packet = beetleQueue.get(block = True)
+    print("ready!")
 
     while (p1Move == Actions.no or p2Move == Actions.no):
 
