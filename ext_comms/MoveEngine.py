@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 import BeetleMain as beetles
 from Player import Actions
 
-INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "none"}
+INDEX_TO_ACTION_MAP = {1: "grenade", 2: "reload", 3: "shield", 4: "logout", 5: "reload"}
 
 NS_AFTER_START = 2000000000
 NS_AFTER_DOUBLESHOOT = 100000000
