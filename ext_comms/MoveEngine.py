@@ -70,6 +70,10 @@ class MoveClassifier:
         self.dma_recv.wait()
         idx = self.output_buffer.argmax(axis=0) + 1
         # print("move engine got index", idx)
+        if idx == 5:
+            print("new reload detected")
+        if idx == 2:
+            print("old reload detected")
         return INDEX_TO_ACTION_MAP[idx]
 
     # data here is raw
