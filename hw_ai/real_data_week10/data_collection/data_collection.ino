@@ -173,7 +173,7 @@ void loop() {
     counter += 1;
   }
 
-  if (counter == 1.5*(SAMPLE_RATE + 1)){
+  if (counter == (SAMPLE_RATE + 1)){
     counter = 0;
     block = 0;
   }
