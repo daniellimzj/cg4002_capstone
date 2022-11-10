@@ -12,7 +12,6 @@ import joblib
 np.set_printoptions(threshold=np.inf)
 np.set_printoptions(formatter={'float_kind': '{:.12f}'.format})
 scaler = StandardScaler()
-
 data = pd.read_csv('main.csv')
 # Replace this line with your test csv
 # validate_data = pd.read_csv('main_test.csv')
@@ -45,10 +44,15 @@ print("test size:" + str(len(x_test)))
 baseline_classifier = MLPClassifier()
 baseline_classifier.fit(x_train, y_train)
 print("baseline accuracy: %f" % baseline_classifier.score(x_test, y_test))
+y_p = baseline_classifier.predict(x_test)
+cm = confusion_matrix(y_test, y_p)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot()
+plt.show()
 #
 # # Hyperparameter Optimization
 coarse_search_space = \
-    {'hidden_layer_size': hp.choice('hidden_layer_sizes', range(1, 1024)),
+    {'hidden_layer_size': hp.choice('hidden_layer_sizes', range(1, 256)),
      'alpha': hp.lognormal('alpha', mu=np.log(1e-4), sigma=1),
      'solver': hp.choice('algorithm', ['sgd', 'adam']),
      'activation': hp.choice('activation', ['relu']),
@@ -75,7 +79,7 @@ best = fmin(objective_fn,
             space=coarse_search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=13)
+            max_evals=12)
 solver = {0: 'sgd', 1: 'adam'}
 best_model = MLPClassifier(hidden_layer_sizes=best['hidden_layer_sizes'],
                            alpha=best['alpha'],

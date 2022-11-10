@@ -2,10 +2,10 @@ import os
 import numpy as np
 from statistics import mean, pvariance, median
 
-folder = os.getcwd() + "\\data"
-extracted_folder = folder + "\\extracted"
-actions = ["grenade", "reload", "shield", "newend"]
-key = {"grenade": 1, "reload": 2, "shield": 3, "newend": 4}
+folder = os.getcwd() + "\\data\\archive"
+extracted_folder = os.getcwd() + "\\data\\extracted"
+actions = ["grenade", "reload", "shield", "logout"]
+key = {"grenade": 1, "reload": 2, "shield": 3, "logout": 4}
 raw_features = ["accX", "accY", "accZ", "gyroX", "gyroY", "gyroZ"]
 extracted_features = ["mean", "max", "min", "var", "median", "25thp", "75thp"]
 
@@ -49,17 +49,17 @@ def main():
 
             for line in lines:
                 count += 1
-                if count % 38 > 0:
-                    if count % 26 > 0:
-                        line = line.strip()
-                        result = line.split(",")
-                        component = [eval(i) for i in result]
-                        accX.append(component[0])
-                        accY.append(component[1])
-                        accZ.append(component[2])
-                        gyroX.append(component[3])
-                        gyroY.append(component[4])
-                        gyroZ.append(component[5])
+                if count % 25 > 0:
+                    # if count % 26 > 0:
+                    line = line.strip()
+                    result = line.split(",")
+                    component = [eval(i) for i in result]
+                    accX.append(component[0])
+                    accY.append(component[1])
+                    accZ.append(component[2])
+                    gyroX.append(component[3])
+                    gyroY.append(component[4])
+                    gyroZ.append(component[5])
                 elif count != 0:
                     meanaccX, maxaccX, minaccX, varaccX, medaccX, iqrLoweraccX, iqrUpperaccX = getStats(accX)
                     meanaccY, maxaccY, minaccY, varaccY, medaccY, iqrLoweraccY, iqrUpperaccY = getStats(accY)
