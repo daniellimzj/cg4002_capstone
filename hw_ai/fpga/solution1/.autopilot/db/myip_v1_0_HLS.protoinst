@@ -1,0 +1,9 @@
+{
+	"version": "1.0",
+	"modules": {
+		"myip_v1_0_HLS": {
+			"proto_instances": {
+			}
+		}
+	}
+}
