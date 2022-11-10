@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class mqttProcessor : MonoBehaviour
 {
@@ -11,14 +12,24 @@ public class mqttProcessor : MonoBehaviour
     public UI_Manager ui_manager;
     public AR_Manager ar_manager;
 
-    string test_msg = @"[{""p1"": {""hp"": 30, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 1, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}, ""p2"": {""hp"": 60, ""action"": ""grenade"", ""bullets"": 5, ""grenades"": 0, ""shield_time"": 0, ""shield_health"": 0, ""num_deaths"": 0, ""num_shield"": 3}}]";
+    public GameObject invalidActionSign;
+    public Text invalidActionText;
+    public ParticleSystem bulletEffect;
 
-    public Text mqttText;
     public string currPlayer;
 
-    // Start is called before the first frame update
+    //Audio effects
+    public AudioSource sound_shoot;
+    public AudioSource sound_reload;
+    public AudioSource sound_grenade;
+    public AudioSource sound_invalid;
+
+
     void Start()
     {
+        invalidActionSign.SetActive(false);
+
+        // Set current player (p1 / p2)
         currPlayer = ChangeScene.playerid;
         if (currPlayer == "p1")
         {
@@ -30,25 +41,20 @@ public class mqttProcessor : MonoBehaviour
         }
     }
 
-    //void Update()
-    //{ 
-    //    ProcessReceivedMsg(test_msg);
-    //}
-
-    // Process the Json message received and update display
-
 
     public void ProcessReceivedMsg(string msg)
     {
-        UnityEngine.Debug.Log(msg);
+        if (invalidActionSign.activeSelf)
+        {
+            invalidActionSign.SetActive(false);
+        }
+
         //todo: handle marshal of correct message from requester
         var msgs = Newtonsoft.Json.Linq.JArray.Parse("[" + msg + "]");
 
 
         foreach (Newtonsoft.Json.Linq.JObject root in msgs)
         {
-
-            //updatePlayer(Newtonsoft.Json.Linq.JObject)
             foreach (KeyValuePair<String, Newtonsoft.Json.Linq.JToken> app in root)
             {
                 //updatePlayer()
@@ -64,7 +70,6 @@ public class mqttProcessor : MonoBehaviour
                 var num_shield = (String)app.Value["num_shield"];
 
 
-                mqttText.text = player + hp + action + bullets + grenades + shield_time + shield_health + num_deaths + num_shield;
                 UnityEngine.Debug.Log(player + hp + action + bullets + grenades + shield_time + shield_health + num_deaths + num_shield);
 
                 if (player == currPlayer)
@@ -85,6 +90,42 @@ public class mqttProcessor : MonoBehaviour
                     else if (string.Equals(action, "grenade"))
                     {
                         ar_manager.Opponent_GrenadeAction();
+                        sound_grenade.Play();
+                    }
+                    else if (string.Equals(action, "logout"))
+                    {
+                        SceneManager.LoadScene("MenuScene");
+                    }
+                    else if (string.Equals(action, "shoot"))
+                    {
+                        UnityEngine.Debug.Log("shoot action");
+                        bulletEffect.Play();
+                        sound_shoot.Play();
+                    }
+                    else if (string.Equals(action, "reload"))
+                    {
+                        sound_reload.Play();
+                    }
+
+                    // INVALID ACTIONS
+                    else if (string.Equals(action, "grenade_invalid")){
+                        //no more grenade
+                        invalidActionText.text = "INVALID GRENADE ACTION";
+                        invalidActionSign.SetActive(true);
+                        sound_invalid.Play();
+
+                    }
+                    else if (string.Equals(action, "reload_invalid")){
+                        //still have bullet
+                        invalidActionText.text = "INVALID RELOAD ACTION";
+                        invalidActionSign.SetActive(true);
+                        sound_invalid.Play();
+                    }
+                    else if (string.Equals(action, "shield_invalid")){
+                        //no more shield or shield still effective
+                        invalidActionText.text = "INVALID SHIELD ACTION";
+                        invalidActionSign.SetActive(true);
+                        sound_invalid.Play();
                     }
                     ar_manager.Player_ShieldHp(Int32.Parse(shield_health));
                 }
@@ -106,6 +147,10 @@ public class mqttProcessor : MonoBehaviour
                     else if (string.Equals(action, "grenade"))
                     {
                         ar_manager.Player_GrenadeAction();
+                    }
+                    else if (string.Equals(action, "logout"))
+                    {
+                        SceneManager.LoadScene("MenuScene");
                     }
                     ar_manager.Opponent_ShieldHp(Int32.Parse(shield_health));
                 }

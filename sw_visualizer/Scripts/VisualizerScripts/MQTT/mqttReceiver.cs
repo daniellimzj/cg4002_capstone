@@ -11,7 +11,6 @@ public class mqttReceiver : M2MqttUnityClient
 {
 
     public mqttProcessor mqttProcessorObj;
-    public Text mqttText;
 
     [Header("MQTT topics")]
     [Tooltip("Set the topic to subscribe. !!!ATTENTION!!! multi-level wildcard # subscribes to all topics")]
@@ -151,9 +150,6 @@ public class mqttReceiver : M2MqttUnityClient
             Debug.Log("Input is not Json String");
         }
 
-
-
-        mqttText.text = msg;
 
         StoreMessage(msg);
         if (topic == topicSubscribe)
