@@ -18,8 +18,6 @@ NS_AFTER_START = 2000000000
 NS_AFTER_DOUBLESHOOT = 100000000
 MIN_READINGS_NEEDED = 25
 
-FILE_LABEL = "wrist"
-
 p1NumSamples = 0
 p2NumSamples = 0
 
@@ -69,11 +67,6 @@ class MoveClassifier:
         self.dma_send.wait()
         self.dma_recv.wait()
         idx = self.output_buffer.argmax(axis=0) + 1
-        # print("move engine got index", idx)
-        if idx == 5:
-            print("new reload detected")
-        if idx == 2:
-            print("old reload detected")
         return INDEX_TO_ACTION_MAP[idx]
 
     # data here is raw
@@ -137,19 +130,9 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     print("length of raw p1 readings:", len(p1Readings[0]))
                     p1WristData = getProcessedData(p1Readings)
 
-                    # start = time.time_ns()
-                    # p1NumSamples += 1
-                    # with open("p1_" + FILE_LABEL + f'{p1NumSamples:04}' + ".txt", "w") as file:
-                    #     for i in range(len(p1Readings[0])):
-                    #         file.write(",".join(str(p1Readings[j][i]) for j in range(6)))
-                    #         file.write("\n")
-                    # print("milliseconds taken to write p1 samples to file:", (time.time_ns() - start) / 1000000)
-
                     if len(p1WristData):
-                        # start = time.time_ns()
                         p1Move = classifier.classifyMove(p1WristData)
                         hasP1WristProcessed = True
-                        # print("milliseconds taken to classify p1 move:", (time.time_ns() - start) / 1000000)
             
             else:
                 if classifier.isStartOfMove(prevP1AccelY, packet[beetles.ACCEL_Y]):
@@ -173,19 +156,9 @@ def getMoves(beetleQueue: mp.Queue, classifier: MoveClassifier):
                     print("length of raw p2 readings:", len(p2Readings[0]))
                     p2WristData = getProcessedData(p2Readings)
 
-                    # start = time.time_ns()
-                    # p2NumSamples += 1
-                    # with open("p2_" + FILE_LABEL + f'{p2NumSamples:04}' + ".txt", "w") as file:
-                    #     for i in range(len(p2Readings[0])):
-                    #         file.write(",".join(str(p2Readings[j][i]) for j in range(6)))
-                    #         file.write("\n")
-                    # print("milliseconds taken to write p2 samples to file:", (time.time_ns() - start) / 1000000)
-
                     if len(p2WristData):
-                        # start = time.time_ns()
                         p2Move = classifier.classifyMove(p2WristData)
                         hasP2WristProcessed = True
-                        # print("milliseconds taken to classify p2 move:", (time.time_ns() - start) / 1000000)
 
             else:
                 if classifier.isStartOfMove(prevP2AccelY, packet[beetles.ACCEL_Y]):
