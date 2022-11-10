@@ -41,6 +41,4 @@ public class mqttPublisher : M2MqttUnityClient
         }
     }
 
-
-
 }
