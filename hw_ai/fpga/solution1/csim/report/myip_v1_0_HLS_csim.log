@@ -1,0 +1,14 @@
+INFO: [SIM 2] *************** CSIM start ***************
+INFO: [SIM 4] CSIM will launch GCC as the compiler.
+   Compiling ../../../test_myip_v1_0_HLS.cpp in debug mode
+   Generating csim.exe
+ Transmitting Data for test case 0 ... 
+
+ Receiving data for test case 0 ... 
+
+6644986.500000
+6094925.500000
+0.000000
+5753822.000000
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

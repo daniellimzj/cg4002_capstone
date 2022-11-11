@@ -1,11 +1,10 @@
-DONE: 
-- Data Segmentation (sliding window done, but overlapping part unclear)
-- Feature Extraction Done (time series is ok, but frequency domain to be explored)
-- Simple MLP (36 inputs, 1 hidden layer of 5, maps to 6 actions in the output layer) Model
-- Simple KNN Model 
-- HLS 
+fpga folder:
+- contains the c++ code for the fpga portion
+- my_ip_v1_0_HLS.cpp is the file we use to generate the neural network on the FPGA
+- bias.h and weight.h are the header files that are used to store the bias and weights respectively. 
+- test_my_ip_v1_0_HLS.cpp is the testbench file. 
 
-TO BE DONE: 
-- Cross Validation 
-- IP integration on Vivado
-- Bitstream Generation 
+model folder:
+- mlp_sklearn.py is the file that is used to train the MLP neural network in software.
+- data_processing.py is the file that is used to preprocess and feature extract from the raw data files, which generates main.csv.
+- scaler.joblib is the file that is used to scale our extracted features.  
