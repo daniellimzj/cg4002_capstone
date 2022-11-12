@@ -35,11 +35,8 @@ void myip_v1_0_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_A
 	int word_cnt;
 	float v[HIDDEN_LAYER1_SIZE];
 	float v2[NUM_OUTPUT];
-//	float v2[HIDDEN_LAYER2_SIZE];
-//	float v3[NUM_OUTPUT];
 	float input[NUM_FEATURES];
-	//ap_uint<8> sum = 0; // using arbitrary precision
-	float sum = 0;		 // using 32 bit precision
+	float sum = 0;
 	float sum2 = 0;
 	float sum3 = 0;
 	AXIS_wLAST read_input, write_output;
@@ -66,7 +63,7 @@ void myip_v1_0_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_A
 			}
 		}
 
-		// for each neuron, hidden layer 2
+		// output layer
 		myip_v1_0_HLS_for3:for(word_cnt = 0; word_cnt < NUM_OUTPUT; word_cnt++){
 			sum2 = 0;
 			myip_v1_0_HLS_label2:for (int x = 0; x < HIDDEN_LAYER1_SIZE; x++) {
@@ -81,24 +78,10 @@ void myip_v1_0_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_A
 			}
 		}
 
-		// for each neuron, output layer
-//		myip_v1_0_HLS_for4:for(word_cnt = 0; word_cnt < NUM_OUTPUT; word_cnt++){
-//			sum3 = 0;
-//			for (int x = 0; x < HIDDEN_LAYER2_SIZE; x++) {
-//				sum3 += weights3[x][word_cnt] * v2[x];
-//			}
-//			sum3 += bias3[word_cnt];
-//			if (sum3 > 0) {
-//				v3[word_cnt] = sum3;
-//			}
-//			else {
-//				v3[word_cnt] = 0;
-//			}
-//		}
 
 		myip_v1_0_HLS_for5:for(word_cnt = 0; word_cnt < NUM_OUTPUT; word_cnt++){
 			//write_output.data = sum.to_int();	// using arbitrary precision
-			write_output.data = v2[word_cnt];			// using 32 bit precision
+			write_output.data = v2[word_cnt];
 			// write_output is the element sent by our ip through M_AXIS in one clock cycle.
 			write_output.last = 0;
 			if(word_cnt==NUM_OUTPUT-1)
