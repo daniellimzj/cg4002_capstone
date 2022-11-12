@@ -1,17 +1,15 @@
-import struct
 import multiprocessing as mp
-import time
 import os
-import sys
-
-import paho.mqtt.client as mqtt
-import MQTT
 import queue
-
+import struct
+import sys
+import time
 from socket import *
-import sshtunnel
 
-from bluepy.btle import Peripheral, DefaultDelegate
+import MQTT
+import paho.mqtt.client as mqtt
+import sshtunnel
+from bluepy.btle import DefaultDelegate, Peripheral
 
 INDEX_GUN_P1 = 2
 INDEX_GUN_P2 = 5
@@ -36,15 +34,6 @@ class ChecksumError(Exception):
     pass
 
 class Comms(DefaultDelegate):
-    # def __init__(self, serialChar, index):
-    #     DefaultDelegate.__init__(self)
-    #     self.serialChar = serialChar
-    #     self.index = index
-    #     self.buffer = b''
-    #     self.fragmented = 0
-    #     self.dropped = 0
-    #     self.prev = ""
-
     def __init__(self, serialChar, index, clientSocket):
         DefaultDelegate.__init__(self)
         self.serialChar = serialChar
@@ -53,34 +42,20 @@ class Comms(DefaultDelegate):
         self.buffer = b''
         self.fragmented = 0
         self.dropped = 0
-        self.prev = ""
 
     def sendAckPacket(self):
-        # print("Sending ack!")
         self.serialChar.write(bytes("A", "utf-8"))
 
     def handleAckPacket(self):
-        self.sendAckPacket()  # TODO: Change to 20bytes
+        self.sendAckPacket() 
         btleHandshakes[self.index] = True
 
-    def handleGunAndVestPacket(self, data, packet):
-        datas = {
-            'BeetleID': self.index,
-            'PacketType': packet[0],
-            'Mean': packet[1],
-            'Range': packet[2],
-            'Variance': packet[3],
-            'Median': packet[4],
-            'Has Shot Gun': packet[5],
-            'Is Shot': packet[6]
-        }
-        # result = (','.join([str(value) for value in datas.values()]))
+    def handleGunAndVestPacket(self, data):
         self.clientSocket.send(data)
-        # print(result)
         self.sendAckPacket()
 
 
-    def handleArmPacket(self, data, packet):
+    def handleArmPacket(self, data):
         # Packet Indexing:
         # 0 - Packet Type
         # 1 - Mean
@@ -90,37 +65,18 @@ class Comms(DefaultDelegate):
         # 5 - Shoots Gun
         # 6 - Gets Shot
 
-        # self.sendAckPacket()
-        datas = {
-            # 'BeetleID': self.index,
-            'Mean': packet[1],
-            'Range': packet[2],
-            'Variance': packet[3],
-            'Median': packet[4],
-            # 'Has Shot Gun': packet[5],
-            # 'Is Shot': packet[6]
-        }
-        # print("Beetle {0} data:".format(self.index))
-        result = (','.join([str(value) for value in datas.values()]))
-        if result != self.prev:
-            # print(result, end="\r")
-            self.prev = result
-            self.clientSocket.send(data)
-        # print(data)
+        self.clientSocket.send(data)
         self.sendAckPacket()
 
     def verifyChecksum(self, data):
-        # print("start verify")
         packetBytes = struct.unpack('<20b', data)
-        # print("unpacked")
         sum = 0
         count = 0
         byte = 0
 
         for byte in packetBytes:
-            if count == 19:  # 19th byte
+            if count == 19:
                 if sum == byte:
-                    # print("Beetle {0}: Checksum is true, packet valid!".format(self.index))
                     return True
                 else:
                     break
@@ -131,37 +87,18 @@ class Comms(DefaultDelegate):
         return False
 
     def handleFragmentation(self, data):
-        # print("================================")
-        # print("  ^FRAGMENTED PACKET DETECTED^")
-        # print("================================")
         self.buffer = self.buffer + data
         self.fragmented += 1
-        # print("Buffer:", self.buffer)
-        # print("Data:", data)
-        # print("Beetle {0} Fragmented: {1}".format(self.index, self.fragmented))
-        if len(self.buffer) == 20:  # Need to handle if fragmented weirdly?
-            # print("================================")
-            # print("   FRAGMENTED DATA PREVENTED")
-            # print("================================")
+        if len(self.buffer) == 20: 
             self.handleNotification(None, self.buffer)
             self.buffer = b''
 
     def handleChecksumError(self, data):
-        # print("================================")
-        # print("Handling checksum error")
-        # print("================================")
         currBuffer = len(self.buffer)
-        # print("received:", data, len(data))
-        # print("old data:", self.buffer, currBuffer)
         currData = data[:(20-currBuffer)]
         self.buffer = self.buffer + currData
-        # print("Fixed data:", self.buffer)
         self.handleNotification(None, self.buffer)
-        # print("new called data:")
-        # print(self.buffer, len(self.buffer))
         self.buffer = data[(20-currBuffer):]
-        # print("Leftover data:", self.buffer)
-        # print(self.buffer, len(self.buffer))
 
     def handleNotification(self, charHandle, data):
         try:
@@ -179,19 +116,17 @@ class Comms(DefaultDelegate):
                 '?'   # Got Shot
                 'b'   # Checksum
             )
-            # print()
-            # print("Beetle {0}: {1} {2}".format(self.index, data, type(data)))
             packet = struct.unpack_from(packetFormat, data, 0)
             if len(packet) == 11:
                 if not self.verifyChecksum(data):
                     raise ChecksumError("Incorrect checksum")
 
             packetType = packet[0]
-            # P1:a,b,c,d,e,f,V,G        P2:u,v,w,x,y,z,W,J
+            # P1: D, G, V       P2: E, J, W
             if packetType == ord('D') or packetType == ord('E'):
-                self.handleArmPacket(data, packet)
+                self.handleArmPacket(data)
             elif packetType == ord('G') or packetType == ord('J') or packetType == ord('V') or packetType == ord('W'):
-                self.handleGunAndVestPacket(data, packet)
+                self.handleGunAndVestPacket(data)
             elif packetType == ord('A'):
                 self.handleAckPacket()
 
@@ -204,9 +139,7 @@ class Comms(DefaultDelegate):
 
         except Exception as e:
             self.dropped += 1
-            # print(e)
-            # print("Dropped:", data)
-            # print("Beetle {0} dropped: {1}".format(self.index, self.dropped))
+            pass
 
 def startMQTTClient(id: int, queue: mp.Queue):
 
@@ -235,23 +168,18 @@ def startMQTTClient(id: int, queue: mp.Queue):
 
 def initHandshake(beetle, serialChar, index):
     while not btleHandshakes[index]:
-        # print("Starting Handshake Protocol...")
         serialChar.write(bytes("H", "utf-8"))
 
         if beetle.waitForNotifications(TIMEOUT_HANDSHAKE):
             pass
 
 def checkReload(serialChar, mqttQueue):
-    # print("checking queue..")
     try:
-        # print("inside try")
         didPlayerReload = mqttQueue.get(block=False, timeout=None)
         print("did player reload:", didPlayerReload)
         if didPlayerReload == 1:
             serialChar.write(bytes("R", "utf-8"))
-            print("reloaded")
     except queue.Empty:
-        # print()
         pass
 
 def watchForDisconnect(beetle, index):
@@ -266,9 +194,7 @@ def watchForDisconnect(beetle, index):
 
 def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     while True:
-        # print("listening")
         if not beetle.waitForNotifications(TIMEOUT_NOTIFICATION):
-            # disconnected = True
             print("breaking loop")
             break
         checkReload(serialChar, mqttQueue)
@@ -278,7 +204,7 @@ def watchForDisconnectGun(beetle, index, serialChar, mqttQueue):
     beetle.disconnect()  # Disconnects first and try to reconnect again
     return True
 
-def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
+def beetleProcess(index, beetlePort): 
     addr = btleAddrs[index]
     serialSvc = None
     serialChar = None
@@ -308,7 +234,6 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
             clientSocket.connect((serverName, serverPort))
             print("connected to:", serverName, serverPort)
 
-            # dont forget to indent this
             while notStop:
                 try:
                     print("Searching for Beetle", str(index))
@@ -336,7 +261,6 @@ def beetleProcess(index, beetlePort):  # Curr beetle addr, curr beetle index
                 except KeyboardInterrupt:
                     beetle.disconnect()
                 except Exception as e:
-                    # print(e)
                     pass
     except KeyboardInterrupt:
         if (index == INDEX_GUN_P1 or index == INDEX_GUN_P2):
