@@ -16,7 +16,7 @@
   - Open serial monitor
   - Set "Both NL & CR" to "No line ending"
   - Type `+++` and send it
-- AT Commands:
+- Enter AT Commands:
   - Set "No line ending" to "Both NL & CR"
   - Mac Address: AT+MAC=?
   - Set UART to 115200: `AT+UART=115200`
