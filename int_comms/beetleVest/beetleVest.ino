@@ -1,7 +1,7 @@
 #include "receiver.h"
 
 #define START_STATE_ID 1
-#define SLEEP_STATE_ID 2
+#define IDLE_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
@@ -9,7 +9,7 @@
 #define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
 
-volatile int nextID = SLEEP_STATE_ID;
+volatile int nextID = IDLE_STATE_ID;
 volatile boolean handshakeDone = false;
 volatile boolean isDetected = false;
 volatile long counter = 0;
@@ -130,7 +130,7 @@ public:
         handshakeDone = false;
       } else if (serialRead == 'A') {
         isDetected = false;
-        nextID = SLEEP_STATE_ID;
+        nextID = IDLE_STATE_ID;
       }
       if (isDetected) {
         sendVestData();
@@ -173,10 +173,10 @@ public:
   }
 } Handshake_State;
 
-class SleepState : public State
+class IdleState : public State
 {
   public:
-    SleepState() : State(SLEEP_STATE_ID) {}
+    IdleState() : State(IDLE_STATE_ID) {}
 
     void run() override
     {
@@ -186,7 +186,7 @@ class SleepState : public State
         nextID = DATA_STATE_ID;
       }
     }
-} Sleep_State;
+} Idle_State;
 
 class StartState : public State
 {
@@ -195,7 +195,7 @@ public:
 
   void init() override
   {
-    nextID = SLEEP_STATE_ID;
+    nextID = IDLE_STATE_ID;
   }
 } Start_State;
 
@@ -204,7 +204,7 @@ void setup()
 {
   Serial.begin(115200);
   currState = &Start_State;
-  nextID = SLEEP_STATE_ID;
+  nextID = IDLE_STATE_ID;
   initReceiver();
 }
 
@@ -217,8 +217,8 @@ void loop()
     case START_STATE_ID:
       nextState = &Start_State;
       break;
-    case SLEEP_STATE_ID:
-      nextState = &Sleep_State;
+    case IDLE_STATE_ID:
+      nextState = &Idle_State;
       break;
     case HANDSHAKE_STATE_ID:
       nextState = &Handshake_State;

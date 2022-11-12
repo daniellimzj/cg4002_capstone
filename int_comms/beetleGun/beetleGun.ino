@@ -1,7 +1,7 @@
 #include "infraredEmmiter.h"
 
 #define START_STATE_ID 1
-#define SLEEP_STATE_ID 2
+#define IDLE_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
@@ -9,7 +9,7 @@
 #define TIMEOUT_DATA 50 
 #define PACKET_SIZE 20
 
-volatile int nextID = SLEEP_STATE_ID;
+volatile int nextID = IDLE_STATE_ID;
 volatile boolean handshakeDone = false;
 volatile boolean isDetected = false;
 volatile long counter = 0;
@@ -32,7 +32,7 @@ struct NotifyPacket
 struct DataPacket
 { 
   byte packetType = (PLAYER_NUM == 1) ? 'G' : 'J';
-  float mean; // 4 bytes
+  float mean;
   float range;
   float variance;
   float median;
@@ -43,7 +43,7 @@ struct DataPacket
 
 // Helper Functions
 uint8_t calculateChecksum(uint8_t *packet)
-{ // 1 byte
+{
   uint8_t sum = 0;
   for (int i = 0; i < PACKET_SIZE - 1; ++i)
   {
@@ -122,7 +122,7 @@ public:
         reloadGun();
       } else if (Serial.read() == 'A') {
         isDetected = false;
-        nextID = SLEEP_STATE_ID;
+        nextID = IDLE_STATE_ID;
       } else if (Serial.read() == 'H') {
         nextID = HANDSHAKE_STATE_ID;
         handshakeDone = false;
@@ -161,10 +161,10 @@ public:
   }
 } Handshake_State;
 
-class SleepState : public State
+class IdleState : public State
 {
   public:
-    SleepState() : State(SLEEP_STATE_ID) {}
+    IdleState() : State(IDLE_STATE_ID) {}
 
     void run() override
     {
@@ -174,7 +174,7 @@ class SleepState : public State
         nextID = DATA_STATE_ID;
       }
     }
-} Sleep_State;
+} Idle_State;
 
 class StartState : public State
 {
@@ -183,7 +183,7 @@ public:
 
   void init() override
   {
-    nextID = SLEEP_STATE_ID;
+    nextID = IDLE_STATE_ID;
   }
 } Start_State;
 
@@ -192,7 +192,7 @@ void setup()
 {
   Serial.begin(115200);
   currState = &Start_State;
-  nextID = SLEEP_STATE_ID;
+  nextID = IDLE_STATE_ID;
   initEmmiter();
 }
 
@@ -205,8 +205,8 @@ void loop()
     case START_STATE_ID:
       nextState = &Start_State;
       break;
-    case SLEEP_STATE_ID:
-      nextState = &Sleep_State;
+    case IDLE_STATE_ID:
+      nextState = &Idle_State;
       break;
     case HANDSHAKE_STATE_ID:
       nextState = &Handshake_State;

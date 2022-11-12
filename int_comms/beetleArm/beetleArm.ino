@@ -41,10 +41,9 @@ struct AckPacket
   byte checkSum = 'A';
 } ackPacket;
 
-struct DataPacket
-{
+struct DataPacket {
   byte packetType = (PLAYER_NUM == 1) ? 'D' : 'E';
-  int16_t accX; // 2 bytes
+  int16_t accX;
   int16_t accY;
   int16_t accZ;
   int16_t gyroX;
