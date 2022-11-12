@@ -1,27 +1,26 @@
-#include "sensorArm.h"
+#include "sensor.h"
+
+#define PLAYER_NUM 2
 
 #define START_STATE_ID 1
-#define SLEEP_STATE_ID 2
+#define IDLE_STATE_ID 2
 #define HANDSHAKE_STATE_ID 3
 #define DATA_STATE_ID 4
 
-#define TIMEOUT_ACK 25  
-#define TIMEOUT_DATA 25
+#define TIMEOUT_ACK 25
+#define TIMEOUT_DATA 40
 #define PACKET_SIZE 20
 
-volatile int nextID = SLEEP_STATE_ID;
+volatile int nextID = IDLE_STATE_ID;
 
-volatile int current = ACCEL_X;
 volatile boolean handshakeDone = false;
+volatile boolean dataReady = false;
 
 // SENSOR
 MPU6050 myIMU;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ;
 int16_t filteredAccX, filteredAccY, filteredAccZ, filteredGyroX, filteredGyroY, filteredGyroZ;
-
-int16_t readings[NUM_FEATURES][NUM_READINGS];
-float stats[NUM_FEATURES][NUM_STATS];
 
 unsigned long i = 0;
 unsigned long previousMillis = 0;
@@ -34,26 +33,28 @@ ExponentialFilter<long> gyroXFilter(FILTER_WEIGHT, 0);
 ExponentialFilter<long> gyroYFilter(FILTER_WEIGHT, 0);
 ExponentialFilter<long> gyroZFilter(FILTER_WEIGHT, 0);
 
-// Packet Definitions (20 bytes each)
+// Packet Definitions (16 bytes each)
 struct AckPacket
 {
   byte packetType = 'A';
   byte padding[18];
-  byte checkSum = 'A'; 
+  byte checkSum = 'A';
 } ackPacket;
 
 struct DataPacket
-{ 
-  byte packetType = 'D';
-  float mean; // 4 bytes
-  float range;
-  float variance;
-  float median;
+{
+  byte packetType = (PLAYER_NUM == 1) ? 'D' : 'E';
+  int16_t accX; // 2 bytes
+  int16_t accY;
+  int16_t accZ;
+  int16_t gyroX;
+  int16_t gyroY;
+  int16_t gyroZ;
+  byte padding[4];
   boolean isGunShot;
   boolean isHit;
   byte checkSum;
 };
-
 
 // Helper Functions
 uint8_t calculateChecksum(uint8_t *packet)
@@ -66,57 +67,22 @@ uint8_t calculateChecksum(uint8_t *packet)
   return sum;
 }
 
-byte getType(uint8_t index) {
-  if (index == ACCEL_X) {
-    return 'a';
-  } else if (index == ACCEL_Y) {
-    return 'b';
-  } else if (index == ACCEL_Z) {
-    return 'c';
-  } else if (index == ROTATE_X) {
-    return 'd';
-  } else if (index == ROTATE_Y) {
-    return 'e';
-  } else if (index == ROTATE_Z) {
-    return 'f';
-  }
-}
-
-// Packet Sending Functions
-//void sendDummyData()
-//{
-//  DataPacket dummyPacket;
-//  
-//  dummyPacket.mean0 = random(1, 500) / 100.0;
-//  dummyPacket.median0 = random(1, 500) / 100.0;
-//  dummyPacket.range0 = random(1, 500) / 100.0;
-//  dummyPacket.variance0 = random(1, 500) / 100.0;
-//  dummyPacket.isGunShot = false;
-//  dummyPacket.isHit = false;
-//  dummyPacket.checkSum = calculateChecksum((uint8_t *)&dummyPacket);
-//
-//  Serial.write((byte *)&dummyPacket, sizeof(dummyPacket));
-//}
-
-void sendArmData(int index)
+void sendArmData()
 {
   DataPacket armPacket;
-  
-  armPacket.mean = stats[index][MEAN];
-  armPacket.range = stats[index][RANGE];
-  armPacket.variance = stats[index][VARIANCE];
-  armPacket.median = stats[index][MEDIAN];
+
+  armPacket.accX = filteredAccX;
+  armPacket.accY = filteredAccY;
+  armPacket.accZ = filteredAccZ;
+  armPacket.gyroX = filteredGyroX;
+  armPacket.gyroY = filteredGyroY;
+  armPacket.gyroZ = filteredGyroZ;
   armPacket.isGunShot = false;
   armPacket.isHit = false;
   armPacket.checkSum = calculateChecksum((uint8_t *)&armPacket);
-//  Serial.println(armPacket.mean);
-//  Serial.println(armPacket.median);
-//  Serial.println(armPacket.range);
-//  Serial.println(armPacket.variance);
 
   Serial.write((byte *)&armPacket, sizeof(armPacket));
 }
-
 
 void sendAck()
 {
@@ -147,73 +113,36 @@ public:
 
   void init() override
   {
-//    sendDummyData();
-      if (dataReady) {
-        sendArmData(current);
-      }
+    if (dataReady)
+    {
+      sendArmData();
+    }
   }
 
   void run() override
   {
-//    if (Serial.read() == 'H') {
-//        nextID = HANDSHAKE_STATE_ID;
-//        handshakeDone = false;
-//        current = ACCEL_X;
-//    } else if (Serial.read() == 'A') {
-//      if (current == ROTATE_Z) {
-//        current = ACCEL_X;
-//        dataReady = false;
-//    } else {
-//      current += 1;
-//    }
-////        Serial.println("got ack in data state");
-//        nextID = SLEEP_STATE_ID;
-//      }
-//  }
-    while (true) {
-      delay(TIMEOUT_DATA);
-//      if (current == ROTATE_Z) {
-//        current = ACCEL_X;
-//        dataReady = false;
-//      } else {
-//        current += 1;
-//      }
-//      if (Serial.read() == 'A') {
-//        if (current == ROTATE_Z) {
-//          current = ACCEL_X;
-//          dataReady = false;
-//        } else {
-//          current += 1;
-//        }
-////        Serial.println("got ack in data state");
-//        nextID = SLEEP_STATE_ID;
-//        break;
-//      } else if (Serial.read() == 'H') {
-////        nextState = &Handshake_State;
-//          nextID = HANDSHAKE_STATE_ID;
-//          handshakeDone = false;
-//          current = ACCEL_X;
-//        break;
-//      }
-      if (Serial.read() == 'H') {
-        nextID = HANDSHAKE_STATE_ID;
-        handshakeDone = false;
-        dataReady = false;
-        current = ACCEL_X;
-        break;
-      } else if (Serial.read() == 'A') {
-        if (current == ROTATE_Z) {
-          current = ACCEL_X;
-          dataReady = false;
-        } else {
-          current += 1;
-        }
-        nextID = SLEEP_STATE_ID;
+    unsigned long currTime = millis();
+    char serialRead = Serial.read();
+    while (serialRead != 'H' || serialRead != 'A')
+    {
+      if (millis() - currTime >= TIMEOUT_DATA)
+      {
         break;
       }
-      sendArmData(current);
-//       sendDummyData();
+      serialRead = Serial.read();
     }
+    if (serialRead == 'H')
+    {
+      nextID = HANDSHAKE_STATE_ID;
+      handshakeDone = false;
+      dataReady = false;
+    }
+    else if (serialRead == 'A')
+    {
+      dataReady = false;
+      nextID = IDLE_STATE_ID;
+    }
+    sendArmData();
   }
 } Data_State;
 
@@ -229,13 +158,22 @@ public:
 
   void run() override
   {
-//    nextState = &Data_State;
-    while (true) {
-      delay(TIMEOUT_ACK);
-      if (Serial.read() == 'A') {
-//        nextState = &Data_State;
-          nextID = DATA_STATE_ID;
-          handshakeDone = true;
+    while (true)
+    {
+      unsigned long currTime = millis();
+      char serialRead = Serial.read();
+      while (serialRead != 'A')
+      {
+        if (millis() - currTime >= TIMEOUT_DATA)
+        {
+          break;
+        }
+        serialRead = Serial.read();
+      }
+      if (serialRead == 'A')
+      {
+        nextID = DATA_STATE_ID;
+        handshakeDone = true;
         break;
       }
       sendAck();
@@ -243,21 +181,23 @@ public:
   }
 } Handshake_State;
 
-class SleepState : public State
+class IdleState : public State
 {
-  public:
-    SleepState() : State(SLEEP_STATE_ID) {}
+public:
+  IdleState() : State(IDLE_STATE_ID) {}
 
-    void run() override
+  void run() override
+  {
+    if (Serial.read() == 'H')
     {
-      if (Serial.read() == 'H') {
-//        nextState = &Handshake_State;
-          nextID = HANDSHAKE_STATE_ID;
-      } else if (handshakeDone && dataReady) {
-          nextID = DATA_STATE_ID;  
-      }
+      nextID = HANDSHAKE_STATE_ID;
     }
-} Sleep_State;
+    else if (handshakeDone && dataReady)
+    {
+      nextID = DATA_STATE_ID;
+    }
+  }
+} Idle_State;
 
 class StartState : public State
 {
@@ -266,8 +206,7 @@ public:
 
   void init() override
   {
-//    nextState = &Sleep_State;
-    nextID = SLEEP_STATE_ID;
+    nextID = IDLE_STATE_ID;
   }
 } Start_State;
 
@@ -296,7 +235,6 @@ void initSensor()
   gyroXFilter.SetCurrent(gyroX);
   gyroYFilter.SetCurrent(gyroY);
   gyroZFilter.SetCurrent(gyroZ);
-//  Serial.println("ready!");
 }
 
 void getReading()
@@ -307,7 +245,6 @@ void getReading()
 
   if (currentMillis - previousMillis >= SAMPLE_INTERVAL)
   {
-
     previousMillis = currentMillis;
 
     myIMU.getMotion6(&accX, &accY, &accZ, &gyroX, &gyroY, &gyroZ); // take all measurements in same instant
@@ -326,51 +263,7 @@ void getReading()
     gyroZFilter.Filter(gyroZ);
     filteredGyroZ = (int16_t)(gyroZFilter.Current());
 
-    /* filtered values */
-    //  accXFilter.Filter(accX);
-    //  int filteredAccX = (int)accXFilter.Current();
-    //  accYFilter.Filter(accY);
-    //  int filteredAccY = (int)accYFilter.Current();
-    //  accZFilter.Filter(accZ);
-    //  int filteredAccZ = (int)accZFilter.Current();
-    //  gyroXFilter.Filter(gyroX);
-    //  int filteredGyroX = (int)gyroXFilter.Current();
-    //  gyroYFilter.Filter(gyroY);
-    //  int filteredGyroY = (int)gyroYFilter.Current();
-    //  gyroZFilter.Filter(gyroZ);
-    //  int filteredGyroZ = (int)gyroZFilter.Current();
-
-    readings[ACCEL_X][i] = filteredAccX;
-    readings[ACCEL_Y][i] = filteredAccY;
-    readings[ACCEL_Z][i] = filteredAccZ;
-    readings[ROTATE_X][i] = filteredGyroX;
-    readings[ROTATE_Y][i] = filteredGyroY;
-    readings[ROTATE_Z][i] = filteredGyroZ;
-
-    if (i == NUM_READINGS - 1)
-    {
-      getStats(readings[ACCEL_X], stats[ACCEL_X]);
-      getStats(readings[ACCEL_Y], stats[ACCEL_Y]);
-      getStats(readings[ACCEL_Z], stats[ACCEL_Z]);
-      getStats(readings[ROTATE_X], stats[ROTATE_X]);
-      getStats(readings[ROTATE_Y], stats[ROTATE_Y]);
-      getStats(readings[ROTATE_Z], stats[ROTATE_Z]);
-
-      dataReady = true;
-      
-//      printStats(stats[ACCEL_X]);
-//      printStats(stats[ACCEL_Y]);
-//      printStats(stats[ACCEL_Z]);
-//      printStats(stats[ROTATE_X]);
-//      printStats(stats[ROTATE_Y]);
-//      printStats(stats[ROTATE_Z]);
-
-      i = 0;
-    }
-    else
-    {
-      i++;
-    }
+    dataReady = true;
   }
 }
 
@@ -379,27 +272,28 @@ void setup()
 {
   Serial.begin(115200);
   currState = &Start_State;
-  nextID = SLEEP_STATE_ID;
+  nextID = IDLE_STATE_ID;
   initSensor();
 }
 
 void loop()
 {
   getReading();
-  switch (nextID) {
-    case START_STATE_ID:
-      nextState = &Start_State;
-      break;
-    case SLEEP_STATE_ID:
-      nextState = &Sleep_State;
-      break;
-    case HANDSHAKE_STATE_ID:
-      nextState = &Handshake_State;
-      break;
-    case DATA_STATE_ID:
-      nextState = &Data_State;
-      break;
-  } 
+  switch (nextID)
+  {
+  case START_STATE_ID:
+    nextState = &Start_State;
+    break;
+  case IDLE_STATE_ID:
+    nextState = &Idle_State;
+    break;
+  case HANDSHAKE_STATE_ID:
+    nextState = &Handshake_State;
+    break;
+  case DATA_STATE_ID:
+    nextState = &Data_State;
+    break;
+  }
   if (currState->getID() != nextState->getID())
   {
     currState = nextState;
