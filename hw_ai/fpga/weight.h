@@ -3,7 +3,7 @@
 
 #define NUM_FEATURES 42
 #define HIDDEN_LAYER1_SIZE 172
-#define NUM_OUTPUT 5
+#define NUM_OUTPUT 5 //5 because there are 2 distinct forms of reload
 
 float weights1[NUM_FEATURES][HIDDEN_LAYER1_SIZE] = {{-0.069689212781, -0.136064180043, -0.006200147916,
         -0.046940537992, -0.226190596951, -0.214125921292,
