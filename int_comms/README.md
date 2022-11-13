@@ -40,6 +40,5 @@ There are 3 types of beetles each with different hardwares. Each beetle has its 
   - Upload the beetle script
 
 ## Running the Laptop Node:
-
-$ `python3 ble_central.py`  
+$ `python3 ble_final_p1.py [PORT_NUMBER]`    
 (Make sure that the beetle addresses are correct)
